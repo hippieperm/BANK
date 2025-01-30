@@ -144,7 +144,9 @@ class _AddEditAccountDialogState extends State<AddEditAccountDialog>
                         TextButton(
                           style: TextButton.styleFrom(
                             side: const BorderSide(
-                                color: Colors.grey, width: 1), // 보더라인 추가
+                              color: Colors.grey,
+                              width: 3,
+                            ), // 보더라인 추가
                           ),
                           onPressed: () async {
                             // 날짜 선택 기능
@@ -178,7 +180,9 @@ class _AddEditAccountDialogState extends State<AddEditAccountDialog>
                         TextButton(
                           style: TextButton.styleFrom(
                             side: const BorderSide(
-                                color: Colors.grey, width: 1), // 보더라인 추가
+                              color: Colors.grey,
+                              width: 3,
+                            ), // 보더라인 추가
                           ),
                           onPressed: () async {
                             // 날짜 선택 기능
@@ -207,36 +211,41 @@ class _AddEditAccountDialogState extends State<AddEditAccountDialog>
                     const SizedBox(
                       height: 10,
                     ),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Expanded(
-                          child: SizedBox(
-                            width: 1,
-                            child: TextField(
-                              controller: interestRateController,
-                              decoration:
-                                  const InputDecoration(labelText: '이자율'),
-                              keyboardType: TextInputType.number,
-                            ),
-                          ),
+                    SizedBox(
+                      width: 100,
+                      child: TextField(
+                        controller: interestRateController,
+                        decoration: const InputDecoration(
+                          labelText: '이자율 (%)',
+                          suffixText: '%',
                         ),
-                        Expanded(
-                          child: Column(
-                            children: [
-                              const Text('비과세여부'),
-                              Switch(
-                                value: isTaxExempt,
-                                onChanged: (value) {
-                                  setState(() {
-                                    isTaxExempt = value;
-                                  });
-                                },
-                              ),
-                            ],
+                        keyboardType: TextInputType.number,
+                      ),
+                    ),
+                    const SizedBox(
+                      height: 20,
+                    ),
+                    Container(
+                      width: 180,
+                      decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(14),
+                          border: Border.all(
+                            color: Colors.black,
+                          )),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                        children: [
+                          const Text('비과세여부'),
+                          Switch(
+                            value: isTaxExempt,
+                            onChanged: (value) {
+                              setState(() {
+                                isTaxExempt = value;
+                              });
+                            },
                           ),
-                        ),
-                      ],
+                        ],
+                      ),
                     ),
                     Slider(
                       value: taxRate,
