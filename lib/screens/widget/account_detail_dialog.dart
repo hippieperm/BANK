@@ -2,7 +2,7 @@ import 'dart:ui';
 
 import 'package:flutter/material.dart';
 
-import '../add_edit_account_dialog.dart';
+import 'add_edit_account_dialog.dart';
 
 class AccountDetailDialog extends StatefulWidget {
   final String bankName;
@@ -187,10 +187,8 @@ class _AccountDetailDialogState extends State<AccountDetailDialog>
                                   // Navigator.push(...) // 기존 코드 주석 처리
                                   showDialog(
                                     context: context,
-                                    builder: (context) => AddEditAccountDialog(
-                                      bankName: widget.bankName,
-                                      notifications: widget.notifications,
-                                    ),
+                                    builder: (context) =>
+                                        const AddEditAccountDialog(),
                                   );
                                 },
                                 child: Container(
