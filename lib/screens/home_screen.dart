@@ -52,7 +52,7 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
                         backgroundColor: Colors.transparent, // 배경을 투명하게 설정
                         child: Stack(
                           children: [
-                            // 배경 블러 처리,
+                            // 배경 블러 처리
                             BackdropFilter(
                               filter: ImageFilter.blur(
                                   sigmaX: 10.0, sigmaY: 10.0), // 블러 강도 조절
@@ -64,7 +64,13 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
                               onTap: () {
                                 // 다이얼로그 내부 터치 시 아무 동작도 하지 않음
                               },
-                              child: const SettingsScreen(), // 다이얼로그 내용
+                              child: const AccountDetailDialog(
+                                  bankName: '알림 설정',
+                                  notifications: [
+                                    '알림 1: 계좌 잔액이 부족합니다.',
+                                    '알림 2: 이자 지급일이 다가옵니다.',
+                                    '알림 3: 계좌 정보가 업데이트되었습니다.',
+                                  ]), // 다이얼로그 내용 변경
                             ),
                           ],
                         ),
