@@ -22,49 +22,54 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
       appBar: PreferredSize(
         preferredSize: const Size.fromHeight(50.0), // AppBar의 높이 설정
         child: AppBar(
-          title: const Text(
+          title: Text(
             '정기예금 관리',
             style: TextStyle(
               fontWeight: FontWeight.bold,
               fontSize: 24,
+              color: Colors.black.withOpacity(0.9),
             ),
           ),
           actions: [
-            IconButton(
-              icon: const Icon(Icons.notifications),
-              onPressed: () {
-                // 알림 설정 기능
-                showDialog(
-                  context: context,
-                  barrierDismissible: true,
-                  builder: (context) => GestureDetector(
-                    onTap: () {
-                      Navigator.of(context).pop(); // 다이얼로그 닫기
-                    },
-                    child: Dialog(
-                      backgroundColor: Colors.transparent, // 배경을 투명하게 설정
-                      child: Stack(
-                        children: [
-                          // 배경 블러 처리,
-                          BackdropFilter(
-                            filter: ImageFilter.blur(
-                                sigmaX: 10.0, sigmaY: 10.0), // 블러 강도 조절
-                            child: Container(
-                              color: Colors.black.withOpacity(0), // 투명한 배경
+            Padding(
+              // 우측 아이콘 버튼에 패딩 추가
+              padding: const EdgeInsets.only(right: 16.0), // 우측 패딩
+              child: IconButton(
+                icon: const Icon(Icons.notifications),
+                onPressed: () {
+                  // 알림 설정 기능
+                  showDialog(
+                    context: context,
+                    barrierDismissible: true,
+                    builder: (context) => GestureDetector(
+                      onTap: () {
+                        Navigator.of(context).pop(); // 다이얼로그 닫기
+                      },
+                      child: Dialog(
+                        backgroundColor: Colors.transparent, // 배경을 투명하게 설정
+                        child: Stack(
+                          children: [
+                            // 배경 블러 처리,
+                            BackdropFilter(
+                              filter: ImageFilter.blur(
+                                  sigmaX: 10.0, sigmaY: 10.0), // 블러 강도 조절
+                              child: Container(
+                                color: Colors.black.withOpacity(0), // 투명한 배경
+                              ),
                             ),
-                          ),
-                          GestureDetector(
-                            onTap: () {
-                              // 다이얼로그 내부 터치 시 아무 동작도 하지 않음
-                            },
-                            child: const SettingsScreen(), // 다이얼로그 내용
-                          ),
-                        ],
+                            GestureDetector(
+                              onTap: () {
+                                // 다이얼로그 내부 터치 시 아무 동작도 하지 않음
+                              },
+                              child: const SettingsScreen(), // 다이얼로그 내용
+                            ),
+                          ],
+                        ),
                       ),
                     ),
-                  ),
-                );
-              },
+                  );
+                },
+              ),
             ),
             // IconButton(
             //   icon: Icon(isDarkMode ? Icons.wb_sunny : Icons.nights_stay),
@@ -95,15 +100,33 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
                         const Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            Text('은행명',
-                                style: TextStyle(
-                                    fontSize: 20, fontWeight: FontWeight.bold)),
-                            Text('시작일 ~ 종료일', style: TextStyle(fontSize: 12)),
-                            Text('남은 만기일: 20일 남음',
-                                style: TextStyle(
-                                    fontSize: 16, fontWeight: FontWeight.bold)),
-                            Text('월 이자 수입: ₩ XXX,XXX',
-                                style: TextStyle(fontSize: 16)),
+                            Text(
+                              '은행명',
+                              style: TextStyle(
+                                fontSize: 20,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                            Text(
+                              '시작일 ~ 종료일',
+                              style: TextStyle(
+                                fontSize: 14,
+                              ),
+                            ),
+                            Text(
+                              '남은 만기일: 20일 남음',
+                              style: TextStyle(
+                                fontSize: 16,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                            Text(
+                              '월 이자 수입: ₩ XXX,XXX',
+                              style: TextStyle(
+                                fontSize: 18,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
                           ],
                         ),
                         SizedBox(
@@ -147,7 +170,22 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
                                 ),
                               );
                             },
-                            child: const Text('상세 보기'),
+                            child: const Column(
+                              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                              children: [
+                                // Icon(Icons.account_balance_rounded),
+                                Icon(
+                                  Icons.all_inclusive_rounded,
+                                ),
+                                Text(
+                                  '상세 보기',
+                                  style: TextStyle(
+                                    fontWeight: FontWeight.bold,
+                                    fontSize: 17,
+                                  ),
+                                ),
+                              ],
+                            ),
                           ),
                         ),
                       ],
