@@ -1,9 +1,9 @@
 import 'dart:ui';
 
-import 'package:bank/account_detail_dialog.dart';
-import 'package:bank/add_edit_account_dialog.dart';
+import 'package:bank/screens/widget/account_detail_dialog.dart';
+import 'package:bank/screens/widget/add_edit_account_dialog.dart';
 import 'package:bank/main.dart';
-import 'package:bank/settings_screen.dart';
+import 'package:bank/screens/settings_screen.dart';
 import 'package:flutter/material.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -86,7 +86,8 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
                         children: [
                           Text('은행명',
                               style: TextStyle(
-                                  fontSize: 20, fontWeight: FontWeight.bold)),
+                                  fontSize: 20, fontWeight: FontWeight.bold
+                                  )),
                           Text('시작일 ~ 종료일', style: TextStyle(fontSize: 12)),
                           Text('남은 만기일: 20일 남음',
                               style: TextStyle(
@@ -169,16 +170,16 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
           }
         },
       ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: () {
-          // 새 계좌 추가 기능
-          showDialog(
-            context: context,
-            builder: (context) => const AddEditAccountDialog(),
-          );
-        },
-        child: const Icon(Icons.add),
-      ),
+      // floatingActionButton: FloatingActionButton(
+      //   onPressed: () {
+      //     // 새 계좌 추가 기능
+      //     showDialog(
+      //       context: context,
+      //       builder: (context) => const AddEditAccountDialog(),
+      //     );
+      //   },
+      //   child: const Icon(Icons.add),
+      // ),
     );
   }
 }

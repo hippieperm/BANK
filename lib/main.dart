@@ -1,5 +1,5 @@
-import 'package:bank/add_edit_account_dialog.dart';
-import 'package:bank/home_screen.dart';
+import 'package:bank/screens/widget/add_edit_account_dialog.dart';
+import 'package:bank/screens/home_screen.dart';
 import 'package:flutter/material.dart';
 import 'dart:ui'; // 추가: BackdropFilter를 사용하기 위해 필요
 
