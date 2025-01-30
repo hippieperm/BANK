@@ -81,7 +81,7 @@ class _AddEditAccountDialogState extends State<AddEditAccountDialog>
                               // title: const Text('은행 선택'),
                               content: SizedBox(
                                 width: double.maxFinite, // 최대 너비 설정
-                                height: 530, // 다이얼로그 높이 조정
+                                height: 430, // 다이얼로그 높이 조정
                                 child: GridView.count(
                                   crossAxisCount: 3, // 3개의 열
                                   children: List.generate(13, (index) {
@@ -100,14 +100,14 @@ class _AddEditAccountDialogState extends State<AddEditAccountDialog>
                                   }),
                                 ),
                               ),
-                              actions: const [
-                                // TextButton(
-                                //   onPressed: () {
-                                //     Navigator.pop(context); // 다이얼로그 닫기
-                                //   },
-                                //   child: const Text('닫기'),
-                                // ),
-                              ],
+                              // actions: const [
+                              //   // TextButton(
+                              //   //   onPressed: () {
+                              //   //     Navigator.pop(context); // 다이얼로그 닫기
+                              //   //   },
+                              //   //   child: const Text('닫기'),
+                              //   // ),
+                              // ],
                             );
                           },
                         ).catchError((error) {
@@ -135,39 +135,74 @@ class _AddEditAccountDialogState extends State<AddEditAccountDialog>
                         ),
                       ),
                     ),
-                    TextField(
-                      controller: startDateController,
-                      decoration: const InputDecoration(labelText: '시작일'),
-                      onTap: () async {
-                        // 날짜 선택 기능
-                        DateTime? pickedDate = await showDatePicker(
-                          context: context,
-                          initialDate: DateTime.now(),
-                          firstDate: DateTime(2010),
-                          lastDate: DateTime(2101),
-                        );
-                        if (pickedDate != null) {
-                          startDateController.text =
-                              "${pickedDate.toLocal()}".split(' ')[0];
-                        }
-                      },
+                    const SizedBox(
+                      height: 10,
                     ),
-                    TextField(
-                      controller: endDateController,
-                      decoration: const InputDecoration(labelText: '종료일'),
-                      onTap: () async {
-                        // 날짜 선택 기능
-                        DateTime? pickedDate = await showDatePicker(
-                          context: context,
-                          initialDate: DateTime.now(),
-                          firstDate: DateTime(2000),
-                          lastDate: DateTime(2101),
-                        );
-                        if (pickedDate != null) {
-                          endDateController.text =
-                              "${pickedDate.toLocal()}".split(' ')[0];
-                        }
-                      },
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        TextButton(
+                          style: TextButton.styleFrom(
+                            side: const BorderSide(
+                                color: Colors.grey, width: 1), // 보더라인 추가
+                          ),
+                          onPressed: () async {
+                            // 날짜 선택 기능
+                            DateTime? pickedDate = await showDatePicker(
+                              context: context,
+                              initialDate: DateTime.now(),
+                              firstDate: DateTime(2010),
+                              lastDate: DateTime(2101),
+                            );
+                            if (pickedDate != null) {
+                              setState(() {
+                                startDateController.text =
+                                    "${pickedDate.toLocal()}".split(' ')[0];
+                              });
+                            }
+                          },
+                          child: Text(
+                            startDateController.text.isEmpty
+                                ? '시작일 선택'
+                                : startDateController.text,
+                            style: const TextStyle(color: Colors.black),
+                          ),
+                        ),
+                        const Text(
+                          '  ~  ',
+                          style: TextStyle(
+                            fontSize: 24,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                        TextButton(
+                          style: TextButton.styleFrom(
+                            side: const BorderSide(
+                                color: Colors.grey, width: 1), // 보더라인 추가
+                          ),
+                          onPressed: () async {
+                            // 날짜 선택 기능
+                            DateTime? pickedDate = await showDatePicker(
+                              context: context,
+                              initialDate: DateTime.now(),
+                              firstDate: DateTime(2000),
+                              lastDate: DateTime(2101),
+                            );
+                            if (pickedDate != null) {
+                              setState(() {
+                                endDateController.text =
+                                    "${pickedDate.toLocal()}".split(' ')[0];
+                              });
+                            }
+                          },
+                          child: Text(
+                            endDateController.text.isEmpty
+                                ? '종료일 선택'
+                                : endDateController.text,
+                            style: const TextStyle(color: Colors.black),
+                          ),
+                        ),
+                      ],
                     ),
                     TextField(
                       controller: interestRateController,

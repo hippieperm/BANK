@@ -2,6 +2,8 @@ import 'dart:ui';
 
 import 'package:flutter/material.dart';
 
+import '../add_edit_account_dialog.dart';
+
 class AccountDetailDialog extends StatefulWidget {
   final String bankName;
   final List<String>? notifications;
@@ -182,7 +184,14 @@ class _AccountDetailDialogState extends State<AccountDetailDialog>
                             children: [
                               TextButton(
                                 onPressed: () {
-                                  Navigator.pop(context);
+                                  // Navigator.push(...) // 기존 코드 주석 처리
+                                  showDialog(
+                                    context: context,
+                                    builder: (context) => AddEditAccountDialog(
+                                      bankName: widget.bankName,
+                                      notifications: widget.notifications,
+                                    ),
+                                  );
                                 },
                                 child: Container(
                                   decoration: BoxDecoration(
