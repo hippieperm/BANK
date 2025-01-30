@@ -183,9 +183,8 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
                             child: const Column(
                               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                               children: [
-                                // Icon(Icons.account_balance_rounded),
                                 Icon(
-                                  Icons.all_inclusive_rounded,
+                                  Icons.account_balance, // 은행 관련 아이콘으로 변경
                                 ),
                                 Text(
                                   '상세 보기',
