@@ -70,9 +70,70 @@ class _AddEditAccountDialogState extends State<AddEditAccountDialog>
                 content: Column(
                   mainAxisSize: MainAxisSize.min,
                   children: [
-                    TextField(
-                      controller: bankNameController,
-                      decoration: const InputDecoration(labelText: '은행명'),
+                    GestureDetector(
+                      onTap: () {
+                        showDialog(
+                          context: context,
+                          builder: (BuildContext context) {
+                            return AlertDialog(
+                              backgroundColor:
+                                  const Color.fromARGB(255, 86, 89, 92),
+                              // title: const Text('은행 선택'),
+                              content: SizedBox(
+                                width: double.maxFinite, // 최대 너비 설정
+                                height: 530, // 다이얼로그 높이 조정
+                                child: GridView.count(
+                                  crossAxisCount: 3, // 3개의 열
+                                  children: List.generate(13, (index) {
+                                    return Card(
+                                      color: Colors.white.withOpacity(0.7),
+                                      child: Column(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.center,
+                                        children: [
+                                          const Icon(Icons.account_balance,
+                                              size: 40), // 임시 아이콘
+                                          Text('은행 ${index + 1}'), // 임시 은행명
+                                        ],
+                                      ),
+                                    );
+                                  }),
+                                ),
+                              ),
+                              actions: const [
+                                // TextButton(
+                                //   onPressed: () {
+                                //     Navigator.pop(context); // 다이얼로그 닫기
+                                //   },
+                                //   child: const Text('닫기'),
+                                // ),
+                              ],
+                            );
+                          },
+                        ).catchError((error) {
+                          // 오류 처리
+                          print("다이얼로그 열기 오류: $error");
+                        });
+                      },
+                      child: Container(
+                        padding: const EdgeInsets.symmetric(vertical: 10.0),
+                        decoration: BoxDecoration(
+                          color: Colors.purple.withOpacity(0.7),
+                          border: Border.all(color: Colors.grey),
+                          borderRadius: BorderRadius.circular(10),
+                        ),
+                        child: const Padding(
+                          padding:
+                              EdgeInsets.symmetric(horizontal: 30, vertical: 3),
+                          child: Text(
+                            '은행선택',
+                            style: TextStyle(
+                              color: Colors.white,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                        ),
+                      ),
                     ),
                     TextField(
                       controller: startDateController,
@@ -141,19 +202,23 @@ class _AddEditAccountDialogState extends State<AddEditAccountDialog>
                       Navigator.pop(context); // 다이얼로그 닫기
                       // 저장 로직 추가 필요
                     },
-                    child: Container(
-                      decoration: BoxDecoration(
-                        color: const Color.fromARGB(255, 93, 72, 153),
-                        borderRadius: BorderRadius.circular(8.0),
-                      ),
-                      child: const Padding(
-                        padding:
-                            EdgeInsets.symmetric(vertical: 10, horizontal: 30),
-                        child: Text(
-                          '저장',
-                          style: TextStyle(
-                            color: Colors.white,
-                            fontWeight: FontWeight.bold,
+                    child: Center(
+                      child: Container(
+                        decoration: BoxDecoration(
+                          color: const Color.fromARGB(255, 93, 72, 153),
+                          borderRadius: BorderRadius.circular(8.0),
+                        ),
+                        child: const Padding(
+                          padding: EdgeInsets.symmetric(
+                            vertical: 15,
+                            horizontal: 90,
+                          ),
+                          child: Text(
+                            '저장',
+                            style: TextStyle(
+                              color: Colors.white,
+                              fontWeight: FontWeight.bold,
+                            ),
                           ),
                         ),
                       ),

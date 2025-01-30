@@ -155,7 +155,7 @@ class _AccountDetailDialogState extends State<AccountDetailDialog>
                               width: double.infinity,
                               child: Container(
                                 decoration: BoxDecoration(
-                                  color: const Color.fromARGB(255, 93, 72, 153),
+                                  color: Colors.red.withOpacity(0.9),
                                   borderRadius: BorderRadius.circular(8.0),
                                 ),
                                 child: const Padding(
@@ -165,10 +165,10 @@ class _AccountDetailDialogState extends State<AccountDetailDialog>
                                   ),
                                   child: Center(
                                     child: Text(
-                                      '알림 삭제',
+                                      '알림 지우기',
                                       style: TextStyle(
                                         color: Colors.white,
-                                        fontSize: 13,
+                                        fontSize: 14,
                                         fontWeight: FontWeight.bold,
                                       ),
                                     ),
@@ -178,7 +178,7 @@ class _AccountDetailDialogState extends State<AccountDetailDialog>
                             ),
                           )
                         : Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceAround,
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
                               TextButton(
                                 onPressed: () {
@@ -186,8 +186,7 @@ class _AccountDetailDialogState extends State<AccountDetailDialog>
                                 },
                                 child: Container(
                                   decoration: BoxDecoration(
-                                    color:
-                                        const Color.fromARGB(255, 93, 72, 153),
+                                    color: Colors.green.withOpacity(1),
                                     borderRadius: BorderRadius.circular(8.0),
                                   ),
                                   child: const Padding(
@@ -199,7 +198,7 @@ class _AccountDetailDialogState extends State<AccountDetailDialog>
                                       '수정하기',
                                       style: TextStyle(
                                         color: Colors.white,
-                                        fontSize: 13,
+                                        fontSize: 13.5,
                                         fontWeight: FontWeight.bold,
                                       ),
                                     ),
@@ -212,8 +211,7 @@ class _AccountDetailDialogState extends State<AccountDetailDialog>
                                 },
                                 child: Container(
                                   decoration: BoxDecoration(
-                                    color:
-                                        const Color.fromARGB(255, 93, 72, 153),
+                                    color: Colors.red.withOpacity(1),
                                     borderRadius: BorderRadius.circular(8.0),
                                   ),
                                   child: const Padding(
@@ -225,7 +223,7 @@ class _AccountDetailDialogState extends State<AccountDetailDialog>
                                       '삭제하기',
                                       style: TextStyle(
                                         color: Colors.white,
-                                        fontSize: 13,
+                                        fontSize: 13.5,
                                         fontWeight: FontWeight.bold,
                                       ),
                                     ),
