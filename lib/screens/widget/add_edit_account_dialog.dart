@@ -65,7 +65,7 @@ class _AddEditAccountDialogState extends State<AddEditAccountDialog>
                 ),
               ),
               child: AlertDialog(
-                backgroundColor: const Color.fromARGB(255, 223, 220, 213),
+                backgroundColor: Colors.white.withOpacity(0.7),
                 title: const Text('계좌 추가/수정'),
                 content: Column(
                   mainAxisSize: MainAxisSize.min,
