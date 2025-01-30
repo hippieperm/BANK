@@ -129,41 +129,20 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
                                   Navigator.of(context).pop(); // 다이얼로그 닫기
                                 },
                                 child: Dialog(
-                                  backgroundColor:
-                                      Colors.transparent, // 배경을 투명하게 설정
+                                  backgroundColor: Colors.transparent,
                                   child: Stack(
                                     children: [
-                                      // 배경 블러 처리
                                       BackdropFilter(
                                         filter: ImageFilter.blur(
-                                            sigmaX: 10.0,
-                                            sigmaY: 10.0), // 블러 강도 조절
+                                            sigmaX: 10.0, sigmaY: 10.0),
                                         child: Container(
-                                          color: Colors.black
-                                              .withOpacity(0), // 투명한 배경
+                                          color: Colors.black.withOpacity(0),
                                         ),
                                       ),
-                                      // 애니메이션 효과 추가
-                                      AnimatedOpacity(
-                                        opacity: 1.0,
-                                        duration:
-                                            const Duration(milliseconds: 300),
-                                        child: ScaleTransition(
-                                          scale: Tween<double>(
-                                                  begin: 0.8, end: 1.0)
-                                              .animate(
-                                            CurvedAnimation(
-                                              parent: AnimationController(
-                                                vsync: this,
-                                                duration: const Duration(
-                                                    milliseconds: 300),
-                                              )..forward(),
-                                              curve: Curves.easeInOut,
-                                            ),
-                                          ),
-                                          child: const AccountDetailDialog(
-                                              bankName: '은행명'), // 다이얼로그 내용
-                                        ),
+                                      GestureDetector(
+                                        onTap: () {}, // 내부 클릭 시 이벤트 중단
+                                        child: const AccountDetailDialog(
+                                            bankName: '은행명'),
                                       ),
                                     ],
                                   ),
