@@ -204,17 +204,39 @@ class _AddEditAccountDialogState extends State<AddEditAccountDialog>
                         ),
                       ],
                     ),
-                    TextField(
-                      controller: interestRateController,
-                      decoration: const InputDecoration(labelText: '이자율'),
-                      keyboardType: TextInputType.number,
+                    const SizedBox(
+                      height: 10,
                     ),
-                    SwitchListTile(
-                      title: const Text('비과세 여부'),
-                      value: isTaxExempt,
-                      onChanged: (value) {
-                        isTaxExempt = value;
-                      },
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Expanded(
+                          child: SizedBox(
+                            width: 1,
+                            child: TextField(
+                              controller: interestRateController,
+                              decoration:
+                                  const InputDecoration(labelText: '이자율'),
+                              keyboardType: TextInputType.number,
+                            ),
+                          ),
+                        ),
+                        Expanded(
+                          child: Column(
+                            children: [
+                              const Text('비과세여부'),
+                              Switch(
+                                value: isTaxExempt,
+                                onChanged: (value) {
+                                  setState(() {
+                                    isTaxExempt = value;
+                                  });
+                                },
+                              ),
+                            ],
+                          ),
+                        ),
+                      ],
                     ),
                     Slider(
                       value: taxRate,
