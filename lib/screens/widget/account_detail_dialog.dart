@@ -1,6 +1,7 @@
 import 'dart:ui';
 
 import 'package:flutter/material.dart';
+import 'package:awesome_dialog/awesome_dialog.dart';
 
 import 'add_edit_account_dialog.dart';
 
@@ -184,12 +185,21 @@ class _AccountDetailDialogState extends State<AccountDetailDialog>
                             children: [
                               TextButton(
                                 onPressed: () {
-                                  // Navigator.push(...) // 기존 코드 주석 처리
-                                  showDialog(
+                                  AwesomeDialog(
                                     context: context,
-                                    builder: (context) =>
-                                        const AddEditAccountDialog(),
-                                  );
+                                    dialogType: DialogType.warning,
+                                    animType: AnimType.scale,
+                                    title: '수정 확인',
+                                    desc: '정말로 수정하시겠습니까?',
+                                    btnCancelOnPress: () {},
+                                    btnOkOnPress: () {
+                                      showDialog(
+                                        context: context,
+                                        builder: (context) =>
+                                            const AddEditAccountDialog(),
+                                      );
+                                    },
+                                  ).show();
                                 },
                                 child: Container(
                                   decoration: BoxDecoration(
@@ -214,7 +224,18 @@ class _AccountDetailDialogState extends State<AccountDetailDialog>
                               ),
                               TextButton(
                                 onPressed: () {
-                                  Navigator.pop(context);
+                                  // 삭제 확인 다이얼로그 표시
+                                  AwesomeDialog(
+                                    context: context,
+                                    dialogType: DialogType.error,
+                                    animType: AnimType.scale,
+                                    title: '삭제 확인',
+                                    desc: '정말로 삭제하시겠습니까?',
+                                    btnCancelOnPress: () {},
+                                    btnOkOnPress: () {
+                                      // 삭제 로직 추가
+                                    },
+                                  ).show();
                                 },
                                 child: Container(
                                   decoration: BoxDecoration(
