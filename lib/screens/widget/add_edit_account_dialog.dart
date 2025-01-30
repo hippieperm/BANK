@@ -1,6 +1,5 @@
 import 'dart:ui';
 
-import 'package:bank/main.dart';
 import 'package:flutter/material.dart';
 
 class AddEditAccountDialog extends StatefulWidget {

@@ -2,7 +2,7 @@ import 'dart:ui';
 
 import 'package:bank/screens/widget/account_detail_dialog.dart';
 import 'package:bank/screens/widget/add_edit_account_dialog.dart';
-import 'package:bank/main.dart';
+
 import 'package:bank/screens/settings_screen.dart';
 import 'package:flutter/material.dart';
 
@@ -21,63 +21,60 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
     return Scaffold(
       appBar: PreferredSize(
         preferredSize: const Size.fromHeight(50.0), // AppBar의 높이 설정
-        child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 14.0), // 좌우 패딩 추가
-          child: AppBar(
-            title: const Text(
-              '정기예금 관리',
-              style: TextStyle(
-                fontWeight: FontWeight.bold,
-                fontSize: 24,
-              ),
+        child: AppBar(
+          title: const Text(
+            '정기예금 관리',
+            style: TextStyle(
+              fontWeight: FontWeight.bold,
+              fontSize: 24,
             ),
-            actions: [
-              IconButton(
-                icon: const Icon(Icons.notifications),
-                onPressed: () {
-                  // 알림 설정 기능
-                  showDialog(
-                    context: context,
-                    barrierDismissible: true,
-                    builder: (context) => GestureDetector(
-                      onTap: () {
-                        Navigator.of(context).pop(); // 다이얼로그 닫기
-                      },
-                      child: Dialog(
-                        backgroundColor: Colors.transparent, // 배경을 투명하게 설정
-                        child: Stack(
-                          children: [
-                            // 배경 블러 처리,
-                            BackdropFilter(
-                              filter: ImageFilter.blur(
-                                  sigmaX: 10.0, sigmaY: 10.0), // 블러 강도 조절
-                              child: Container(
-                                color: Colors.black.withOpacity(0), // 투명한 배경
-                              ),
+          ),
+          actions: [
+            IconButton(
+              icon: const Icon(Icons.notifications),
+              onPressed: () {
+                // 알림 설정 기능
+                showDialog(
+                  context: context,
+                  barrierDismissible: true,
+                  builder: (context) => GestureDetector(
+                    onTap: () {
+                      Navigator.of(context).pop(); // 다이얼로그 닫기
+                    },
+                    child: Dialog(
+                      backgroundColor: Colors.transparent, // 배경을 투명하게 설정
+                      child: Stack(
+                        children: [
+                          // 배경 블러 처리,
+                          BackdropFilter(
+                            filter: ImageFilter.blur(
+                                sigmaX: 10.0, sigmaY: 10.0), // 블러 강도 조절
+                            child: Container(
+                              color: Colors.black.withOpacity(0), // 투명한 배경
                             ),
-                            GestureDetector(
-                              onTap: () {
-                                // 다이얼로그 내부 터치 시 아무 동작도 하지 않음
-                              },
-                              child: const SettingsScreen(), // 다이얼로그 내용
-                            ),
-                          ],
-                        ),
+                          ),
+                          GestureDetector(
+                            onTap: () {
+                              // 다이얼로그 내부 터치 시 아무 동작도 하지 않음
+                            },
+                            child: const SettingsScreen(), // 다이얼로그 내용
+                          ),
+                        ],
                       ),
                     ),
-                  );
-                },
-              ),
-              IconButton(
-                icon: Icon(isDarkMode ? Icons.wb_sunny : Icons.nights_stay),
-                onPressed: () {
-                  setState(() {
-                    isDarkMode = !isDarkMode;
-                  });
-                },
-              ),
-            ],
-          ),
+                  ),
+                );
+              },
+            ),
+            // IconButton(
+            //   icon: Icon(isDarkMode ? Icons.wb_sunny : Icons.nights_stay),
+            //   onPressed: () {
+            //     setState(() {
+            //       isDarkMode = !isDarkMode;
+            //     });
+            //   },
+            // ),
+          ],
         ),
       ),
       body: Padding(
