@@ -34,7 +34,7 @@ class _AccountDetailDialogState extends State<AccountDetailDialog>
   Widget build(BuildContext context) {
     return Dialog(
       backgroundColor: Colors.transparent,
-      insetPadding: const EdgeInsets.symmetric(horizontal: 0),
+      insetPadding: const EdgeInsets.symmetric(horizontal: 0, vertical: 100),
       child: Stack(
         children: [
           BackdropFilter(
@@ -65,6 +65,7 @@ class _AccountDetailDialogState extends State<AccountDetailDialog>
                   ),
                 ),
                 child: AlertDialog(
+                  backgroundColor: Colors.white.withOpacity(0.7),
                   title: Text(
                     widget.bankName,
                     style: const TextStyle(
@@ -92,6 +93,7 @@ class _AccountDetailDialogState extends State<AccountDetailDialog>
                             fontWeight: FontWeight.bold,
                           ),
                         ),
+                        SizedBox(height: 4),
                         Text(
                           '이자율: X.X%',
                           style: TextStyle(
@@ -106,6 +108,7 @@ class _AccountDetailDialogState extends State<AccountDetailDialog>
                             fontWeight: FontWeight.bold,
                           ),
                         ),
+                        SizedBox(height: 4),
                         Text(
                           '월 수익: ₩ XXX,XXX',
                           style: TextStyle(
@@ -124,17 +127,60 @@ class _AccountDetailDialogState extends State<AccountDetailDialog>
                     ),
                   ),
                   actions: [
-                    TextButton(
-                      onPressed: () {
-                        Navigator.pop(context);
-                      },
-                      child: const Text('수정하기'),
-                    ),
-                    TextButton(
-                      onPressed: () {
-                        Navigator.pop(context);
-                      },
-                      child: const Text('삭제하기'),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceAround,
+                      children: [
+                        TextButton(
+                          onPressed: () {
+                            Navigator.pop(context);
+                          },
+                          child: Container(
+                            decoration: BoxDecoration(
+                              color: const Color.fromARGB(255, 93, 72, 153),
+                              borderRadius: BorderRadius.circular(8.0),
+                            ),
+                            child: const Padding(
+                              padding: EdgeInsets.symmetric(
+                                vertical: 14,
+                                horizontal: 22,
+                              ),
+                              child: Text(
+                                '수정하기',
+                                style: TextStyle(
+                                  color: Colors.white,
+                                  fontSize: 13,
+                                  fontWeight: FontWeight.bold,
+                                ),
+                              ),
+                            ),
+                          ),
+                        ),
+                        TextButton(
+                          onPressed: () {
+                            Navigator.pop(context);
+                          },
+                          child: Container(
+                            decoration: BoxDecoration(
+                              color: const Color.fromARGB(255, 93, 72, 153),
+                              borderRadius: BorderRadius.circular(8.0),
+                            ),
+                            child: const Padding(
+                              padding: EdgeInsets.symmetric(
+                                vertical: 14,
+                                horizontal: 22,
+                              ),
+                              child: Text(
+                                '삭제하기',
+                                style: TextStyle(
+                                  color: Colors.white,
+                                  fontSize: 13,
+                                  fontWeight: FontWeight.bold,
+                                ),
+                              ),
+                            ),
+                          ),
+                        ),
+                      ],
                     ),
                   ],
                 ),

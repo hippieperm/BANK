@@ -19,9 +19,12 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.white.withOpacity(0.8),
       appBar: PreferredSize(
         preferredSize: const Size.fromHeight(50.0), // AppBar의 높이 설정
         child: AppBar(
+          backgroundColor: Colors.white.withOpacity(0.1),
+          elevation: 1,
           title: Text(
             '정기예금 관리',
             style: TextStyle(
@@ -88,6 +91,7 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
           itemCount: 10, // 예시 데이터 수
           itemBuilder: (context, index) {
             return Card(
+              color: const Color.fromARGB(255, 223, 220, 213),
               margin: const EdgeInsets.all(10),
               child: Padding(
                 padding: const EdgeInsets.all(16.0),
@@ -198,6 +202,8 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
         ),
       ),
       bottomNavigationBar: BottomNavigationBar(
+        backgroundColor: Colors.white.withOpacity(0.4),
+        elevation: 1,
         items: const [
           BottomNavigationBarItem(icon: Icon(Icons.home), label: '홈'),
           BottomNavigationBarItem(icon: Icon(Icons.add), label: '계좌 추가'),

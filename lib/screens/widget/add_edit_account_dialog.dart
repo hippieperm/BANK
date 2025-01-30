@@ -38,6 +38,7 @@ class _AddEditAccountDialogState extends State<AddEditAccountDialog>
   Widget build(BuildContext context) {
     return Dialog(
       backgroundColor: Colors.transparent, // 배경을 투명하게 설정
+      insetPadding: const EdgeInsets.symmetric(horizontal: 0, vertical: 100),
       child: Stack(
         children: [
           // 배경 블러 처리
@@ -64,6 +65,7 @@ class _AddEditAccountDialogState extends State<AddEditAccountDialog>
                 ),
               ),
               child: AlertDialog(
+                backgroundColor: const Color.fromARGB(255, 223, 220, 213),
                 title: const Text('계좌 추가/수정'),
                 content: Column(
                   mainAxisSize: MainAxisSize.min,
@@ -80,7 +82,7 @@ class _AddEditAccountDialogState extends State<AddEditAccountDialog>
                         DateTime? pickedDate = await showDatePicker(
                           context: context,
                           initialDate: DateTime.now(),
-                          firstDate: DateTime(2000),
+                          firstDate: DateTime(2010),
                           lastDate: DateTime(2101),
                         );
                         if (pickedDate != null) {
@@ -125,7 +127,9 @@ class _AddEditAccountDialogState extends State<AddEditAccountDialog>
                       divisions: 100,
                       label: '세율',
                       onChanged: (value) {
-                        taxRate = value;
+                        setState(() {
+                          taxRate = value;
+                        });
                       },
                     ),
                   ],
@@ -137,7 +141,23 @@ class _AddEditAccountDialogState extends State<AddEditAccountDialog>
                       Navigator.pop(context); // 다이얼로그 닫기
                       // 저장 로직 추가 필요
                     },
-                    child: const Text('저장'),
+                    child: Container(
+                      decoration: BoxDecoration(
+                        color: const Color.fromARGB(255, 93, 72, 153),
+                        borderRadius: BorderRadius.circular(8.0),
+                      ),
+                      child: const Padding(
+                        padding:
+                            EdgeInsets.symmetric(vertical: 10, horizontal: 30),
+                        child: Text(
+                          '저장',
+                          style: TextStyle(
+                            color: Colors.white,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                      ),
+                    ),
                   ),
                 ],
               ),
