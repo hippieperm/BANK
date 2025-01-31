@@ -1,7 +1,7 @@
 import 'dart:ui';
 
-import 'package:bank/screens/widget/account_detail_dialog.dart';
-import 'package:bank/screens/widget/add_edit_account_dialog.dart';
+import 'package:bank/screens/dialog/account_detail_dialog.dart';
+import 'package:bank/screens/dialog/add_edit_account_dialog.dart';
 
 import 'package:bank/screens/settings_screen.dart';
 import 'package:flutter/material.dart';
@@ -94,7 +94,7 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
       body: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 14),
         child: ListView.builder(
-          itemCount: 10, // 예시 데이터 수
+          itemCount: 1, // 예시 데이터 수
           itemBuilder: (context, index) {
             return Card(
               color: const Color.fromARGB(255, 223, 220, 213),
