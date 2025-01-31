@@ -270,6 +270,11 @@ class _AddEditAccountDialogState extends State<AddEditAccountDialog>
                               });
                             },
                           ),
+                          Text(
+                            isTaxExempt
+                                ? '${taxRate.toStringAsFixed(1)}%'
+                                : '세율',
+                          ),
                         ],
                       ),
                     ),
