@@ -1,5 +1,6 @@
 import 'dart:ui';
 
+import 'package:bank/data/banks.dart';
 import 'package:flutter/material.dart';
 
 class BankChoiceDialog extends StatefulWidget {
@@ -13,6 +14,8 @@ class _BankChoiceDialogState extends State<BankChoiceDialog> {
   String? selectedBankName;
   String? selectedBankImage;
 
+  // 은행 데이터를 저장하는 리스트
+
   @override
   Widget build(BuildContext context) {
     return AlertDialog(
@@ -23,12 +26,12 @@ class _BankChoiceDialogState extends State<BankChoiceDialog> {
         height: 440, // 다이얼로그 높이 조정
         child: GridView.count(
           crossAxisCount: 3, // 3개의 열
-          children: List.generate(13, (index) {
+          children: List.generate(Banks.banks.length, (index) {
             return GestureDetector(
               onTap: () {
                 setState(() {
-                  selectedBankName = '은행 ${index + 1}';
-                  selectedBankImage = '은행 ${index + 1} 이미지 경로';
+                  selectedBankName = Banks.banks[index]['name'];
+                  selectedBankImage = Banks.banks[index]['image'];
                 });
                 Navigator.pop(context);
               },
@@ -37,8 +40,12 @@ class _BankChoiceDialogState extends State<BankChoiceDialog> {
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    const Icon(Icons.account_balance, size: 40), // 임시 아이콘
-                    Text('은행 ${index + 1}'), // 임시 은행명
+                    Image.asset(
+                      Banks.banks[index]['image']!,
+                      width: 40,
+                      height: 40,
+                    ),
+                    Text(Banks.banks[index]['name']!),
                   ],
                 ),
               ),
