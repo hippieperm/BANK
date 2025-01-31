@@ -274,6 +274,9 @@ class _AddEditAccountDialogState extends State<AddEditAccountDialog>
                             isTaxExempt
                                 ? '${taxRate.toStringAsFixed(1)}%'
                                 : '세율',
+                            style: const TextStyle(
+                              fontWeight: FontWeight.bold,
+                            ),
                           ),
                         ],
                       ),
