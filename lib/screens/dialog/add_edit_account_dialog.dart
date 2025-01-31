@@ -252,33 +252,36 @@ class _AddEditAccountDialogState extends State<AddEditAccountDialog>
                       height: 20,
                     ),
                     Container(
-                      width: 180,
+                      width: 195,
                       decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(14),
                           border: Border.all(
                             color: Colors.black,
                           )),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                        children: [
-                          const Text('비과세여부'),
-                          Switch(
-                            value: isTaxExempt,
-                            onChanged: (value) {
-                              setState(() {
-                                isTaxExempt = value;
-                              });
-                            },
-                          ),
-                          Text(
-                            isTaxExempt
-                                ? '${taxRate.toStringAsFixed(1)}%'
-                                : '세율',
-                            style: const TextStyle(
-                              fontWeight: FontWeight.bold,
+                      child: Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 10),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                          children: [
+                            Switch(
+                              value: isTaxExempt,
+                              onChanged: (value) {
+                                setState(() {
+                                  isTaxExempt = value;
+                                });
+                              },
                             ),
-                          ),
-                        ],
+                            const Text('비과세여부 '),
+                            Text(
+                              isTaxExempt
+                                  ? '${taxRate.toStringAsFixed(1)}%'
+                                  : '세율',
+                              style: const TextStyle(
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                          ],
+                        ),
                       ),
                     ),
                     Slider(
