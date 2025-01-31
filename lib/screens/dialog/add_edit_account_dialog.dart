@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 
 import 'bank_choice_dialog.dart';
+import 'package:awesome_dialog/awesome_dialog.dart';
 
 class AddEditAccountDialog extends StatefulWidget {
   const AddEditAccountDialog({super.key});
@@ -302,9 +303,15 @@ class _AddEditAccountDialogState extends State<AddEditAccountDialog>
                           startDateController.text.isEmpty ||
                           endDateController.text.isEmpty ||
                           interestRateController.text.isEmpty) {
-                        ScaffoldMessenger.of(context).showSnackBar(
-                          const SnackBar(content: Text('모든 필드를 입력해주세요')),
-                        );
+                        AwesomeDialog(
+                          context: context,
+                          dialogType: DialogType.warning,
+                          animType: AnimType.scale,
+                          title: '입력 오류',
+                          desc: '모든 필드를 입력해주세요',
+                          btnOkOnPress: () {},
+                          btnOkColor: Colors.purple,
+                        ).show();
                         return;
                       }
 

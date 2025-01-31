@@ -137,8 +137,8 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
                       10000000 * (interestRate / 100) / 12; // 예시 금액 1000만원
 
                   return Card(
-                    color: const Color.fromARGB(255, 223, 220, 213),
-                    margin: const EdgeInsets.all(10),
+                    color: const Color(0xff333333),
+                    // margin: const EdgeInsets.all(10),
                     child: Padding(
                       padding: const EdgeInsets.all(16.0),
                       child: Column(
@@ -159,13 +159,17 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
                                   const SizedBox(height: 8),
                                   Text(
                                     '${account['startDate']} ~ ${account['endDate']}',
-                                    style: const TextStyle(fontSize: 14),
+                                    style: const TextStyle(
+                                      fontSize: 14,
+                                      color: Colors.white70,
+                                    ),
                                   ),
                                   Text(
                                     '남은 만기일: $remainingDays일 남음',
                                     style: const TextStyle(
                                       fontSize: 16,
                                       fontWeight: FontWeight.bold,
+                                      color: Colors.white,
                                     ),
                                   ),
                                   Text(
@@ -173,6 +177,7 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
                                     style: const TextStyle(
                                       fontSize: 18,
                                       fontWeight: FontWeight.bold,
+                                      color: Colors.white,
                                     ),
                                   ),
                                 ],
@@ -228,13 +233,15 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
                                         MainAxisAlignment.spaceEvenly,
                                     children: [
                                       Icon(
-                                        Icons.account_balance, // 은행 관련 아이콘으로 변경
+                                        Icons.account_balance,
+                                        color: Colors.white,
                                       ),
                                       Text(
                                         '상세 보기',
                                         style: TextStyle(
                                           fontWeight: FontWeight.bold,
                                           fontSize: 17,
+                                          color: Colors.white,
                                         ),
                                       ),
                                     ],
