@@ -74,16 +74,20 @@ class _AddEditAccountDialogState extends State<AddEditAccountDialog>
                   mainAxisSize: MainAxisSize.min,
                   children: [
                     GestureDetector(
-                      onTap: () {
-                        showDialog(
+                      onTap: () async {
+                        final result = await showDialog(
                           context: context,
                           builder: (BuildContext context) {
                             return const BankChoiceDialog();
                           },
-                        ).catchError((error) {
-                          // 오류 처리
-                          print("다이얼로그 열기 오류: $error");
-                        });
+                        );
+
+                        if (result != null && mounted) {
+                          setState(() {
+                            selectedBankName = result['name'];
+                            selectedBankImage = result['image'];
+                          });
+                        }
                       },
                       child: Container(
                         padding: const EdgeInsets.symmetric(vertical: 10.0),
