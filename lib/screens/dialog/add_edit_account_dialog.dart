@@ -167,6 +167,13 @@ class _AddEditAccountDialogState extends State<AddEditAccountDialog>
                               initialDate: DateTime.now(),
                               firstDate: DateTime(2010),
                               lastDate: DateTime(2101),
+                              builder: (BuildContext context, Widget? child) {
+                                return AnimatedScale(
+                                  scale: 0.95,
+                                  duration: const Duration(milliseconds: 1800),
+                                  child: child!,
+                                );
+                              },
                             );
                             if (pickedDate != null) {
                               setState(() {
@@ -203,6 +210,13 @@ class _AddEditAccountDialogState extends State<AddEditAccountDialog>
                               initialDate: DateTime.now(),
                               firstDate: DateTime(2000),
                               lastDate: DateTime(2101),
+                              builder: (BuildContext context, Widget? child) {
+                                return AnimatedScale(
+                                  scale: 0.95,
+                                  duration: const Duration(milliseconds: 1800),
+                                  child: child!,
+                                );
+                              },
                             );
                             if (pickedDate != null) {
                               setState(() {
