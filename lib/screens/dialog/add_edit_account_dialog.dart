@@ -128,13 +128,6 @@ class _AddEditAccountDialogState extends State<AddEditAccountDialog>
                                             },
                                           ),
                                     const SizedBox(width: 8),
-                                    // Text(
-                                    //   selectedBankName!,
-                                    //   style: const TextStyle(
-                                    //     color: Colors.white,
-                                    //     fontWeight: FontWeight.bold,
-                                    //   ),
-                                    // ),
                                   ],
                                 )
                               : const Text(
@@ -148,7 +141,7 @@ class _AddEditAccountDialogState extends State<AddEditAccountDialog>
                       ),
                     ),
                     const SizedBox(
-                      height: 10,
+                      height: 15,
                     ),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.center,
@@ -234,15 +227,12 @@ class _AddEditAccountDialogState extends State<AddEditAccountDialog>
                         ),
                       ],
                     ),
-                    const SizedBox(
-                      height: 10,
-                    ),
                     SizedBox(
-                      width: 100,
+                      width: 75,
                       child: TextField(
                         controller: interestRateController,
                         decoration: const InputDecoration(
-                          labelText: '이자율 (%)',
+                          labelText: '이자율(%)',
                           suffixText: '%',
                         ),
                         keyboardType: TextInputType.number,
@@ -308,11 +298,26 @@ class _AddEditAccountDialogState extends State<AddEditAccountDialog>
                 actions: [
                   TextButton(
                     onPressed: () {
-                      // 저장 기능
+                      if (selectedBankName == null ||
+                          startDateController.text.isEmpty ||
+                          endDateController.text.isEmpty ||
+                          interestRateController.text.isEmpty) {
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          const SnackBar(content: Text('모든 필드를 입력해주세요')),
+                        );
+                        return;
+                      }
 
-                      Navigator.pop(
-                        context,
-                      ); // 다이얼로그 닫기 및 저장된 텍스트 반환
+                      Navigator.pop(context, {
+                        'bankName': selectedBankName,
+                        'bankImage': selectedBankImage,
+                        'startDate': startDateController.text,
+                        'endDate': endDateController.text,
+                        'interestRate':
+                            double.parse(interestRateController.text),
+                        'isTaxExempt': isTaxExempt,
+                        'taxRate': taxRate,
+                      });
                     },
                     child: Center(
                       child: Container(

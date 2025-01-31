@@ -6,6 +6,7 @@ import 'package:bank/screens/dialog/add_edit_account_dialog.dart';
 import 'package:bank/screens/settings_screen.dart';
 import 'package:calendar_timeline/calendar_timeline.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -16,6 +17,7 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
   bool isDarkMode = true;
+  List<Map<String, dynamic>> accounts = []; // 계좌 목록을 저장할 리스트 추가
 
   @override
   Widget build(BuildContext context) {
@@ -121,8 +123,19 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
             ),
             Expanded(
               child: ListView.builder(
-                itemCount: 1, // 예시 데이터 수
+                itemCount: accounts.length, // 실제 계좌 수로 변경
                 itemBuilder: (context, index) {
+                  final account = accounts[index];
+                  // 만기일 계산
+                  final endDate = DateTime.parse(account['endDate']);
+                  final remainingDays =
+                      endDate.difference(DateTime.now()).inDays;
+
+                  // 월 이자 계산 (간단한 예시)
+                  final interestRate = account['interestRate'];
+                  final monthlyInterest =
+                      10000000 * (interestRate / 100) / 12; // 예시 금액 1000만원
+
                   return Card(
                     color: const Color.fromARGB(255, 223, 220, 213),
                     margin: const EdgeInsets.all(10),
@@ -134,32 +147,30 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
                           Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
-                              const Column(
+                              Column(
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
+                                  SvgPicture.asset(
+                                    account['bankImage']!,
+                                    width: 100,
+                                    height: 24,
+                                    fit: BoxFit.contain,
+                                  ),
+                                  const SizedBox(height: 8),
                                   Text(
-                                    '은행명',
-                                    style: TextStyle(
-                                      fontSize: 20,
-                                      fontWeight: FontWeight.bold,
-                                    ),
+                                    '${account['startDate']} ~ ${account['endDate']}',
+                                    style: const TextStyle(fontSize: 14),
                                   ),
                                   Text(
-                                    '시작일 ~ 종료일',
-                                    style: TextStyle(
-                                      fontSize: 14,
-                                    ),
-                                  ),
-                                  Text(
-                                    '남은 만기일: 20일 남음',
-                                    style: TextStyle(
+                                    '남은 만기일: $remainingDays일 남음',
+                                    style: const TextStyle(
                                       fontSize: 16,
                                       fontWeight: FontWeight.bold,
                                     ),
                                   ),
                                   Text(
-                                    '월 이자 수입: ₩ XXX,XXX',
-                                    style: TextStyle(
+                                    '월 이자 수입: ₩ ${monthlyInterest.toStringAsFixed(0)}',
+                                    style: const TextStyle(
                                       fontSize: 18,
                                       fontWeight: FontWeight.bold,
                                     ),
@@ -252,11 +263,16 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
         ],
         onTap: (index) {
           if (index == 1) {
-            // 계좌 추가 기능
             showDialog(
               context: context,
               builder: (context) => const AddEditAccountDialog(),
-            );
+            ).then((result) {
+              if (result != null) {
+                setState(() {
+                  accounts.add(result);
+                });
+              }
+            });
           } else if (index == 2) {
             // 설정 화면으로 이동
             Navigator.push(
