@@ -21,6 +21,7 @@ class _AddEditAccountDialogState extends State<AddEditAccountDialog>
   final TextEditingController startDateController = TextEditingController();
   final TextEditingController endDateController = TextEditingController();
   final TextEditingController interestRateController = TextEditingController();
+  final TextEditingController principalController = TextEditingController();
   bool isTaxExempt = false;
   double taxRate = 0;
   late AnimationController _controller;
@@ -38,6 +39,18 @@ class _AddEditAccountDialogState extends State<AddEditAccountDialog>
   void dispose() {
     _controller.dispose();
     super.dispose();
+  }
+
+  // 천 단위 구분 쉼표를 위한 포맷 함수
+  String formatNumber(String text) {
+    if (text.isEmpty) return '';
+    return text.replaceAllMapped(
+        RegExp(r'(\d{1,3})(?=(\d{3})+(?!\d))'), (Match m) => '${m[1]},');
+  }
+
+  // 쉼표를 제거하는 함수
+  String removeCommas(String text) {
+    return text.replaceAll(',', '');
   }
 
   @override
@@ -242,6 +255,38 @@ class _AddEditAccountDialogState extends State<AddEditAccountDialog>
                     const SizedBox(
                       height: 20,
                     ),
+                    SizedBox(
+                      width: 200,
+                      child: TextField(
+                        controller: principalController,
+                        decoration: const InputDecoration(
+                          labelText: '원금',
+                          suffixText: '원',
+                        ),
+                        keyboardType: TextInputType.number,
+                        onChanged: (value) {
+                          // 쉼표 제거 후 숫자만 추출
+                          String numericOnly = removeCommas(value);
+                          if (numericOnly.isNotEmpty) {
+                            // 천 단위 쉼표 추가
+                            String formatted = formatNumber(numericOnly);
+                            // 커서 위치 저장
+                            int cursorPosition =
+                                principalController.selection.start;
+                            // 이전 쉼표 개수와 새로운 쉼표 개수의 차이
+                            int commasDiff = formatted.length - value.length;
+
+                            principalController.text = formatted;
+                            // 커서 위치 조정
+                            principalController.selection =
+                                TextSelection.fromPosition(
+                              TextPosition(offset: cursorPosition + commasDiff),
+                            );
+                          }
+                        },
+                      ),
+                    ),
+                    const SizedBox(height: 15),
                     Container(
                       width: 195,
                       decoration: BoxDecoration(
@@ -302,7 +347,8 @@ class _AddEditAccountDialogState extends State<AddEditAccountDialog>
                       if (selectedBankName == null ||
                           startDateController.text.isEmpty ||
                           endDateController.text.isEmpty ||
-                          interestRateController.text.isEmpty) {
+                          interestRateController.text.isEmpty ||
+                          principalController.text.isEmpty) {
                         AwesomeDialog(
                           context: context,
                           dialogType: DialogType.warning,
@@ -324,6 +370,8 @@ class _AddEditAccountDialogState extends State<AddEditAccountDialog>
                             double.parse(interestRateController.text),
                         'isTaxExempt': isTaxExempt,
                         'taxRate': taxRate,
+                        'principal': double.parse(removeCommas(
+                            principalController.text)), // 쉼표 제거 후 변환
                       });
                     },
                     child: Center(

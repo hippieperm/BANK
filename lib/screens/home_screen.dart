@@ -131,10 +131,17 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
                   final remainingDays =
                       endDate.difference(DateTime.now()).inDays;
 
-                  // 월 이자 계산 (간단한 예시)
+                  // 월 이자 계산 수정
+                  final principal = account['principal'];
                   final interestRate = account['interestRate'];
-                  final monthlyInterest =
-                      10000000 * (interestRate / 100) / 12; // 예시 금액 1000만원
+                  final monthlyInterest = principal * (interestRate / 100) / 12;
+
+                  // 천 단위 구분 쉼표를 위한 포맷 함수
+                  String formatNumber(double number) {
+                    return number.toStringAsFixed(0).replaceAllMapped(
+                        RegExp(r'(\d{1,3})(?=(\d{3})+(?!\d))'),
+                        (Match m) => '${m[1]},');
+                  }
 
                   return Card(
                     color: const Color(0xff333333),
@@ -173,7 +180,14 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
                                     ),
                                   ),
                                   Text(
-                                    '월 이자 수입: ₩ ${monthlyInterest.toStringAsFixed(0)}',
+                                    '원금: ₩ ${formatNumber(principal)}',
+                                    style: const TextStyle(
+                                      fontSize: 16,
+                                      color: Colors.white,
+                                    ),
+                                  ),
+                                  Text(
+                                    '월 이자 수입: ₩ ${formatNumber(monthlyInterest)}',
                                     style: const TextStyle(
                                       fontSize: 18,
                                       fontWeight: FontWeight.bold,
