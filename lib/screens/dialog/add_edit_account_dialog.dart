@@ -274,16 +274,23 @@ class _AddEditAccountDialogState extends State<AddEditAccountDialog>
                       ),
                     ),
                     Slider(
-                      value: taxRate,
+                      value: isTaxExempt ? taxRate : 0,
                       min: 0,
-                      max: 100,
-                      divisions: 100,
-                      label: '세율',
-                      onChanged: (value) {
-                        setState(() {
-                          taxRate = value;
-                        });
-                      },
+                      max: 30,
+                      divisions: 300,
+                      label:
+                          isTaxExempt ? '${taxRate.toStringAsFixed(1)}%' : '세율',
+                      onChanged: isTaxExempt
+                          ? (value) {
+                              setState(() {
+                                taxRate = value;
+                              });
+                            }
+                          : null,
+                      activeColor: isTaxExempt
+                          ? Colors.purple.withOpacity(0.9)
+                          : Colors.grey,
+                      inactiveColor: Colors.grey,
                     ),
                   ],
                 ),
