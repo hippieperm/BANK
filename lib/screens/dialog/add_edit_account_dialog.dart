@@ -259,7 +259,7 @@ class _AddEditAccountDialogState extends State<AddEditAccountDialog>
                             color: Colors.black,
                           )),
                       child: Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 10),
+                        padding: const EdgeInsets.symmetric(horizontal: 8),
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                           children: [
