@@ -2,6 +2,8 @@ import 'dart:ui';
 
 import 'package:flutter/material.dart';
 
+import 'package:flutter_svg/svg.dart';
+
 import 'bank_choice_dialog.dart';
 
 class AddEditAccountDialog extends StatefulWidget {
@@ -41,7 +43,7 @@ class _AddEditAccountDialogState extends State<AddEditAccountDialog>
   Widget build(BuildContext context) {
     return Dialog(
       backgroundColor: Colors.transparent, // 배경을 투명하게 설정
-      insetPadding: const EdgeInsets.symmetric(horizontal: 0, vertical: 100),
+      insetPadding: const EdgeInsets.symmetric(horizontal: 1, vertical: 100),
       child: Stack(
         children: [
           // 배경 블러 처리
@@ -90,7 +92,9 @@ class _AddEditAccountDialogState extends State<AddEditAccountDialog>
                         }
                       },
                       child: Container(
-                        padding: const EdgeInsets.symmetric(vertical: 10.0),
+                        padding: const EdgeInsets.symmetric(
+                          vertical: 10.0,
+                        ),
                         decoration: BoxDecoration(
                           color: Colors.purple.withOpacity(0.7),
                           border: Border.all(color: Colors.grey),
@@ -98,21 +102,39 @@ class _AddEditAccountDialogState extends State<AddEditAccountDialog>
                         ),
                         child: Padding(
                           padding: const EdgeInsets.symmetric(
-                              horizontal: 30, vertical: 3),
+                            horizontal: 30,
+                            vertical: 3,
+                          ),
                           child: selectedBankName != null &&
                                   selectedBankImage != null
-                              ? Column(
+                              ? Row(
                                   mainAxisAlignment: MainAxisAlignment.center,
                                   children: [
-                                    Image.network(selectedBankImage!,
-                                        fit: BoxFit.cover),
-                                    Text(
-                                      selectedBankName!,
-                                      style: const TextStyle(
-                                        color: Colors.white,
-                                        fontWeight: FontWeight.bold,
-                                      ),
-                                    ),
+                                    selectedBankImage!.endsWith('.svg')
+                                        ? SvgPicture.asset(
+                                            selectedBankImage!,
+                                            width: 24,
+                                            height: 24,
+                                            placeholderBuilder: (context) =>
+                                                const Icon(Icons.error),
+                                          )
+                                        : Image.asset(
+                                            selectedBankImage!,
+                                            width: 24,
+                                            height: 24,
+                                            errorBuilder:
+                                                (context, error, stackTrace) {
+                                              return const Icon(Icons.error);
+                                            },
+                                          ),
+                                    const SizedBox(width: 8),
+                                    // Text(
+                                    //   selectedBankName!,
+                                    //   style: const TextStyle(
+                                    //     color: Colors.white,
+                                    //     fontWeight: FontWeight.bold,
+                                    //   ),
+                                    // ),
                                   ],
                                 )
                               : const Text(
