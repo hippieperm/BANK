@@ -27,7 +27,7 @@ class _BankChoiceDialogState extends State<BankChoiceDialog> {
     }
 
     return AlertDialog(
-      backgroundColor: const Color.fromARGB(255, 86, 89, 92),
+      backgroundColor: const Color.fromARGB(255, 100, 82, 97),
       // title: const Text('은행 선택'),
       content: SizedBox(
         width: double.maxFinite, // 최대 너비 설정
@@ -54,7 +54,7 @@ class _BankChoiceDialogState extends State<BankChoiceDialog> {
                 }
               },
               child: Card(
-                color: const Color.fromARGB(255, 115, 112, 112),
+                color: const Color.fromARGB(255, 160, 120, 152),
                 child: Padding(
                   padding: const EdgeInsets.all(8.0),
                   child: Column(
