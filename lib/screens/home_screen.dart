@@ -67,14 +67,7 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
                           minHeight: 14,
                         ),
                         child: notifications.isNotEmpty
-                            ? Text(
-                                '${notifications.length}',
-                                style: const TextStyle(
-                                  color: Colors.white,
-                                  fontSize: 14,
-                                ),
-                                textAlign: TextAlign.center,
-                              )
+                            ? Container()
                             : Container(),
                       ),
                     ),
