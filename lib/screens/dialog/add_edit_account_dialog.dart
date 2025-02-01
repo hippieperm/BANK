@@ -154,9 +154,7 @@ class _AddEditAccountDialogState extends State<AddEditAccountDialog>
                         ),
                       ),
                     ),
-                    const SizedBox(
-                      height: 15,
-                    ),
+                    const SizedBox(height: 20),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
@@ -175,10 +173,15 @@ class _AddEditAccountDialogState extends State<AddEditAccountDialog>
                               firstDate: DateTime(2010),
                               lastDate: DateTime(2101),
                               builder: (BuildContext context, Widget? child) {
-                                return AnimatedScale(
-                                  scale: 0.95,
-                                  duration: const Duration(milliseconds: 1800),
-                                  child: child!,
+                                return BackdropFilter(
+                                  filter: ImageFilter.blur(
+                                      sigmaX: 5.0, sigmaY: 5.0),
+                                  child: AnimatedScale(
+                                    scale: 0.95,
+                                    duration:
+                                        const Duration(milliseconds: 1800),
+                                    child: child!,
+                                  ),
                                 );
                               },
                             );
@@ -218,10 +221,15 @@ class _AddEditAccountDialogState extends State<AddEditAccountDialog>
                               firstDate: DateTime(2000),
                               lastDate: DateTime(2101),
                               builder: (BuildContext context, Widget? child) {
-                                return AnimatedScale(
-                                  scale: 0.95,
-                                  duration: const Duration(milliseconds: 1800),
-                                  child: child!,
+                                return BackdropFilter(
+                                  filter: ImageFilter.blur(
+                                      sigmaX: 5.0, sigmaY: 5.0),
+                                  child: AnimatedScale(
+                                    scale: 0.95,
+                                    duration:
+                                        const Duration(milliseconds: 1800),
+                                    child: child!,
+                                  ),
                                 );
                               },
                             );
@@ -241,6 +249,7 @@ class _AddEditAccountDialogState extends State<AddEditAccountDialog>
                         ),
                       ],
                     ),
+                    const SizedBox(height: 20),
                     SizedBox(
                       width: 180,
                       child: TextField(
@@ -285,6 +294,7 @@ class _AddEditAccountDialogState extends State<AddEditAccountDialog>
                         },
                       ),
                     ),
+                    const SizedBox(height: 16),
                     SizedBox(
                       width: 100,
                       child: TextField(
@@ -309,7 +319,7 @@ class _AddEditAccountDialogState extends State<AddEditAccountDialog>
                         keyboardType: TextInputType.number,
                       ),
                     ),
-                    const SizedBox(height: 15),
+                    const SizedBox(height: 20),
                     Container(
                       width: 195,
                       decoration: BoxDecoration(
@@ -344,6 +354,7 @@ class _AddEditAccountDialogState extends State<AddEditAccountDialog>
                         ),
                       ),
                     ),
+                    const SizedBox(height: 8),
                     Slider(
                       value: isTaxExempt ? taxRate : 0,
                       min: 0,
