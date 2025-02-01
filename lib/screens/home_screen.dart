@@ -22,18 +22,18 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.white.withOpacity(0.8),
+      backgroundColor: const Color(0xff1b1b1b),
       appBar: PreferredSize(
         preferredSize: const Size.fromHeight(50.0), // AppBar의 높이 설정
         child: AppBar(
-          backgroundColor: Colors.white.withOpacity(0.1),
+          backgroundColor: const Color(0xff2d2d2d),
           elevation: 1,
-          title: Text(
+          title: const Text(
             '정기예금 관리',
             style: TextStyle(
               fontWeight: FontWeight.bold,
               fontSize: 24,
-              color: Colors.black.withOpacity(0.9),
+              color: Colors.white,
             ),
           ),
           actions: [
@@ -83,25 +83,17 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
                 },
               ),
             ),
-            // IconButton(
-            //   icon: Icon(isDarkMode ? Icons.wb_sunny : Icons.nights_stay),
-            //   onPressed: () {
-            //     setState(() {
-            //       isDarkMode = !isDarkMode;
-            //     });
-            //   },
-            // ),
           ],
         ),
       ),
       body: Padding(
-        padding: const EdgeInsets.all(18.0),
+        padding: const EdgeInsets.symmetric(horizontal: 18, vertical: 10),
         child: Column(
           children: [
             Container(
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(24),
-                color: const Color.fromARGB(255, 59, 57, 57),
+                color: const Color(0xff2d2d2d),
               ),
               child: Padding(
                 padding:
@@ -112,15 +104,16 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
                   lastDate: DateTime.now().add(const Duration(days: 365)),
                   onDateSelected: (date) => print(date),
                   leftMargin: 20,
-                  monthColor: const Color.fromARGB(255, 198, 214, 222),
-                  dayColor: const Color.fromARGB(255, 177, 194, 194),
+                  monthColor: Colors.grey[400],
+                  dayColor: Colors.grey[500],
                   activeDayColor: Colors.white,
-                  activeBackgroundDayColor: Colors.teal[600],
+                  activeBackgroundDayColor: Colors.teal[800],
                   selectableDayPredicate: (date) => date.day != 23,
                   height: 75,
                 ),
               ),
             ),
+            const SizedBox(height: 4),
             Expanded(
               child: ListView.builder(
                 itemCount: accounts.length, // 실제 계좌 수로 변경
@@ -144,10 +137,11 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
                   }
 
                   return Card(
-                    color: const Color(0xff333333),
+                    color: const Color(0xff2d2d2d),
                     // margin: const EdgeInsets.all(10),
                     child: Padding(
-                      padding: const EdgeInsets.all(16.0),
+                      padding: const EdgeInsets.symmetric(
+                          horizontal: 20, vertical: 10),
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
@@ -201,8 +195,7 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
                                 height: 100, // 버튼의 높이
                                 child: TextButton(
                                   style: TextButton.styleFrom(
-                                    backgroundColor:
-                                        Colors.purple.withOpacity(0.2),
+                                    backgroundColor: const Color(0xff3d3d3d),
                                     shape: RoundedRectangleBorder(
                                       borderRadius:
                                           BorderRadius.circular(15), // 라운딩
@@ -275,7 +268,8 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
         ),
       ),
       bottomNavigationBar: BottomNavigationBar(
-        backgroundColor: Colors.white.withOpacity(0.4),
+        backgroundColor: const Color.fromARGB(255, 29, 27, 27).withOpacity(0.1),
+        unselectedItemColor: Colors.white,
         elevation: 1,
         items: const [
           BottomNavigationBarItem(icon: Icon(Icons.home), label: '홈'),
