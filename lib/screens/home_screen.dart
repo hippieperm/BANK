@@ -268,7 +268,7 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
         ),
       ),
       bottomNavigationBar: BottomNavigationBar(
-        backgroundColor: const Color.fromARGB(255, 29, 27, 27).withOpacity(0.1),
+        backgroundColor: Colors.transparent,
         unselectedItemColor: Colors.white,
         elevation: 1,
         items: const [

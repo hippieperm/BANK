@@ -164,8 +164,8 @@ class _AddEditAccountDialogState extends State<AddEditAccountDialog>
                           style: TextButton.styleFrom(
                             side: const BorderSide(
                               color: Colors.grey,
-                              width: 3,
-                            ), // 보더라인 추가
+                              width: 1,
+                            ),
                           ),
                           onPressed: () async {
                             // 날짜 선택 기능
@@ -207,8 +207,8 @@ class _AddEditAccountDialogState extends State<AddEditAccountDialog>
                           style: TextButton.styleFrom(
                             side: const BorderSide(
                               color: Colors.grey,
-                              width: 3,
-                            ), // 보더라인 추가
+                              width: 1,
+                            ),
                           ),
                           onPressed: () async {
                             // 날짜 선택 기능
@@ -242,26 +242,25 @@ class _AddEditAccountDialogState extends State<AddEditAccountDialog>
                       ],
                     ),
                     SizedBox(
-                      width: 75,
-                      child: TextField(
-                        controller: interestRateController,
-                        decoration: const InputDecoration(
-                          labelText: '이자율(%)',
-                          suffixText: '%',
-                        ),
-                        keyboardType: TextInputType.number,
-                      ),
-                    ),
-                    const SizedBox(
-                      height: 20,
-                    ),
-                    SizedBox(
-                      width: 200,
+                      width: 180,
                       child: TextField(
                         controller: principalController,
-                        decoration: const InputDecoration(
+                        decoration: InputDecoration(
                           labelText: '원금',
                           suffixText: '원',
+                          border: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(15.0),
+                          ),
+                          enabledBorder: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(15.0),
+                            borderSide: BorderSide(
+                              color: Colors.black.withOpacity(0.4),
+                            ),
+                          ),
+                          focusedBorder: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(15.0),
+                            borderSide: const BorderSide(color: Colors.purple),
+                          ),
                         ),
                         keyboardType: TextInputType.number,
                         onChanged: (value) {
@@ -286,13 +285,38 @@ class _AddEditAccountDialogState extends State<AddEditAccountDialog>
                         },
                       ),
                     ),
+                    SizedBox(
+                      width: 100,
+                      child: TextField(
+                        controller: interestRateController,
+                        decoration: InputDecoration(
+                          labelText: '이자율(%)',
+                          suffixText: '%',
+                          border: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(15.0),
+                          ),
+                          enabledBorder: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(15.0),
+                            borderSide: BorderSide(
+                              color: Colors.black.withOpacity(0.4),
+                            ),
+                          ),
+                          focusedBorder: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(15.0),
+                            borderSide: const BorderSide(color: Colors.purple),
+                          ),
+                        ),
+                        keyboardType: TextInputType.number,
+                      ),
+                    ),
                     const SizedBox(height: 15),
                     Container(
                       width: 195,
                       decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(14),
                           border: Border.all(
-                            color: Colors.black,
+                            color: Colors.grey,
+                            width: 1,
                           )),
                       child: Padding(
                         padding: const EdgeInsets.symmetric(horizontal: 8),
