@@ -18,6 +18,12 @@ class HomeScreen extends StatefulWidget {
 class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
   bool isDarkMode = true;
   List<Map<String, dynamic>> accounts = []; // 계좌 목록을 저장할 리스트 추가
+  final List<String> notifications = [
+    // 알림 목록 추가
+    '알림 1: 계좌 잔액이 부족합니다.',
+    '알림 2: 이자 지급일이 다가옵니다.',
+    '알림 3: 계좌 정보가 업데이트되었습니다.',
+  ];
 
   @override
   Widget build(BuildContext context) {
@@ -38,10 +44,42 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
           ),
           actions: [
             Padding(
-              // 우측 아이콘 버튼에 패딩 추가
-              padding: const EdgeInsets.only(right: 16.0), // 우측 패딩
+              padding: const EdgeInsets.only(right: 16.0),
               child: IconButton(
-                icon: const Icon(Icons.notifications),
+                icon: Stack(
+                  children: [
+                    const Icon(
+                      Icons.notifications,
+                      color: Colors.white,
+                      size: 34,
+                    ),
+                    Positioned(
+                      right: 0,
+                      top: 0,
+                      child: Container(
+                        padding: const EdgeInsets.all(1),
+                        decoration: BoxDecoration(
+                          color: Colors.red,
+                          borderRadius: BorderRadius.circular(6),
+                        ),
+                        constraints: const BoxConstraints(
+                          minWidth: 14,
+                          minHeight: 14,
+                        ),
+                        child: notifications.isNotEmpty
+                            ? Text(
+                                '${notifications.length}',
+                                style: const TextStyle(
+                                  color: Colors.white,
+                                  fontSize: 14,
+                                ),
+                                textAlign: TextAlign.center,
+                              )
+                            : Container(),
+                      ),
+                    ),
+                  ],
+                ),
                 onPressed: () {
                   // 알림 설정 기능
                   showDialog(
@@ -52,28 +90,25 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
                         Navigator.of(context).pop(); // 다이얼로그 닫기
                       },
                       child: Dialog(
-                        backgroundColor: Colors.transparent, // 배경을 투명하게 설정
+                        backgroundColor: Colors.transparent,
                         child: Stack(
                           children: [
-                            // 배경 블러 처리
                             BackdropFilter(
-                              filter: ImageFilter.blur(
-                                  sigmaX: 10.0, sigmaY: 10.0), // 블러 강도 조절
+                              filter:
+                                  ImageFilter.blur(sigmaX: 10.0, sigmaY: 10.0),
                               child: Container(
-                                color: Colors.black.withOpacity(0), // 투명한 배경
+                                color: Colors.black.withOpacity(0),
                               ),
                             ),
                             GestureDetector(
-                              onTap: () {
-                                // 다이얼로그 내부 터치 시 아무 동작도 하지 않음
-                              },
+                              onTap: () {},
                               child: const AccountDetailDialog(
                                   bankName: '알림 설정',
                                   notifications: [
                                     '알림 1: 계좌 잔액이 부족합니다.',
                                     '알림 2: 이자 지급일이 다가옵니다.',
                                     '알림 3: 계좌 정보가 업데이트되었습니다.',
-                                  ]), // 다이얼로그 내용 변경
+                                  ]),
                             ),
                           ],
                         ),
