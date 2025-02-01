@@ -29,90 +29,86 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: const Color(0xff1b1b1b),
-      appBar: PreferredSize(
-        preferredSize: const Size.fromHeight(50.0), // AppBar의 높이 설정
-        child: AppBar(
-          backgroundColor: const Color(0xff2d2d2d),
-          elevation: 1,
-          title: const Text(
-            '정기예금 관리',
-            style: TextStyle(
-              fontWeight: FontWeight.bold,
-              fontSize: 24,
-              color: Colors.white,
+      appBar: AppBar(
+        backgroundColor: const Color(0xff2d2d2d),
+        elevation: 0.1,
+        title: Text(
+          '정기예금 관리',
+          style: TextStyle(
+            fontWeight: FontWeight.bold,
+            fontSize: 22,
+            color: Colors.white.withOpacity(0.9),
+          ),
+        ),
+        actions: [
+          Padding(
+            padding: const EdgeInsets.only(right: 16.0),
+            child: IconButton(
+              icon: Stack(
+                children: [
+                  const Icon(
+                    Icons.notifications,
+                    color: Colors.white,
+                    size: 34,
+                  ),
+                  Positioned(
+                    right: 0,
+                    top: 0,
+                    child: Container(
+                      padding: const EdgeInsets.all(1),
+                      decoration: BoxDecoration(
+                        color: Colors.red,
+                        borderRadius: BorderRadius.circular(6),
+                      ),
+                      constraints: const BoxConstraints(
+                        minWidth: 14,
+                        minHeight: 14,
+                      ),
+                      child:
+                          notifications.isNotEmpty ? Container() : Container(),
+                    ),
+                  ),
+                ],
+              ),
+              onPressed: () {
+                // 알림 설정 기능
+                showDialog(
+                  context: context,
+                  barrierDismissible: true,
+                  builder: (context) => GestureDetector(
+                    onTap: () {
+                      Navigator.of(context).pop(); // 다이얼로그 닫기
+                    },
+                    child: Dialog(
+                      backgroundColor: Colors.transparent,
+                      child: Stack(
+                        children: [
+                          BackdropFilter(
+                            filter:
+                                ImageFilter.blur(sigmaX: 10.0, sigmaY: 10.0),
+                            child: Container(
+                              color: Colors.black.withOpacity(0),
+                            ),
+                          ),
+                          GestureDetector(
+                            onTap: () {},
+                            child: const AccountDetailDialog(
+                                bankName: '알림 설정',
+                                notifications: [
+                                  '알림 1: 계좌 잔액이 부족합니다.',
+                                  '알림 2: 이자 지급일이 다가옵니다.',
+                                  '알림 3: 계좌 정보가 업데이트되었습니다.',
+                                ]),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+                );
+              },
             ),
           ),
-          actions: [
-            Padding(
-              padding: const EdgeInsets.only(right: 16.0),
-              child: IconButton(
-                icon: Stack(
-                  children: [
-                    const Icon(
-                      Icons.notifications,
-                      color: Colors.white,
-                      size: 34,
-                    ),
-                    Positioned(
-                      right: 0,
-                      top: 0,
-                      child: Container(
-                        padding: const EdgeInsets.all(1),
-                        decoration: BoxDecoration(
-                          color: Colors.red,
-                          borderRadius: BorderRadius.circular(6),
-                        ),
-                        constraints: const BoxConstraints(
-                          minWidth: 14,
-                          minHeight: 14,
-                        ),
-                        child: notifications.isNotEmpty
-                            ? Container()
-                            : Container(),
-                      ),
-                    ),
-                  ],
-                ),
-                onPressed: () {
-                  // 알림 설정 기능
-                  showDialog(
-                    context: context,
-                    barrierDismissible: true,
-                    builder: (context) => GestureDetector(
-                      onTap: () {
-                        Navigator.of(context).pop(); // 다이얼로그 닫기
-                      },
-                      child: Dialog(
-                        backgroundColor: Colors.transparent,
-                        child: Stack(
-                          children: [
-                            BackdropFilter(
-                              filter:
-                                  ImageFilter.blur(sigmaX: 10.0, sigmaY: 10.0),
-                              child: Container(
-                                color: Colors.black.withOpacity(0),
-                              ),
-                            ),
-                            GestureDetector(
-                              onTap: () {},
-                              child: const AccountDetailDialog(
-                                  bankName: '알림 설정',
-                                  notifications: [
-                                    '알림 1: 계좌 잔액이 부족합니다.',
-                                    '알림 2: 이자 지급일이 다가옵니다.',
-                                    '알림 3: 계좌 정보가 업데이트되었습니다.',
-                                  ]),
-                            ),
-                          ],
-                        ),
-                      ),
-                    ),
-                  );
-                },
-              ),
-            ),
-          ],
-        ),
+        ],
       ),
       body: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 18, vertical: 10),
