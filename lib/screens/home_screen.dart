@@ -189,14 +189,14 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
                                       color: Colors.white70,
                                     ),
                                   ),
-                                  Text(
-                                    '남은 만기일: $remainingDays일 남음',
-                                    style: const TextStyle(
-                                      fontSize: 16,
-                                      fontWeight: FontWeight.bold,
-                                      color: Colors.white,
-                                    ),
-                                  ),
+                                  // Text(
+                                  //   '남은 만기일: $remainingDays일 남음',
+                                  //   style: const TextStyle(
+                                  //     fontSize: 16,
+                                  //     fontWeight: FontWeight.bold,
+                                  //     color: Colors.white,
+                                  //   ),
+                                  // ),
                                   Text(
                                     '원금: ₩ ${formatNumber(principal)}',
                                     style: const TextStyle(
@@ -259,17 +259,17 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
                                       ),
                                     );
                                   },
-                                  child: const Column(
+                                  child: Column(
                                     mainAxisAlignment:
                                         MainAxisAlignment.spaceEvenly,
                                     children: [
-                                      Icon(
-                                        Icons.account_balance,
+                                      const Icon(
+                                        Icons.date_range_rounded,
                                         color: Colors.white,
                                       ),
                                       Text(
-                                        '상세 보기',
-                                        style: TextStyle(
+                                        '$remainingDays',
+                                        style: const TextStyle(
                                           fontWeight: FontWeight.bold,
                                           fontSize: 17,
                                           color: Colors.white,
