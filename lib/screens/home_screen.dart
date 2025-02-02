@@ -260,19 +260,30 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
                                     );
                                   },
                                   child: Column(
-                                    mainAxisAlignment:
-                                        MainAxisAlignment.spaceEvenly,
+                                    mainAxisAlignment: MainAxisAlignment.center,
                                     children: [
-                                      const Icon(
-                                        Icons.date_range_rounded,
-                                        color: Colors.white,
+                                      // const Icon(
+                                      //   Icons.date_range_rounded,
+                                      //   color: Colors.white,
+                                      // ),
+                                      Text(
+                                        'DAY',
+                                        style: TextStyle(
+                                          fontWeight: FontWeight.bold,
+                                          fontSize: 12,
+                                          color: remainingDays <= 15
+                                              ? Colors.red
+                                              : Colors.white,
+                                        ),
                                       ),
                                       Text(
                                         '$remainingDays',
-                                        style: const TextStyle(
+                                        style: TextStyle(
                                           fontWeight: FontWeight.bold,
-                                          fontSize: 17,
-                                          color: Colors.white,
+                                          fontSize: 24,
+                                          color: remainingDays <= 15
+                                              ? Colors.red
+                                              : Colors.white,
                                         ),
                                       ),
                                     ],
