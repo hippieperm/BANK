@@ -118,9 +118,11 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
             onSelected: sortAccounts,
             itemBuilder: (BuildContext context) => [
               '은행별',
-              '남은기간별',
+              '만기일자',
               '원금순',
               '월이자수입순',
+              '월 금리순',
+              '시작일자',
             ].map((String choice) {
               return PopupMenuItem<String>(
                 value: choice,

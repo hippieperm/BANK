@@ -35,7 +35,7 @@ class AccountService {
         case '은행별':
           comparison = a['bankName'].compareTo(b['bankName']);
           break;
-        case '남은기간별':
+        case '만기일자':
           DateTime endDateA = DateTime.parse(a['endDate']);
           DateTime endDateB = DateTime.parse(b['endDate']);
           comparison = endDateA.compareTo(endDateB);
@@ -49,6 +49,14 @@ class AccountService {
           double monthlyInterestB =
               b['principal'] * (b['interestRate'] / 100) / 12;
           comparison = monthlyInterestA.compareTo(monthlyInterestB);
+          break;
+        case '월 금리순':
+          comparison = (a['interestRate']).compareTo(b['interestRate']);
+          break;
+        case '시작일자':
+          DateTime startDateA = DateTime.parse(a['startDate']);
+          DateTime startDateB = DateTime.parse(b['startDate']);
+          comparison = startDateA.compareTo(startDateB);
           break;
         default:
           comparison = 0; // 기본값
