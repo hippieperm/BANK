@@ -99,6 +99,7 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
                       style: const TextStyle(
                         color: Colors.white,
                         fontWeight: FontWeight.bold,
+                        fontSize: 16,
                       ),
                     ),
                     if (currentSortType == choice)
