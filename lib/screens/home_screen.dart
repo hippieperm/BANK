@@ -1,13 +1,17 @@
 import 'dart:ui';
+import 'dart:math';
 
 import 'package:bank/screens/dialog/account_detail_dialog.dart';
 import 'package:bank/screens/dialog/add_edit_account_dialog.dart';
 
 import 'package:bank/screens/settings_screen.dart';
-import 'package:calendar_timeline/calendar_timeline.dart';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:fl_chart/fl_chart.dart';
+import 'package:bank/services/account_service.dart';
+
+import 'package:bank/services/storage_service.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -28,39 +32,52 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
     '알림 3: 계좌 정보가 업데이트되었습니다.',
   ];
 
+  @override
+  void initState() {
+    super.initState();
+    _loadData();
+  }
+
+  Future<void> _loadData() async {
+    final loadedAccounts = await StorageService.loadAccounts();
+    setState(() {
+      accounts = loadedAccounts;
+    });
+  }
+
+  // 계좌 추가 시 저장
+  void _addAccount(Map<String, dynamic> account) {
+    setState(() {
+      accounts.add(account);
+      StorageService.saveAccounts(accounts);
+    });
+  }
+
+  // 계좌 삭제 시 저장
+  void _deleteAccount(int index) {
+    setState(() {
+      accounts.removeAt(index);
+      StorageService.saveAccounts(accounts);
+    });
+  }
+
+  // 계좌 수정 시 저장
+  void _updateAccount(int index, Map<String, dynamic> updatedAccount) {
+    setState(() {
+      accounts[index] = updatedAccount;
+      StorageService.saveAccounts(accounts);
+    });
+  }
+
   void sortAccounts(String sortType) {
     setState(() {
       if (currentSortType == sortType) {
-        // 같은 정렬 기준 선택 시 오름차순/내림차순 전환
         isAscending = !isAscending;
       } else {
-        // 새로운 정렬 기준 선택 시
         currentSortType = sortType;
         isAscending = true;
       }
-
-      accounts.sort((a, b) {
-        int comparison = 0;
-        switch (sortType) {
-          case '은행별':
-            comparison = a['bankName'].compareTo(b['bankName']);
-            break;
-          case '남은기간별':
-            final aEndDate = DateTime.parse(a['endDate']);
-            final bEndDate = DateTime.parse(b['endDate']);
-            comparison = aEndDate.compareTo(bEndDate);
-            break;
-          case '원금순':
-            comparison = a['principal'].compareTo(b['principal']);
-            break;
-          case '월이자수입순':
-            final aInterest = a['principal'] * (a['interestRate'] / 100) / 12;
-            final bInterest = b['principal'] * (b['interestRate'] / 100) / 12;
-            comparison = aInterest.compareTo(bInterest);
-            break;
-        }
-        return isAscending ? comparison : -comparison;
-      });
+      AccountService.sortAccounts(accounts, sortType, isAscending);
     });
   }
 
@@ -137,46 +154,154 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
                         minWidth: 14,
                         minHeight: 14,
                       ),
-                      child:
-                          notifications.isNotEmpty ? Container() : Container(),
+                      child: Text(
+                        notifications.length.toString(),
+                        style: const TextStyle(
+                          color: Colors.white,
+                          fontSize: 10,
+                          fontWeight: FontWeight.bold,
+                        ),
+                        textAlign: TextAlign.center,
+                      ),
                     ),
                   ),
                 ],
               ),
               onPressed: () {
                 // 알림 설정 기능
-                showDialog(
+                showGeneralDialog(
                   context: context,
                   barrierDismissible: true,
-                  builder: (context) => GestureDetector(
-                    onTap: () {
-                      Navigator.of(context).pop(); // 다이얼로그 닫기
-                    },
-                    child: Dialog(
-                      backgroundColor: Colors.transparent,
-                      child: Stack(
-                        children: [
-                          BackdropFilter(
-                            filter:
-                                ImageFilter.blur(sigmaX: 10.0, sigmaY: 10.0),
-                            child: Container(
-                              color: Colors.black.withOpacity(0),
-                            ),
-                          ),
-                          GestureDetector(
-                            onTap: () {},
-                            child: const AccountDetailDialog(
-                                bankName: '알림 설정',
-                                notifications: [
-                                  '알림 1: 계좌 잔액이 부족합니다.',
-                                  '알림 2: 이자 지급일이 다가옵니다.',
-                                  '알림 3: 계좌 정보가 업데이트되었습니다.',
-                                ]),
-                          ),
-                        ],
-                      ),
+                  barrierLabel: '',
+                  barrierColor: Colors.black.withOpacity(0.5),
+                  pageBuilder: (context, animation, secondaryAnimation) =>
+                      AlertDialog(
+                    backgroundColor: const Color(0xff2d2d2d),
+                    title: const Text(
+                      '알림',
+                      style: TextStyle(color: Colors.white),
+                    ),
+                    content: Column(
+                      mainAxisSize: MainAxisSize.min,
+                      children: notifications
+                          .map((notification) => ListTile(
+                                title: Text(
+                                  notification,
+                                  style: const TextStyle(color: Colors.white),
+                                ),
+                              ))
+                          .toList(),
                     ),
                   ),
+                  transitionBuilder:
+                      (context, animation, secondaryAnimation, child) {
+                    var curve = Curves.easeInOut;
+                    var curvedAnimation = CurvedAnimation(
+                      parent: animation,
+                      curve: curve,
+                    );
+
+                    return GestureDetector(
+                      onTap: () => Navigator.of(context).pop(),
+                      child: BackdropFilter(
+                        filter: ImageFilter.blur(sigmaX: 5, sigmaY: 5),
+                        child: GestureDetector(
+                          onTap: () {},
+                          child: ScaleTransition(
+                            scale: Tween<double>(begin: 0.8, end: 1.0)
+                                .animate(curvedAnimation),
+                            child: FadeTransition(
+                              opacity: Tween<double>(begin: 0.0, end: 1.0)
+                                  .animate(curvedAnimation),
+                              child: Dialog(
+                                backgroundColor: const Color(0xff2d2d2d),
+                                child: Padding(
+                                  padding: const EdgeInsets.all(16.0),
+                                  child: Column(
+                                    mainAxisSize: MainAxisSize.min,
+                                    children: [
+                                      const Text(
+                                        '월별 이자 추이',
+                                        style: TextStyle(
+                                          color: Colors.white,
+                                          fontSize: 20,
+                                          fontWeight: FontWeight.bold,
+                                        ),
+                                      ),
+                                      const SizedBox(height: 20),
+                                      SizedBox(
+                                        height: 300,
+                                        child: LineChart(
+                                          LineChartData(
+                                            gridData:
+                                                const FlGridData(show: false),
+                                            titlesData: FlTitlesData(
+                                              leftTitles: const AxisTitles(
+                                                sideTitles: SideTitles(
+                                                    showTitles: false),
+                                              ),
+                                              rightTitles: const AxisTitles(
+                                                sideTitles: SideTitles(
+                                                    showTitles: false),
+                                              ),
+                                              topTitles: const AxisTitles(
+                                                sideTitles: SideTitles(
+                                                    showTitles: false),
+                                              ),
+                                              bottomTitles: AxisTitles(
+                                                sideTitles: SideTitles(
+                                                  showTitles: true,
+                                                  getTitlesWidget:
+                                                      (value, meta) {
+                                                    return Text(
+                                                      '${value.toInt()}월',
+                                                      style: const TextStyle(
+                                                        color: Colors.white70,
+                                                        fontSize: 12,
+                                                      ),
+                                                    );
+                                                  },
+                                                ),
+                                              ),
+                                            ),
+                                            borderData:
+                                                FlBorderData(show: false),
+                                            lineBarsData: [
+                                              LineChartBarData(
+                                                spots:
+                                                    List.generate(6, (index) {
+                                                  return FlSpot(
+                                                      index.toDouble(),
+                                                      calculateTotalMonthlyInterest() *
+                                                          (1 + index * 0.1));
+                                                }),
+                                                isCurved: true,
+                                                color: Colors.blue,
+                                                barWidth: 3,
+                                                isStrokeCapRound: true,
+                                                dotData: const FlDotData(
+                                                    show: false),
+                                                belowBarData: BarAreaData(
+                                                  show: true,
+                                                  color: Colors.blue
+                                                      .withOpacity(0.2),
+                                                ),
+                                              ),
+                                            ],
+                                          ),
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                              ),
+                            ),
+                          ),
+                        ),
+                      ),
+                    );
+                  },
+                  transitionDuration: const Duration(milliseconds: 300),
                 );
               },
             ),
@@ -381,7 +506,7 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
                   // 만기일 계산
                   final endDate = DateTime.parse(account['endDate']);
                   final remainingDays =
-                      endDate.difference(DateTime.now()).inDays;
+                      max(0, endDate.difference(DateTime.now()).inDays);
 
                   // 월 이자 계산 수정
                   final principal = account['principal'];
@@ -476,9 +601,10 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
                                               ),
                                               GestureDetector(
                                                 onTap: () {}, // 내부 클릭 시 이벤트 중단
-                                                child:
-                                                    const AccountDetailDialog(
-                                                        bankName: '은행명'),
+                                                child: AccountDetailDialog(
+                                                    account: account,
+                                                    bankName:
+                                                        account['bankName']),
                                               ),
                                             ],
                                           ),
@@ -545,9 +671,7 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
               builder: (context) => const AddEditAccountDialog(),
             ).then((result) {
               if (result != null) {
-                setState(() {
-                  accounts.add(result);
-                });
+                _addAccount(result);
               }
             });
           } else if (index == 2) {
@@ -563,25 +687,11 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
   }
 
   double calculateTotalMonthlyInterest() {
-    double total = 0;
-    for (var account in accounts) {
-      double principal = account['principal'];
-      double interestRate = account['interestRate'];
-      total += principal * (interestRate / 100) / 12;
-    }
-    return total;
+    return AccountService.calculateTotalMonthlyInterest(accounts);
   }
 
   double calculateTotalReceivedInterest() {
-    double total = 0;
-    for (var account in accounts) {
-      double principal = account['principal'];
-      double interestRate = account['interestRate'];
-      DateTime startDate = DateTime.parse(account['startDate']);
-      int monthsPassed = DateTime.now().difference(startDate).inDays ~/ 30;
-      total += (principal * (interestRate / 100) / 12) * monthsPassed;
-    }
-    return total;
+    return AccountService.calculateTotalReceivedInterest(accounts);
   }
 
   String formatNumber(double number) {

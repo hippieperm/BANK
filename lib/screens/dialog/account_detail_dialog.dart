@@ -6,11 +6,13 @@ import 'package:awesome_dialog/awesome_dialog.dart';
 import 'add_edit_account_dialog.dart';
 
 class AccountDetailDialog extends StatefulWidget {
+  final Map<String, dynamic> account;
   final String bankName;
   final List<String>? notifications;
 
   const AccountDetailDialog({
     super.key,
+    required this.account,
     required this.bankName,
     this.notifications,
   });

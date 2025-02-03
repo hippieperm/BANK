@@ -1,7 +1,11 @@
 import 'package:bank/screens/home_screen.dart';
 import 'package:flutter/material.dart';
+import 'package:bank/services/storage_service.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
-void main() {
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await StorageService.init();
   runApp(const MyApp());
 }
 

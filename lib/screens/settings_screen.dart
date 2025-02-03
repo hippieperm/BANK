@@ -1,7 +1,40 @@
 import 'package:flutter/material.dart';
+import 'package:bank/services/storage_service.dart';
 
-class SettingsScreen extends StatelessWidget {
+class SettingsScreen extends StatefulWidget {
   const SettingsScreen({super.key});
+
+  @override
+  _SettingsScreenState createState() => _SettingsScreenState();
+}
+
+class _SettingsScreenState extends State<SettingsScreen> {
+  String notificationPeriod = '14일';
+  double taxRate = 15.4;
+  bool isDarkMode = false;
+
+  @override
+  void initState() {
+    super.initState();
+    _loadSettings();
+  }
+
+  Future<void> _loadSettings() async {
+    final settings = await StorageService.loadSettings();
+    setState(() {
+      notificationPeriod = settings['notificationPeriod'];
+      taxRate = settings['taxRate'];
+      isDarkMode = settings['isDarkMode'];
+    });
+  }
+
+  Future<void> _saveSettings() async {
+    await StorageService.saveSettings({
+      'notificationPeriod': notificationPeriod,
+      'taxRate': taxRate,
+      'isDarkMode': isDarkMode,
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
