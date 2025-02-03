@@ -40,6 +40,12 @@ class _AccountDetailDialogState extends State<AccountDetailDialog>
     super.dispose();
   }
 
+  // 천 단위 구분 쉼표를 위한 포맷 함수
+  String formatNumber(double number) {
+    return number.toStringAsFixed(0).replaceAllMapped(
+        RegExp(r'(\d{1,3})(?=(\d{3})+(?!\d))'), (Match m) => '${m[1]},');
+  }
+
   @override
   Widget build(BuildContext context) {
     return Dialog(
@@ -102,47 +108,47 @@ class _AccountDetailDialogState extends State<AccountDetailDialog>
                                     ),
                                   ))
                               .toList()
-                          : const [
+                          : [
                               Text(
-                                '시작일: YYYY-MM-DD',
-                                style: TextStyle(
+                                '시작일: ${widget.account['startDate']}',
+                                style: const TextStyle(
                                   fontSize: 18,
                                   fontWeight: FontWeight.bold,
                                 ),
                               ),
                               Text(
-                                '종료일: YYYY-MM-DD',
-                                style: TextStyle(
+                                '종료일: ${widget.account['endDate']}',
+                                style: const TextStyle(
                                   fontSize: 18,
                                   fontWeight: FontWeight.bold,
                                 ),
                               ),
-                              SizedBox(height: 4),
+                              const SizedBox(height: 4),
                               Text(
-                                '이자율: X.X%',
-                                style: TextStyle(
+                                '이자율: ${widget.account['interestRate']}%',
+                                style: const TextStyle(
                                   fontSize: 14,
                                   fontWeight: FontWeight.bold,
                                 ),
                               ),
                               Text(
-                                '비과세 여부: 비과세 적용',
-                                style: TextStyle(
+                                '비과세 여부: ${widget.account['isTaxExempt'] ? '비과세' : '과세'} 적용',
+                                style: const TextStyle(
                                   fontSize: 14,
                                   fontWeight: FontWeight.bold,
                                 ),
                               ),
-                              SizedBox(height: 4),
+                              const SizedBox(height: 4),
                               Text(
-                                '월 수익: ₩ XXX,XXX',
-                                style: TextStyle(
+                                '월 수익: ₩ ${formatNumber(widget.account['principal'] * (widget.account['interestRate'] / 100) / 12)}',
+                                style: const TextStyle(
                                   fontSize: 18,
                                   fontWeight: FontWeight.bold,
                                 ),
                               ),
                               Text(
-                                '남은 기간: 30일 남음',
-                                style: TextStyle(
+                                '남은 기간: ${DateTime.parse(widget.account['endDate']).difference(DateTime.now()).inDays}일 남음',
+                                style: const TextStyle(
                                   fontSize: 18,
                                   fontWeight: FontWeight.bold,
                                 ),
