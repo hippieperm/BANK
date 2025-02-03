@@ -500,12 +500,28 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
                                     fit: BoxFit.contain,
                                   ),
                                   const SizedBox(height: 8),
-                                  Text(
-                                    '${account['startDate']} ~ ${account['endDate']}',
-                                    style: const TextStyle(
-                                      fontSize: 14,
-                                      color: Colors.white70,
-                                    ),
+                                  Row(
+                                    children: [
+                                      Text(
+                                        '${account['startDate']} ~ ',
+                                        style: const TextStyle(
+                                          fontSize: 14,
+                                          color: Colors.white70,
+                                        ),
+                                      ),
+                                      Text(
+                                        '${account['endDate']}',
+                                        style: TextStyle(
+                                          fontSize: 14,
+                                          color: remainingDays <= 30
+                                              ? Colors.red
+                                              : Colors.white70,
+                                          fontWeight: remainingDays <= 30
+                                              ? FontWeight.bold
+                                              : FontWeight.normal,
+                                        ),
+                                      ),
+                                    ],
                                   ),
                                   Text(
                                     '원금: ₩ ${formatNumber(principal)}',
