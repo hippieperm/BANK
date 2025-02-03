@@ -12,6 +12,7 @@ import 'package:fl_chart/fl_chart.dart';
 import 'package:bank/services/account_service.dart';
 
 import 'package:bank/services/storage_service.dart';
+import 'package:bank/services/notification_service.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -36,6 +37,8 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
   void initState() {
     super.initState();
     _loadData();
+    notifications.clear(); // 기존 알림 목록 초기화
+    notifications.addAll(NotificationService.getNotifications()); // 알림 목록 가져오기
   }
 
   Future<void> _loadData() async {
@@ -154,11 +157,12 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
                         minWidth: 14,
                         minHeight: 14,
                       ),
-                      child: Text(
-                        notifications.length.toString(),
-                        style: const TextStyle(
+                      child: const Text(
+                        // notifications.length.toString(),
+                        '',
+                        style: TextStyle(
                           color: Colors.white,
-                          fontSize: 10,
+                          fontSize: 0,
                           fontWeight: FontWeight.bold,
                         ),
                         textAlign: TextAlign.center,
@@ -183,14 +187,16 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
                     ),
                     content: Column(
                       mainAxisSize: MainAxisSize.min,
-                      children: notifications
-                          .map((notification) => ListTile(
-                                title: Text(
-                                  notification,
-                                  style: const TextStyle(color: Colors.white),
-                                ),
-                              ))
-                          .toList(),
+                      children:
+                          NotificationService.getNotifications() // 여기서 직접 가져오기
+                              .map((notification) => ListTile(
+                                    title: Text(
+                                      notification,
+                                      style:
+                                          const TextStyle(color: Colors.white),
+                                    ),
+                                  ))
+                              .toList(),
                     ),
                   ),
                   transitionBuilder:
@@ -213,84 +219,22 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
                             child: FadeTransition(
                               opacity: Tween<double>(begin: 0.0, end: 1.0)
                                   .animate(curvedAnimation),
-                              child: Dialog(
-                                backgroundColor: const Color(0xff2d2d2d),
+                              child: const Dialog(
+                                backgroundColor: Color(0xff2d2d2d),
                                 child: Padding(
-                                  padding: const EdgeInsets.all(16.0),
+                                  padding: EdgeInsets.all(16.0),
                                   child: Column(
                                     mainAxisSize: MainAxisSize.min,
                                     children: [
-                                      const Text(
-                                        '월별 이자 추이',
+                                      Text(
+                                        '알림',
                                         style: TextStyle(
                                           color: Colors.white,
                                           fontSize: 20,
                                           fontWeight: FontWeight.bold,
                                         ),
                                       ),
-                                      const SizedBox(height: 20),
-                                      SizedBox(
-                                        height: 300,
-                                        child: LineChart(
-                                          LineChartData(
-                                            gridData:
-                                                const FlGridData(show: false),
-                                            titlesData: FlTitlesData(
-                                              leftTitles: const AxisTitles(
-                                                sideTitles: SideTitles(
-                                                    showTitles: false),
-                                              ),
-                                              rightTitles: const AxisTitles(
-                                                sideTitles: SideTitles(
-                                                    showTitles: false),
-                                              ),
-                                              topTitles: const AxisTitles(
-                                                sideTitles: SideTitles(
-                                                    showTitles: false),
-                                              ),
-                                              bottomTitles: AxisTitles(
-                                                sideTitles: SideTitles(
-                                                  showTitles: true,
-                                                  getTitlesWidget:
-                                                      (value, meta) {
-                                                    return Text(
-                                                      '${value.toInt()}월',
-                                                      style: const TextStyle(
-                                                        color: Colors.white70,
-                                                        fontSize: 12,
-                                                      ),
-                                                    );
-                                                  },
-                                                ),
-                                              ),
-                                            ),
-                                            borderData:
-                                                FlBorderData(show: false),
-                                            lineBarsData: [
-                                              LineChartBarData(
-                                                spots:
-                                                    List.generate(6, (index) {
-                                                  return FlSpot(
-                                                      index.toDouble(),
-                                                      calculateTotalMonthlyInterest() *
-                                                          (1 + index * 0.1));
-                                                }),
-                                                isCurved: true,
-                                                color: Colors.blue,
-                                                barWidth: 3,
-                                                isStrokeCapRound: true,
-                                                dotData: const FlDotData(
-                                                    show: false),
-                                                belowBarData: BarAreaData(
-                                                  show: true,
-                                                  color: Colors.blue
-                                                      .withOpacity(0.2),
-                                                ),
-                                              ),
-                                            ],
-                                          ),
-                                        ),
-                                      ),
+                                      SizedBox(height: 20),
                                     ],
                                   ),
                                 ),

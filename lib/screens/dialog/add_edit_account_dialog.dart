@@ -264,129 +264,123 @@ class _AddEditAccountDialogState extends State<AddEditAccountDialog>
                       ],
                     ),
                     const SizedBox(height: 20),
-                    SizedBox(
-                      width: 180,
-                      child: TextField(
-                        controller: principalController,
-                        decoration: InputDecoration(
-                          labelText: '원금',
-                          suffixText: '원',
-                          border: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(15.0),
-                          ),
-                          enabledBorder: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(15.0),
-                            borderSide: BorderSide(
-                              color: Colors.black.withOpacity(0.4),
+                    Center(
+                      child: SizedBox(
+                        width: 215,
+                        child: TextField(
+                          controller: principalController,
+                          decoration: InputDecoration(
+                            labelText: '원금',
+                            suffixText: '원',
+                            border: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(15.0),
+                            ),
+                            enabledBorder: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(15.0),
+                              borderSide: BorderSide(
+                                color: Colors.black.withOpacity(0.4),
+                              ),
+                            ),
+                            focusedBorder: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(15.0),
+                              borderSide:
+                                  const BorderSide(color: Colors.purple),
                             ),
                           ),
-                          focusedBorder: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(15.0),
-                            borderSide: const BorderSide(color: Colors.purple),
-                          ),
-                        ),
-                        keyboardType: TextInputType.number,
-                        onChanged: (value) {
-                          // 쉼표 제거 후 숫자만 추출
-                          String numericOnly = removeCommas(value);
-                          if (numericOnly.isNotEmpty) {
-                            // 천 단위 쉼표 추가
-                            String formatted = formatNumber(numericOnly);
-                            // 커서 위치 저장
-                            int cursorPosition =
-                                principalController.selection.start;
-                            // 이전 쉼표 개수와 새로운 쉼표 개수의 차이
-                            int commasDiff = formatted.length - value.length;
+                          keyboardType: TextInputType.number,
+                          onChanged: (value) {
+                            // 쉼표 제거 후 숫자만 추출
+                            String numericOnly = removeCommas(value);
+                            if (numericOnly.isNotEmpty) {
+                              // 천 단위 쉼표 추가
+                              String formatted = formatNumber(numericOnly);
+                              // 커서 위치 저장
+                              int cursorPosition =
+                                  principalController.selection.start;
+                              // 이전 쉼표 개수와 새로운 쉼표 개수의 차이
+                              int commasDiff = formatted.length - value.length;
 
-                            principalController.text = formatted;
-                            // 커서 위치 조정
-                            principalController.selection =
-                                TextSelection.fromPosition(
-                              TextPosition(offset: cursorPosition + commasDiff),
-                            );
-                          }
-                        },
+                              principalController.text = formatted;
+                              // 커서 위치 조정
+                              principalController.selection =
+                                  TextSelection.fromPosition(
+                                TextPosition(
+                                    offset: cursorPosition + commasDiff),
+                              );
+                            }
+                          },
+                        ),
                       ),
                     ),
                     const SizedBox(height: 16),
-                    SizedBox(
-                      width: 100,
-                      child: TextField(
-                        controller: interestRateController,
-                        decoration: InputDecoration(
-                          labelText: '이자율(%)',
-                          suffixText: '%',
-                          border: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(15.0),
-                          ),
-                          enabledBorder: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(15.0),
-                            borderSide: BorderSide(
-                              color: Colors.black.withOpacity(0.4),
-                            ),
-                          ),
-                          focusedBorder: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(15.0),
-                            borderSide: const BorderSide(color: Colors.purple),
-                          ),
-                        ),
-                        keyboardType: TextInputType.number,
-                      ),
-                    ),
-                    const SizedBox(height: 20),
-                    Container(
-                      width: 195,
-                      decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(14),
-                          border: Border.all(
-                            color: Colors.grey,
-                            width: 1,
-                          )),
-                      child: Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 8),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                          children: [
-                            Switch(
-                              value: isTaxExempt,
-                              onChanged: (value) {
-                                setState(() {
-                                  isTaxExempt = value;
-                                });
-                              },
-                            ),
-                            const Text('비과세여부 '),
-                            Text(
-                              isTaxExempt
-                                  ? '${taxRate.toStringAsFixed(1)}%'
-                                  : '세율',
-                              style: const TextStyle(
-                                fontWeight: FontWeight.bold,
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceAround,
+                      children: [
+                        SizedBox(
+                          width: 100,
+                          height: 50, // 높이를 동일하게 설정
+                          child: TextField(
+                            controller: interestRateController,
+                            decoration: InputDecoration(
+                              labelText: '이자율(%)',
+                              suffixText: '%',
+                              border: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(15.0),
+                              ),
+                              enabledBorder: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(15.0),
+                                borderSide: BorderSide(
+                                  color: Colors.black.withOpacity(0.4),
+                                ),
+                              ),
+                              focusedBorder: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(15.0),
+                                borderSide:
+                                    const BorderSide(color: Colors.purple),
                               ),
                             ),
-                          ],
+                            keyboardType: TextInputType.number,
+                          ),
                         ),
-                      ),
-                    ),
-                    const SizedBox(height: 8),
-                    Slider(
-                      value: isTaxExempt ? taxRate : 0,
-                      min: 0,
-                      max: 30,
-                      divisions: 300,
-                      label:
-                          isTaxExempt ? '${taxRate.toStringAsFixed(1)}%' : '세율',
-                      onChanged: isTaxExempt
-                          ? (value) {
-                              setState(() {
-                                taxRate = value;
-                              });
-                            }
-                          : null,
-                      activeColor: isTaxExempt
-                          ? Colors.purple.withOpacity(0.9)
-                          : Colors.grey,
-                      inactiveColor: Colors.grey,
+                        GestureDetector(
+                          onTap: () {
+                            setState(() {
+                              isTaxExempt = !isTaxExempt; // 클릭 시 비과세 여부 토글
+                            });
+                          },
+                          child: Container(
+                            width: 100,
+                            height: 50, // 높이를 동일하게 설정
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(14),
+                              border: Border.all(
+                                color: isTaxExempt
+                                    ? Colors.black
+                                    : Colors.black.withOpacity(0.4),
+                                width: 1,
+                              ),
+                              color: isTaxExempt
+                                  ? Colors.purple.withOpacity(0.3)
+                                  : Colors.transparent, // 색상 변경
+                            ),
+                            child: Center(
+                              // 텍스트 중앙 정렬
+                              child: Text(
+                                '비과세여부',
+                                style: TextStyle(
+                                  color: Colors.black,
+                                  fontSize: isTaxExempt
+                                      ? 16
+                                      : 14, // 비과세 선택 시 폰트 크기 조정
+                                  fontWeight: isTaxExempt
+                                      ? FontWeight.bold
+                                      : FontWeight.normal, // 비과세 선택 시 볼드체
+                                ),
+                              ),
+                            ),
+                          ),
+                        ),
+                      ],
                     ),
                   ],
                 ),
