@@ -37,14 +37,23 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
   void initState() {
     super.initState();
     _loadData();
-    notifications.clear(); // 기존 알림 목록 초기화
-    notifications.addAll(NotificationService.getNotifications()); // 알림 목록 가져오기
+    _loadSortSettings(); // 정렬 설정 불러오기
+    notifications.clear();
+    notifications.addAll(NotificationService.getNotifications());
   }
 
   Future<void> _loadData() async {
     final loadedAccounts = await StorageService.loadAccounts();
     setState(() {
       accounts = loadedAccounts;
+    });
+  }
+
+  Future<void> _loadSortSettings() async {
+    final settings = await StorageService.loadSortSettings();
+    setState(() {
+      currentSortType = settings['currentSortType'];
+      isAscending = settings['isAscending'];
     });
   }
 
@@ -81,6 +90,7 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
         isAscending = true;
       }
       AccountService.sortAccounts(accounts, sortType, isAscending);
+      StorageService.saveSortSettings(currentSortType, isAscending); // 정렬 설정 저장
     });
   }
 

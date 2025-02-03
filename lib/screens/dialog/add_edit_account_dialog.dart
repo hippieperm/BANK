@@ -346,6 +346,9 @@ class _AddEditAccountDialogState extends State<AddEditAccountDialog>
                           onTap: () {
                             setState(() {
                               isTaxExempt = !isTaxExempt; // 클릭 시 비과세 여부 토글
+                              taxRate = isTaxExempt
+                                  ? 0
+                                  : taxRate; // 비과세 선택 시 세율을 0으로 설정
                             });
                           },
                           child: Container(

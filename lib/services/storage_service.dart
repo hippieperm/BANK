@@ -7,7 +7,7 @@ class StorageService {
   static const String SETTINGS_KEY = 'settings';
   static const String NOTIFICATIONS_KEY = 'notifications';
 
-  static late SharedPreferences _prefs;
+  static SharedPreferences? _prefs;
 
   // SharedPreferences 초기화
   static Future<void> init() async {
@@ -17,12 +17,12 @@ class StorageService {
   // 계좌 데이터 저장
   static Future<void> saveAccounts(List<Map<String, dynamic>> accounts) async {
     final String encodedData = json.encode(accounts);
-    await _prefs.setString(ACCOUNTS_KEY, encodedData);
+    await _prefs!.setString(ACCOUNTS_KEY, encodedData);
   }
 
   // 계좌 데이터 불러오기
   static Future<List<Map<String, dynamic>>> loadAccounts() async {
-    final String? encodedData = _prefs.getString(ACCOUNTS_KEY);
+    final String? encodedData = _prefs!.getString(ACCOUNTS_KEY);
     if (encodedData == null) return [];
 
     final List<dynamic> decodedData = json.decode(encodedData);
@@ -32,12 +32,12 @@ class StorageService {
   // 설정 데이터 저장
   static Future<void> saveSettings(Map<String, dynamic> settings) async {
     final String encodedData = json.encode(settings);
-    await _prefs.setString(SETTINGS_KEY, encodedData);
+    await _prefs!.setString(SETTINGS_KEY, encodedData);
   }
 
   // 설정 데이터 불러오기
   static Future<Map<String, dynamic>> loadSettings() async {
-    final String? encodedData = _prefs.getString(SETTINGS_KEY);
+    final String? encodedData = _prefs!.getString(SETTINGS_KEY);
     if (encodedData == null) {
       return {
         'notificationPeriod': '14일',
@@ -50,16 +50,33 @@ class StorageService {
 
   // 알림 데이터 저장
   static Future<void> saveNotifications(List<String> notifications) async {
-    await _prefs.setStringList(NOTIFICATIONS_KEY, notifications);
+    await _prefs!.setStringList(NOTIFICATIONS_KEY, notifications);
   }
 
   // 알림 데이터 불러오기
   static Future<List<String>> loadNotifications() async {
-    return _prefs.getStringList(NOTIFICATIONS_KEY) ?? [];
+    return _prefs!.getStringList(NOTIFICATIONS_KEY) ?? [];
   }
 
   // 모든 데이터 초기화
   static Future<void> clearAllData() async {
-    await _prefs.clear();
+    await _prefs!.clear();
+  }
+
+  // 정렬 설정 저장
+  static Future<void> saveSortSettings(
+      String sortType, bool isAscending) async {
+    await _prefs!.setString('currentSortType', sortType);
+    await _prefs!.setBool('isAscending', isAscending);
+  }
+
+  // 정렬 설정 불러오기
+  static Future<Map<String, dynamic>> loadSortSettings() async {
+    final String? sortType = _prefs!.getString('currentSortType');
+    final bool isAscending = _prefs!.getBool('isAscending') ?? true;
+    return {
+      'currentSortType': sortType ?? '',
+      'isAscending': isAscending,
+    };
   }
 }
