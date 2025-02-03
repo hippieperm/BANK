@@ -241,7 +241,7 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
                 child: Container(
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(24),
-                    color: const Color(0xff2d2d2d),
+                    color: const Color(0xff3d3d3d),
                   ),
                   child: Padding(
                     padding: const EdgeInsets.symmetric(
@@ -287,7 +287,7 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
                             Text(
                               '₩ ${formatNumber(calculateTotalReceivedInterest())}',
                               style: const TextStyle(
-                                fontSize: 24,
+                                fontSize: 14,
                                 fontWeight: FontWeight.bold,
                                 color: Colors.white,
                               ),
