@@ -523,8 +523,8 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
                                 ],
                               ),
                               SizedBox(
-                                width: 100, // 버튼의 너비
-                                height: 100, // 버튼의 높이
+                                width: 80, // 버튼의 너비
+                                height: 80, // 버튼의 높이
                                 child: TextButton(
                                   style: TextButton.styleFrom(
                                     backgroundColor: const Color(0xff3d3d3d),
@@ -576,11 +576,11 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
                                       //   color: Colors.white,
                                       // ),
                                       Text(
-                                        'DAY',
+                                        'D-Day',
                                         style: TextStyle(
                                           fontWeight: FontWeight.bold,
-                                          fontSize: 12,
-                                          color: remainingDays <= 15
+                                          fontSize: 10,
+                                          color: remainingDays <= 30
                                               ? Colors.red
                                               : Colors.white,
                                         ),
@@ -589,8 +589,8 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
                                         '$remainingDays',
                                         style: TextStyle(
                                           fontWeight: FontWeight.bold,
-                                          fontSize: 24,
-                                          color: remainingDays <= 15
+                                          fontSize: 21,
+                                          color: remainingDays <= 30
                                               ? Colors.red
                                               : Colors.white,
                                         ),
