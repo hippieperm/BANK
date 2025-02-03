@@ -226,14 +226,6 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
                                       color: Colors.white70,
                                     ),
                                   ),
-                                  // Text(
-                                  //   '남은 만기일: $remainingDays일 남음',
-                                  //   style: const TextStyle(
-                                  //     fontSize: 16,
-                                  //     fontWeight: FontWeight.bold,
-                                  //     color: Colors.white,
-                                  //   ),
-                                  // ),
                                   Text(
                                     '원금: ₩ ${formatNumber(principal)}',
                                     style: const TextStyle(
@@ -369,16 +361,6 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
           }
         },
       ),
-      // floatingActionButton: FloatingActionButton(
-      //   onPressed: () {
-      //     // 새 계좌 추가 기능
-      //     showDialog(
-      //       context: context,
-      //       builder: (context) => const AddEditAccountDialog(),
-      //     );
-      //   },
-      //   child: const Icon(Icons.add),
-      // ),
     );
   }
 
