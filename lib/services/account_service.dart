@@ -1,6 +1,7 @@
 class AccountService {
   // 월별 총 이자 계산
-  static double calculateTotalMonthlyInterest(List<Map<String, dynamic>> accounts) {
+  static double calculateTotalMonthlyInterest(
+      List<Map<String, dynamic>> accounts) {
     double total = 0;
     for (var account in accounts) {
       double principal = account['principal'];
@@ -11,7 +12,8 @@ class AccountService {
   }
 
   // 누적 수령 이자 계산
-  static double calculateTotalReceivedInterest(List<Map<String, dynamic>> accounts) {
+  static double calculateTotalReceivedInterest(
+      List<Map<String, dynamic>> accounts) {
     double total = 0;
     for (var account in accounts) {
       double principal = account['principal'];
@@ -24,28 +26,35 @@ class AccountService {
   }
 
   // 계좌 정렬
-  static void sortAccounts(List<Map<String, dynamic>> accounts, String sortType, bool isAscending) {
+  static void sortAccounts(
+      List<Map<String, dynamic>> accounts, String sortType, bool isAscending) {
     accounts.sort((a, b) {
-      int comparison = 0;
+      int comparison;
+
       switch (sortType) {
         case '은행별':
           comparison = a['bankName'].compareTo(b['bankName']);
           break;
         case '남은기간별':
-          final aEndDate = DateTime.parse(a['endDate']);
-          final bEndDate = DateTime.parse(b['endDate']);
-          comparison = aEndDate.compareTo(bEndDate);
+          DateTime endDateA = DateTime.parse(a['endDate']);
+          DateTime endDateB = DateTime.parse(b['endDate']);
+          comparison = endDateA.compareTo(endDateB);
           break;
         case '원금순':
           comparison = a['principal'].compareTo(b['principal']);
           break;
         case '월이자수입순':
-          final aInterest = a['principal'] * (a['interestRate'] / 100) / 12;
-          final bInterest = b['principal'] * (b['interestRate'] / 100) / 12;
-          comparison = aInterest.compareTo(bInterest);
+          double monthlyInterestA =
+              a['principal'] * (a['interestRate'] / 100) / 12;
+          double monthlyInterestB =
+              b['principal'] * (b['interestRate'] / 100) / 12;
+          comparison = monthlyInterestA.compareTo(monthlyInterestB);
           break;
+        default:
+          comparison = 0; // 기본값
       }
-      return isAscending ? comparison : -comparison;
+
+      return isAscending ? comparison : -comparison; // 오름차순/내림차순 적용
     });
   }
-} 
+}

@@ -66,17 +66,17 @@ class StorageService {
   // 정렬 설정 저장
   static Future<void> saveSortSettings(
       String sortType, bool isAscending) async {
-    await _prefs!.setString('currentSortType', sortType);
-    await _prefs!.setBool('isAscending', isAscending);
+    final prefs = await SharedPreferences.getInstance();
+    await prefs.setString('currentSortType', sortType);
+    await prefs.setBool('isAscending', isAscending);
   }
 
   // 정렬 설정 불러오기
   static Future<Map<String, dynamic>> loadSortSettings() async {
-    final String? sortType = _prefs!.getString('currentSortType');
-    final bool isAscending = _prefs!.getBool('isAscending') ?? true;
+    final prefs = await SharedPreferences.getInstance();
     return {
-      'currentSortType': sortType ?? '',
-      'isAscending': isAscending,
+      'currentSortType': prefs.getString('currentSortType') ?? '은행별',
+      'isAscending': prefs.getBool('isAscending') ?? true,
     };
   }
 }

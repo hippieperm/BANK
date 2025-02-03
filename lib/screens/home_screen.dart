@@ -27,7 +27,7 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
   String currentSortType = ''; // 현재 정렬 기준
   bool isAscending = true; // 오름차순/내림차순 상태
   final List<String> notifications = [
-    // 알림 목록 추가
+    // 알림 목록 추가,
     '알림 1: 계좌 잔액이 부족합니다.',
     '알림 2: 이자 지급일이 다가옵니다.',
     '알림 3: 계좌 정보가 업데이트되었습니다.',
@@ -52,9 +52,11 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
   Future<void> _loadSortSettings() async {
     final settings = await StorageService.loadSortSettings();
     setState(() {
-      currentSortType = settings['currentSortType'];
-      isAscending = settings['isAscending'];
+      currentSortType = settings['currentSortType'] ?? '은행별'; // 기본 정렬 기준 설정
+      isAscending = settings['isAscending'] ?? true; // 기본 정렬 방향 설정
     });
+    AccountService.sortAccounts(
+        accounts, currentSortType, isAscending); // 불러온 정렬 기준으로 정렬
   }
 
   // 계좌 추가 시 저장
@@ -84,12 +86,12 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
   void sortAccounts(String sortType) {
     setState(() {
       if (currentSortType == sortType) {
-        isAscending = !isAscending;
+        isAscending = !isAscending; // 현재 정렬 기준이 같으면 오름차순/내림차순 전환
       } else {
-        currentSortType = sortType;
-        isAscending = true;
+        currentSortType = sortType; // 새로운 정렬 기준 설정
+        isAscending = true; // 새로운 기준으로는 항상 오름차순으로 시작
       }
-      AccountService.sortAccounts(accounts, sortType, isAscending);
+      AccountService.sortAccounts(accounts, currentSortType, isAscending);
       StorageService.saveSortSettings(currentSortType, isAscending); // 정렬 설정 저장
     });
   }
