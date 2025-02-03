@@ -121,19 +121,56 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
               ),
               child: Padding(
                 padding:
-                    const EdgeInsets.symmetric(horizontal: 14, vertical: 14),
-                child: CalendarTimeline(
-                  initialDate: DateTime.now(),
-                  firstDate: DateTime.now().subtract(const Duration(days: 365)),
-                  lastDate: DateTime.now().add(const Duration(days: 365)),
-                  onDateSelected: (date) => print(date),
-                  leftMargin: 20,
-                  monthColor: Colors.grey[400],
-                  dayColor: Colors.grey[500],
-                  activeDayColor: Colors.white,
-                  activeBackgroundDayColor: Colors.teal[800],
-                  selectableDayPredicate: (date) => date.day != 23,
-                  height: 75,
+                    const EdgeInsets.symmetric(horizontal: 20, vertical: 20),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceAround,
+                  children: [
+                    Column(
+                      children: [
+                        const Text(
+                          '이번 달 총 이자',
+                          style: TextStyle(
+                            fontSize: 16,
+                            color: Colors.white70,
+                          ),
+                        ),
+                        const SizedBox(height: 8),
+                        Text(
+                          '₩ ${formatNumber(calculateTotalMonthlyInterest())}',
+                          style: const TextStyle(
+                            fontSize: 24,
+                            fontWeight: FontWeight.bold,
+                            color: Colors.white,
+                          ),
+                        ),
+                      ],
+                    ),
+                    Container(
+                      width: 1,
+                      height: 40,
+                      color: Colors.white24,
+                    ),
+                    Column(
+                      children: [
+                        const Text(
+                          '누적 수령 이자',
+                          style: TextStyle(
+                            fontSize: 16,
+                            color: Colors.white70,
+                          ),
+                        ),
+                        const SizedBox(height: 8),
+                        Text(
+                          '₩ ${formatNumber(calculateTotalReceivedInterest())}',
+                          style: const TextStyle(
+                            fontSize: 24,
+                            fontWeight: FontWeight.bold,
+                            color: Colors.white,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ],
                 ),
               ),
             ),
@@ -343,5 +380,32 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
       //   child: const Icon(Icons.add),
       // ),
     );
+  }
+
+  double calculateTotalMonthlyInterest() {
+    double total = 0;
+    for (var account in accounts) {
+      double principal = account['principal'];
+      double interestRate = account['interestRate'];
+      total += principal * (interestRate / 100) / 12;
+    }
+    return total;
+  }
+
+  double calculateTotalReceivedInterest() {
+    double total = 0;
+    for (var account in accounts) {
+      double principal = account['principal'];
+      double interestRate = account['interestRate'];
+      DateTime startDate = DateTime.parse(account['startDate']);
+      int monthsPassed = DateTime.now().difference(startDate).inDays ~/ 30;
+      total += (principal * (interestRate / 100) / 12) * monthsPassed;
+    }
+    return total;
+  }
+
+  String formatNumber(double number) {
+    return number.toStringAsFixed(0).replaceAllMapped(
+        RegExp(r'(\d{1,3})(?=(\d{3})+(?!\d))'), (Match m) => '${m[1]},');
   }
 }
