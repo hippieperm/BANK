@@ -19,12 +19,50 @@ class HomeScreen extends StatefulWidget {
 class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
   bool isDarkMode = true;
   List<Map<String, dynamic>> accounts = []; // 계좌 목록을 저장할 리스트 추가
+  String currentSortType = ''; // 현재 정렬 기준
+  bool isAscending = true; // 오름차순/내림차순 상태
   final List<String> notifications = [
     // 알림 목록 추가
     '알림 1: 계좌 잔액이 부족합니다.',
     '알림 2: 이자 지급일이 다가옵니다.',
     '알림 3: 계좌 정보가 업데이트되었습니다.',
   ];
+
+  void sortAccounts(String sortType) {
+    setState(() {
+      if (currentSortType == sortType) {
+        // 같은 정렬 기준 선택 시 오름차순/내림차순 전환
+        isAscending = !isAscending;
+      } else {
+        // 새로운 정렬 기준 선택 시
+        currentSortType = sortType;
+        isAscending = true;
+      }
+
+      accounts.sort((a, b) {
+        int comparison = 0;
+        switch (sortType) {
+          case '은행별':
+            comparison = a['bankName'].compareTo(b['bankName']);
+            break;
+          case '남은기간별':
+            final aEndDate = DateTime.parse(a['endDate']);
+            final bEndDate = DateTime.parse(b['endDate']);
+            comparison = aEndDate.compareTo(bEndDate);
+            break;
+          case '원금순':
+            comparison = a['principal'].compareTo(b['principal']);
+            break;
+          case '월이자수입순':
+            final aInterest = a['principal'] * (a['interestRate'] / 100) / 12;
+            final bInterest = b['principal'] * (b['interestRate'] / 100) / 12;
+            comparison = aInterest.compareTo(bInterest);
+            break;
+        }
+        return isAscending ? comparison : -comparison;
+      });
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -42,6 +80,36 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
           ),
         ),
         actions: [
+          PopupMenuButton<String>(
+            icon: const Icon(Icons.sort, color: Colors.white, size: 28),
+            color: const Color(0xff2d2d2d),
+            onSelected: sortAccounts,
+            itemBuilder: (BuildContext context) => [
+              '은행별',
+              '남은기간별',
+              '원금순',
+              '월이자수입순',
+            ].map((String choice) {
+              return PopupMenuItem<String>(
+                value: choice,
+                child: Row(
+                  children: [
+                    Text(
+                      choice,
+                      style: const TextStyle(color: Colors.white),
+                    ),
+                    if (currentSortType == choice)
+                      Icon(
+                        isAscending ? Icons.arrow_upward : Icons.arrow_downward,
+                        color: Colors.white,
+                        size: 18,
+                      ),
+                  ],
+                ),
+              );
+            }).toList(),
+          ),
+          const SizedBox(width: 16),
           Padding(
             padding: const EdgeInsets.only(right: 16.0),
             child: IconButton(
