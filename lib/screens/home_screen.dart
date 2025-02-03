@@ -523,20 +523,47 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
                                       ),
                                     ],
                                   ),
-                                  Text(
-                                    '원금: ₩ ${formatNumber(principal)}',
-                                    style: const TextStyle(
-                                      fontSize: 16,
-                                      color: Colors.white,
-                                    ),
+                                  const SizedBox(height: 5),
+                                  Row(
+                                    children: [
+                                      const Text(
+                                        '원금: ₩ ',
+                                        style: TextStyle(
+                                          fontSize: 14,
+                                          color: Colors.white,
+                                          fontWeight: FontWeight.w600,
+                                        ),
+                                      ),
+                                      Text(
+                                        formatNumber(principal),
+                                        style: const TextStyle(
+                                          fontSize: 15,
+                                          color: Colors.white,
+                                          fontWeight: FontWeight.bold,
+                                        ),
+                                      ),
+                                    ],
                                   ),
-                                  Text(
-                                    '월 이자 수입: ₩ ${formatNumber(monthlyInterest)}',
-                                    style: const TextStyle(
-                                      fontSize: 18,
-                                      fontWeight: FontWeight.bold,
-                                      color: Colors.white,
-                                    ),
+                                  const SizedBox(height: 1),
+                                  Row(
+                                    children: [
+                                      const Text(
+                                        '월 이자 수입: ₩ ',
+                                        style: TextStyle(
+                                          fontSize: 14,
+                                          color: Colors.white,
+                                          fontWeight: FontWeight.w600,
+                                        ),
+                                      ),
+                                      Text(
+                                        formatNumber(monthlyInterest),
+                                        style: const TextStyle(
+                                          fontSize: 16,
+                                          color: Colors.white,
+                                          fontWeight: FontWeight.bold,
+                                        ),
+                                      ),
+                                    ],
                                   ),
                                 ],
                               ),
