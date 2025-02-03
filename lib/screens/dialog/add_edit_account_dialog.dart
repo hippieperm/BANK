@@ -105,52 +105,66 @@ class _AddEditAccountDialogState extends State<AddEditAccountDialog>
                           });
                         }
                       },
-                      child: Container(
-                        padding: const EdgeInsets.symmetric(
-                          vertical: 10.0,
-                        ),
-                        decoration: BoxDecoration(
-                          color: Colors.purple.withOpacity(0.7),
-                          border: Border.all(color: Colors.grey),
-                          borderRadius: BorderRadius.circular(10),
-                        ),
-                        child: Padding(
-                          padding: const EdgeInsets.symmetric(
-                            horizontal: 30,
-                            vertical: 3,
+                      child: Material(
+                        // InkWell을 사용하기 위해 Material 위젯 추가
+                        color: Colors.transparent, // 배경색 투명 설정
+                        child: InkWell(
+                          // 터치 효과를 위해 InkWell 추가
+                          borderRadius: BorderRadius.circular(10), // 모서리 둥글게
+                          splashColor:
+                              Colors.white.withOpacity(0.3), // 터치 효과 색상
+                          highlightColor:
+                              Colors.white.withOpacity(0.1), // 눌렀을 때 효과 색상
+                          child: Container(
+                            padding: const EdgeInsets.symmetric(
+                              vertical: 10.0,
+                            ),
+                            decoration: BoxDecoration(
+                              color: Colors.purple.withOpacity(0.7),
+                              border: Border.all(color: Colors.grey),
+                              borderRadius: BorderRadius.circular(10),
+                            ),
+                            child: Padding(
+                              padding: const EdgeInsets.symmetric(
+                                horizontal: 30,
+                                vertical: 3,
+                              ),
+                              child: selectedBankName != null &&
+                                      selectedBankImage != null
+                                  ? Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.center,
+                                      children: [
+                                        selectedBankImage!.endsWith('.svg')
+                                            ? SvgPicture.asset(
+                                                selectedBankImage!,
+                                                width: 24,
+                                                height: 24,
+                                                placeholderBuilder: (context) =>
+                                                    const Icon(Icons.error),
+                                              )
+                                            : Image.asset(
+                                                selectedBankImage!,
+                                                width: 24,
+                                                height: 24,
+                                                errorBuilder: (context, error,
+                                                    stackTrace) {
+                                                  return const Icon(
+                                                      Icons.error);
+                                                },
+                                              ),
+                                        const SizedBox(width: 8),
+                                      ],
+                                    )
+                                  : const Text(
+                                      '은행선택',
+                                      style: TextStyle(
+                                        color: Colors.white,
+                                        fontWeight: FontWeight.bold,
+                                      ),
+                                    ),
+                            ),
                           ),
-                          child: selectedBankName != null &&
-                                  selectedBankImage != null
-                              ? Row(
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  children: [
-                                    selectedBankImage!.endsWith('.svg')
-                                        ? SvgPicture.asset(
-                                            selectedBankImage!,
-                                            width: 24,
-                                            height: 24,
-                                            placeholderBuilder: (context) =>
-                                                const Icon(Icons.error),
-                                          )
-                                        : Image.asset(
-                                            selectedBankImage!,
-                                            width: 24,
-                                            height: 24,
-                                            errorBuilder:
-                                                (context, error, stackTrace) {
-                                              return const Icon(Icons.error);
-                                            },
-                                          ),
-                                    const SizedBox(width: 8),
-                                  ],
-                                )
-                              : const Text(
-                                  '은행선택',
-                                  style: TextStyle(
-                                    color: Colors.white,
-                                    fontWeight: FontWeight.bold,
-                                  ),
-                                ),
                         ),
                       ),
                     ),
