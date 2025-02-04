@@ -70,10 +70,12 @@ class AccountService {
   static void sortAccountsByTotalIncome(
       List<Map<String, dynamic>> accounts, bool isAscending) {
     accounts.sort((a, b) {
-      double totalIncomeA = a['principal'] * (a['interestRate'] / 100) *
+      double totalIncomeA = a['principal'] *
+          (a['interestRate'] / 100) *
           (DateTime.now().difference(DateTime.parse(a['startDate'])).inDays) /
           365;
-      double totalIncomeB = b['principal'] * (b['interestRate'] / 100) *
+      double totalIncomeB = b['principal'] *
+          (b['interestRate'] / 100) *
           (DateTime.now().difference(DateTime.parse(b['startDate'])).inDays) /
           365;
       return isAscending

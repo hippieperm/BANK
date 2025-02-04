@@ -440,7 +440,8 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
                         Column(
                           children: [
                             const Text(
-                              '누적 수령 이자',
+                              // '누적 수령 이자',
+                              '총 수입',
                               style: TextStyle(
                                 fontSize: 16,
                                 color: Colors.white70,
