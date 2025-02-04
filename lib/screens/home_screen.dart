@@ -92,7 +92,7 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
         currentSortType = sortType; // 새로운 정렬 기준 설정
         isAscending = true; // 새로운 기준으로는 항상 오름차순으로 시작
       }
-      if (currentSortType == '금리순') {
+      if (currentSortType == '금리') {
         AccountService.sortAccountsByInterestRate(accounts, isAscending);
       } else if (currentSortType == '총 수입') {
         AccountService.sortAccountsByTotalIncome(accounts, isAscending);
@@ -126,9 +126,9 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
             itemBuilder: (BuildContext context) => [
               '은행별',
               '만기일자',
-              '원금순',
-              '월이자수입순',
-              '금리순',
+              '원금',
+              '월이자수입',
+              '금리',
               '시작일자',
               '총 수입',
               //총수입,

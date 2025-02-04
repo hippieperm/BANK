@@ -9,4 +9,4 @@ class NumberFormatter {
   static String formatPercent(double value) {
     return '${value.toStringAsFixed(1)}%';
   }
-} 
+}

@@ -40,17 +40,17 @@ class AccountService {
           DateTime endDateB = DateTime.parse(b['endDate']);
           comparison = endDateA.compareTo(endDateB);
           break;
-        case '원금순':
+        case '원금':
           comparison = a['principal'].compareTo(b['principal']);
           break;
-        case '월이자수입순':
+        case '월이자수입':
           double monthlyInterestA =
               a['principal'] * (a['interestRate'] / 100) / 12;
           double monthlyInterestB =
               b['principal'] * (b['interestRate'] / 100) / 12;
           comparison = monthlyInterestA.compareTo(monthlyInterestB);
           break;
-        case '월 금리순':
+        case '금리':
           comparison = (a['interestRate']).compareTo(b['interestRate']);
           break;
         case '시작일자':
