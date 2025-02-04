@@ -1,3 +1,5 @@
+import '../models/account.dart';
+
 class AccountService {
   // 월별 총 이자 계산
   static double calculateTotalMonthlyInterest(
@@ -27,43 +29,36 @@ class AccountService {
 
   // 계좌 정렬
   static void sortAccounts(
-      List<Map<String, dynamic>> accounts, String sortType, bool isAscending) {
-    accounts.sort((a, b) {
-      int comparison;
-
-      switch (sortType) {
-        case '은행별':
-          comparison = a['bankName'].compareTo(b['bankName']);
-          break;
-        case '만기일자':
-          DateTime endDateA = DateTime.parse(a['endDate']);
-          DateTime endDateB = DateTime.parse(b['endDate']);
-          comparison = endDateA.compareTo(endDateB);
-          break;
-        case '원금순':
-          comparison = a['principal'].compareTo(b['principal']);
-          break;
-        case '월이자수입순':
-          double monthlyInterestA =
-              a['principal'] * (a['interestRate'] / 100) / 12;
-          double monthlyInterestB =
-              b['principal'] * (b['interestRate'] / 100) / 12;
-          comparison = monthlyInterestA.compareTo(monthlyInterestB);
-          break;
-        case '월 금리순':
-          comparison = (a['interestRate']).compareTo(b['interestRate']);
-          break;
-        case '시작일자':
-          DateTime startDateA = DateTime.parse(a['startDate']);
-          DateTime startDateB = DateTime.parse(b['startDate']);
-          comparison = startDateA.compareTo(startDateB);
-          break;
-        default:
-          comparison = 0; // 기본값
-      }
-
-      return isAscending ? comparison : -comparison; // 오름차순/내림차순 적용
-    });
+      List<Account> accounts, String sortType, bool ascending) {
+    if (sortType == '은행별') {
+      accounts.sort((a, b) => ascending
+          ? a.bankName.compareTo(b.bankName)
+          : b.bankName.compareTo(a.bankName));
+    } else if (sortType == '만기일자') {
+      accounts.sort((a, b) => ascending
+          ? a.endDate.compareTo(b.endDate)
+          : b.endDate.compareTo(a.endDate));
+    } else if (sortType == '원금순') {
+      accounts.sort((a, b) => ascending
+          ? a.principal.compareTo(b.principal)
+          : b.principal.compareTo(a.principal));
+    } else if (sortType == '월이자수입순') {
+      accounts.sort((a, b) => ascending
+          ? (a.principal * (a.interestRate / 100) / 12)
+              .compareTo(b.principal * (b.interestRate / 100) / 12)
+          : (b.principal * (b.interestRate / 100) / 12)
+              .compareTo(a.principal * (a.interestRate / 100) / 12));
+    } else if (sortType == '월 금리순') {
+      accounts.sort((a, b) => ascending
+          ? a.interestRate.compareTo(b.interestRate)
+          : b.interestRate.compareTo(a.interestRate));
+    } else if (sortType == '시작일자') {
+      accounts.sort((a, b) => ascending
+          ? a.startDate.compareTo(b.startDate)
+          : b.startDate.compareTo(a.startDate));
+    } else if (sortType == '카드') {
+      // 카드 정렬 로직 추가
+    }
   }
 
   // 총 수입 순으로 계좌 정렬

@@ -64,11 +64,10 @@ class StorageService {
   }
 
   // 정렬 설정 저장
-  static Future<void> saveSortSettings(
-      String sortType, bool isAscending) async {
+  static Future<void> saveSortSettings(String sortType, bool ascending) async {
     final prefs = await SharedPreferences.getInstance();
     await prefs.setString('currentSortType', sortType);
-    await prefs.setBool('isAscending', isAscending);
+    await prefs.setBool('isAscending', ascending);
   }
 
   // 정렬 설정 불러오기
