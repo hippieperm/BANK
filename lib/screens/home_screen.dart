@@ -455,7 +455,6 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
                 ),
               ),
             ),
-            const SizedBox(height: 4),
             Expanded(
               child: ListView.builder(
                 itemCount: accounts.length, // 실제 계좌 수로 변경
