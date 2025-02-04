@@ -407,18 +407,29 @@ class _AddEditAccountDialogState extends State<AddEditAccountDialog>
                         return;
                       }
 
-                      Navigator.pop(context, {
-                        'bankName': selectedBankName,
-                        'bankImage': selectedBankImage,
-                        'startDate': startDateController.text,
-                        'endDate': endDateController.text,
-                        'interestRate':
-                            double.parse(interestRateController.text),
-                        'isTaxExempt': isTaxExempt,
-                        'taxRate': taxRate,
-                        'principal': double.parse(removeCommas(
-                            principalController.text)), // 쉼표 제거 후 변환
-                      });
+                      // 계좌 추가 성공 다이얼로그
+                      AwesomeDialog(
+                        context: context,
+                        dialogType: DialogType.success,
+                        animType: AnimType.scale,
+                        title: '계좌 추가 성공',
+                        desc: '계좌가 성공적으로 추가되었습니다.',
+                        btnOkOnPress: () {
+                          Navigator.pop(context, {
+                            'bankName': selectedBankName,
+                            'bankImage': selectedBankImage,
+                            'startDate': startDateController.text,
+                            'endDate': endDateController.text,
+                            'interestRate':
+                                double.parse(interestRateController.text),
+                            'isTaxExempt': isTaxExempt,
+                            'taxRate': taxRate,
+                            'principal': double.parse(
+                                removeCommas(principalController.text)),
+                          });
+                        },
+                        btnOkColor: Colors.green,
+                      ).show();
                     },
                     child: Center(
                       child: Container(
