@@ -547,9 +547,9 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
                                       ),
                                       Text(
                                         formatNumber(principal),
-                                        style: const TextStyle(
-                                          fontSize: 15,
-                                          color: Colors.white,
+                                        style: TextStyle(
+                                          fontSize: 16,
+                                          color: Colors.white.withOpacity(0.9),
                                           fontWeight: FontWeight.bold,
                                         ),
                                       ),
@@ -569,7 +569,7 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
                                       Text(
                                         formatNumber(monthlyInterest),
                                         style: const TextStyle(
-                                          fontSize: 16,
+                                          fontSize: 18,
                                           color: Colors.white,
                                           fontWeight: FontWeight.bold,
                                         ),
