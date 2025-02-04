@@ -91,7 +91,11 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
         currentSortType = sortType; // 새로운 정렬 기준 설정
         isAscending = true; // 새로운 기준으로는 항상 오름차순으로 시작
       }
-      AccountService.sortAccounts(accounts, currentSortType, isAscending);
+      if (currentSortType == '총 수입') {
+        AccountService.sortAccountsByTotalIncome(accounts, isAscending);
+      } else {
+        AccountService.sortAccounts(accounts, currentSortType, isAscending);
+      }
       StorageService.saveSortSettings(currentSortType, isAscending); // 정렬 설정 저장
     });
   }
@@ -123,6 +127,7 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
               '월이자수입순',
               '금리순',
               '시작일자',
+              '총 수입',
               //총수입,
               //만기인지 아닌지 차트,
               //상세보기에 은행 전화번호,총수입 원금
@@ -419,23 +424,6 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
                             const SizedBox(height: 8),
                             Text(
                               '₩ ${formatNumber(calculateTotalMonthlyInterest())}',
-                              style: const TextStyle(
-                                fontSize: 24,
-                                fontWeight: FontWeight.bold,
-                                color: Colors.white,
-                              ),
-                            ),
-                            const SizedBox(height: 16),
-                            const Text(
-                              '총 수입',
-                              style: TextStyle(
-                                fontSize: 16,
-                                color: Colors.white70,
-                              ),
-                            ),
-                            const SizedBox(height: 8),
-                            Text(
-                              '₩ ${formatNumber(calculateTotalReceivedInterest())}',
                               style: const TextStyle(
                                 fontSize: 24,
                                 fontWeight: FontWeight.bold,

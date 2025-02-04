@@ -65,4 +65,20 @@ class AccountService {
       return isAscending ? comparison : -comparison; // 오름차순/내림차순 적용
     });
   }
+
+  // 총 수입 순으로 계좌 정렬
+  static void sortAccountsByTotalIncome(
+      List<Map<String, dynamic>> accounts, bool isAscending) {
+    accounts.sort((a, b) {
+      double totalIncomeA = a['principal'] * (a['interestRate'] / 100) *
+          (DateTime.now().difference(DateTime.parse(a['startDate'])).inDays) /
+          365;
+      double totalIncomeB = b['principal'] * (b['interestRate'] / 100) *
+          (DateTime.now().difference(DateTime.parse(b['startDate'])).inDays) /
+          365;
+      return isAscending
+          ? totalIncomeA.compareTo(totalIncomeB)
+          : totalIncomeB.compareTo(totalIncomeA);
+    });
+  }
 }
