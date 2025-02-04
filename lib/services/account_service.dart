@@ -19,8 +19,8 @@ class AccountService {
       double principal = account['principal'];
       double interestRate = account['interestRate'];
       DateTime startDate = DateTime.parse(account['startDate']);
-      int monthsPassed = DateTime.now().difference(startDate).inDays ~/ 30;
-      total += (principal * (interestRate / 100) / 12) * monthsPassed;
+      int daysPassed = DateTime.now().difference(startDate).inDays;
+      total += (principal * (interestRate / 100) * daysPassed / 365);
     }
     return total;
   }

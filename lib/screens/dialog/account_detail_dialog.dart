@@ -153,6 +153,14 @@ class _AccountDetailDialogState extends State<AccountDetailDialog>
                                   fontWeight: FontWeight.bold,
                                 ),
                               ),
+                              const SizedBox(height: 4),
+                              Text(
+                                '총 수입: ₩ ${formatNumber(widget.account['principal'] * (widget.account['interestRate'] / 100) * (DateTime.now().difference(DateTime.parse(widget.account['startDate'])).inDays) / 365)}',
+                                style: const TextStyle(
+                                  fontSize: 18,
+                                  fontWeight: FontWeight.bold,
+                                ),
+                              ),
                             ],
                     ),
                   ),

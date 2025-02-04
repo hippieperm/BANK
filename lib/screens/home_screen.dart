@@ -121,8 +121,11 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
               '만기일자',
               '원금순',
               '월이자수입순',
-              '월 금리순',
+              '금리순',
               '시작일자',
+              //총수입,
+              //만기인지 아닌지 차트,
+              //상세보기에 은행 전화번호,총수입 원금
             ].map((String choice) {
               return PopupMenuItem<String>(
                 value: choice,
@@ -416,6 +419,23 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
                             const SizedBox(height: 8),
                             Text(
                               '₩ ${formatNumber(calculateTotalMonthlyInterest())}',
+                              style: const TextStyle(
+                                fontSize: 24,
+                                fontWeight: FontWeight.bold,
+                                color: Colors.white,
+                              ),
+                            ),
+                            const SizedBox(height: 16),
+                            const Text(
+                              '총 수입',
+                              style: TextStyle(
+                                fontSize: 16,
+                                color: Colors.white70,
+                              ),
+                            ),
+                            const SizedBox(height: 8),
+                            Text(
+                              '₩ ${formatNumber(calculateTotalReceivedInterest())}',
                               style: const TextStyle(
                                 fontSize: 24,
                                 fontWeight: FontWeight.bold,

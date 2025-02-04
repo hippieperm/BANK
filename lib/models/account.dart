@@ -21,4 +21,5 @@ class Account {
 
   double get monthlyInterest => principal * (interestRate / 100) / 12;
   int get remainingDays => endDate.difference(DateTime.now()).inDays;
+  double get totalIncome => principal * (interestRate / 100) * remainingDays / 365;
 } 
