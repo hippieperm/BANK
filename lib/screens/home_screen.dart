@@ -491,7 +491,7 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
 
                   return Card(
                     color: const Color(0xff2d2d2d),
-                    // margin: const EdgeInsets.all(10),
+                    margin: const EdgeInsets.only(top: 10),
                     child: Padding(
                       padding: const EdgeInsets.symmetric(
                           horizontal: 20, vertical: 10),
