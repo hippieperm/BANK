@@ -52,7 +52,8 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
   Future<void> _loadSortSettings() async {
     final settings = await StorageService.loadSortSettings();
     setState(() {
-      currentSortType = settings['currentSortType'] ?? '은행별'; // 기본 정렬 기준 설정
+      currentSortType =
+          settings['currentSortType'] ?? '총 수입'; // 기본 정렬 기준을 총 수입으로 설정
       isAscending = settings['isAscending'] ?? true; // 기본 정렬 방향 설정
     });
     AccountService.sortAccounts(
@@ -91,7 +92,9 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
         currentSortType = sortType; // 새로운 정렬 기준 설정
         isAscending = true; // 새로운 기준으로는 항상 오름차순으로 시작
       }
-      if (currentSortType == '총 수입') {
+      if (currentSortType == '금리순') {
+        AccountService.sortAccountsByInterestRate(accounts, isAscending);
+      } else if (currentSortType == '총 수입') {
         AccountService.sortAccountsByTotalIncome(accounts, isAscending);
       } else {
         AccountService.sortAccounts(accounts, currentSortType, isAscending);

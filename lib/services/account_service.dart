@@ -83,4 +83,16 @@ class AccountService {
           : totalIncomeB.compareTo(totalIncomeA);
     });
   }
+
+  // 금리순으로 계좌 정렬
+  static void sortAccountsByInterestRate(
+      List<Map<String, dynamic>> accounts, bool isAscending) {
+    accounts.sort((a, b) {
+      double interestRateA = a['interestRate'] ?? 0.0;
+      double interestRateB = b['interestRate'] ?? 0.0;
+      return isAscending
+          ? interestRateA.compareTo(interestRateB)
+          : interestRateB.compareTo(interestRateA);
+    });
+  }
 }

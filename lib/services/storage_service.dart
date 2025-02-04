@@ -75,7 +75,7 @@ class StorageService {
   static Future<Map<String, dynamic>> loadSortSettings() async {
     final prefs = await SharedPreferences.getInstance();
     return {
-      'currentSortType': prefs.getString('currentSortType') ?? '은행별',
+      'currentSortType': prefs.getString('currentSortType'),
       'isAscending': prefs.getBool('isAscending') ?? true,
     };
   }
