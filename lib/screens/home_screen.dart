@@ -655,7 +655,12 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
                                                           .length >=
                                                       4
                                                   ? 20
-                                                  : 22, // 글자 수에 따라 폰트 사이즈 조정
+                                                  : remainingDays
+                                                              .toString()
+                                                              .length >=
+                                                          3
+                                                      ? 26
+                                                      : 28, // 글자 수에 따라 폰트 사이즈 조정
                                           color: remainingDays <= 30
                                               ? Colors.red
                                               : Colors.white,
