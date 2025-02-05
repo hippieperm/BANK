@@ -645,7 +645,17 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
                                         '$remainingDays',
                                         style: TextStyle(
                                           fontWeight: FontWeight.bold,
-                                          fontSize: 21,
+                                          fontSize: remainingDays
+                                                      .toString()
+                                                      .length >=
+                                                  5
+                                              ? 18
+                                              : remainingDays
+                                                          .toString()
+                                                          .length >=
+                                                      4
+                                                  ? 20
+                                                  : 22, // 글자 수에 따라 폰트 사이즈 조정
                                           color: remainingDays <= 30
                                               ? Colors.red
                                               : Colors.white,
