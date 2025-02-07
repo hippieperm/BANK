@@ -393,7 +393,7 @@ class _AddEditAccountDialogState extends State<AddEditAccountDialog>
                             child: Center(
                               // 텍스트 중앙 정렬
                               child: Text(
-                                '비과세여부',
+                                '비과세',
                                 style: TextStyle(
                                   color: Colors.black,
                                   fontSize: isTaxExempt

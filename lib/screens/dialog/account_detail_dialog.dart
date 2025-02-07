@@ -85,6 +85,7 @@ class _AccountDetailDialogState extends State<AccountDetailDialog>
                   backgroundColor:
                       const Color.fromARGB(255, 56, 55, 55).withOpacity(0.6),
                   title: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       SvgPicture.asset(
                         widget.bankName,
@@ -96,7 +97,7 @@ class _AccountDetailDialogState extends State<AccountDetailDialog>
                     width: MediaQuery.of(context).size.width * 0.8,
                     child: Column(
                       mainAxisSize: MainAxisSize.min,
-                      crossAxisAlignment: CrossAxisAlignment.start,
+                      crossAxisAlignment: CrossAxisAlignment.center,
                       children: widget.notifications != null
                           ? widget.notifications!
                               .map((notification) => Padding(
@@ -149,7 +150,19 @@ class _AccountDetailDialogState extends State<AccountDetailDialog>
                                   fontWeight: FontWeight.bold,
                                 ),
                               ),
-                              const SizedBox(height: 4),
+                              Padding(
+                                padding: const EdgeInsets.all(10.0),
+                                child: Center(
+                                  child: Container(
+                                    width: double.infinity,
+                                    height: 2,
+                                    decoration: BoxDecoration(
+                                      color: Colors.grey,
+                                      borderRadius: BorderRadius.circular(2),
+                                    ),
+                                  ),
+                                ),
+                              ),
                               Text(
                                 '이자율: ${widget.account['interestRate']}%',
                                 style: const TextStyle(
@@ -166,7 +179,19 @@ class _AccountDetailDialogState extends State<AccountDetailDialog>
                                   fontWeight: FontWeight.bold,
                                 ),
                               ),
-                              const SizedBox(height: 4),
+                              Padding(
+                                padding: const EdgeInsets.all(10.0),
+                                child: Center(
+                                  child: Container(
+                                    width: double.infinity,
+                                    height: 2,
+                                    decoration: BoxDecoration(
+                                      color: Colors.grey,
+                                      borderRadius: BorderRadius.circular(2),
+                                    ),
+                                  ),
+                                ),
+                              ),
                               Text(
                                 '월 수익: ₩ ${formatNumber(widget.account['principal'] * (widget.account['interestRate'] / 100) / 12)}',
                                 style: const TextStyle(
