@@ -32,12 +32,14 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
     '알림 2: 이자 지급일이 다가옵니다.',
     '알림 3: 계좌 정보가 업데이트되었습니다.',
   ];
+  bool hideExpiredAccounts = false; // 만기된 계좌 숨기기 상태 추가
 
   @override
   void initState() {
     super.initState();
     _loadData();
     _loadSortSettings(); // 정렬 설정 불러오기
+    _loadHideExpiredAccountsSetting(); // 만기된 계좌 숨기기 설정 불러오기
     notifications.clear();
     notifications.addAll(NotificationService.getNotifications());
   }
@@ -58,6 +60,14 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
     });
     AccountService.sortAccounts(
         accounts, currentSortType, isAscending); // 불러온 정렬 기준으로 정렬
+  }
+
+  Future<void> _loadHideExpiredAccountsSetting() async {
+    final settings = await StorageService.loadSettings();
+    setState(() {
+      hideExpiredAccounts =
+          settings['hideExpiredAccounts'] ?? false; // 기본값은 false
+    });
   }
 
   // 계좌 추가 시 저장
@@ -162,118 +172,131 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
           Padding(
             padding: const EdgeInsets.only(right: 16.0),
             child: IconButton(
-              icon: Stack(
-                children: [
-                  const Icon(
-                    Icons.notifications,
-                    color: Colors.white,
-                    size: 34,
-                  ),
-                  Positioned(
-                    right: 0,
-                    top: 0,
-                    child: Container(
-                      padding: const EdgeInsets.all(1),
-                      decoration: BoxDecoration(
-                        color: Colors.red,
-                        borderRadius: BorderRadius.circular(6),
-                      ),
-                      constraints: const BoxConstraints(
-                        minWidth: 14,
-                        minHeight: 14,
-                      ),
-                      child: const Text(
-                        // notifications.length.toString(),
-                        '',
-                        style: TextStyle(
-                          color: Colors.white,
-                          fontSize: 0,
-                          fontWeight: FontWeight.bold,
-                        ),
-                        textAlign: TextAlign.center,
-                      ),
-                    ),
-                  ),
-                ],
+              icon: Icon(
+                hideExpiredAccounts ? Icons.visibility_off : Icons.visibility,
+                color: Colors.white,
               ),
               onPressed: () {
-                // 알림 설정 기능
-                showGeneralDialog(
-                  context: context,
-                  barrierDismissible: true,
-                  barrierLabel: '',
-                  barrierColor: Colors.black.withOpacity(0.5),
-                  pageBuilder: (context, animation, secondaryAnimation) =>
-                      AlertDialog(
-                    backgroundColor: const Color(0xff2d2d2d),
-                    title: const Text(
-                      '알림',
-                      style: TextStyle(color: Colors.white),
-                    ),
-                    content: Column(
-                      mainAxisSize: MainAxisSize.min,
-                      children:
-                          NotificationService.getNotifications() // 여기서 직접 가져오기
-                              .map((notification) => ListTile(
-                                    title: Text(
-                                      notification,
-                                      style:
-                                          const TextStyle(color: Colors.white),
-                                    ),
-                                  ))
-                              .toList(),
-                    ),
-                  ),
-                  transitionBuilder:
-                      (context, animation, secondaryAnimation, child) {
-                    var curve = Curves.easeInOut;
-                    var curvedAnimation = CurvedAnimation(
-                      parent: animation,
-                      curve: curve,
-                    );
-
-                    return GestureDetector(
-                      onTap: () => Navigator.of(context).pop(),
-                      child: BackdropFilter(
-                        filter: ImageFilter.blur(sigmaX: 5, sigmaY: 5),
-                        child: GestureDetector(
-                          onTap: () {},
-                          child: ScaleTransition(
-                            scale: Tween<double>(begin: 0.8, end: 1.0)
-                                .animate(curvedAnimation),
-                            child: FadeTransition(
-                              opacity: Tween<double>(begin: 0.0, end: 1.0)
-                                  .animate(curvedAnimation),
-                              child: const Dialog(
-                                backgroundColor: Color(0xff2d2d2d),
-                                child: Padding(
-                                  padding: EdgeInsets.all(16.0),
-                                  child: Column(
-                                    mainAxisSize: MainAxisSize.min,
-                                    children: [
-                                      Text(
-                                        '알림',
-                                        style: TextStyle(
-                                          color: Colors.white,
-                                          fontSize: 20,
-                                          fontWeight: FontWeight.bold,
-                                        ),
-                                      ),
-                                      SizedBox(height: 20),
-                                    ],
-                                  ),
-                                ),
-                              ),
-                            ),
-                          ),
-                        ),
-                      ),
-                    );
-                  },
-                  transitionDuration: const Duration(milliseconds: 300),
-                );
+                setState(() {
+                  hideExpiredAccounts = !hideExpiredAccounts; // 상태 전환
+                  StorageService.saveSettings(
+                      {'hideExpiredAccounts': hideExpiredAccounts}); // 설정 저장
+                });
               },
             ),
+            // child: IconButton(
+            //   icon: Stack(
+            //     children: [
+            //       const Icon(
+            //         Icons.notifications,
+            //         color: Colors.white,
+            //         size: 34,
+            //       ),
+            //       Positioned(
+            //         right: 0,
+            //         top: 0,
+            //         child: Container(
+            //           padding: const EdgeInsets.all(1),
+            //           decoration: BoxDecoration(
+            //             color: Colors.red,
+            //             borderRadius: BorderRadius.circular(6),
+            //           ),
+            //           constraints: const BoxConstraints(
+            //             minWidth: 14,
+            //             minHeight: 14,
+            //           ),
+            //           child: const Text(
+            //             // notifications.length.toString(),
+            //             '',
+            //             style: TextStyle(
+            //               color: Colors.white,
+            //               fontSize: 0,
+            //               fontWeight: FontWeight.bold,
+            //             ),
+            //             textAlign: TextAlign.center,
+            //           ),
+            //         ),
+            //       ),
+            //     ],
+            //   ),
+            //   onPressed: () {
+            //     // 알림 설정 기능
+            //     showGeneralDialog(
+            //       context: context,
+            //       barrierDismissible: true,
+            //       barrierLabel: '',
+            //       barrierColor: Colors.black.withOpacity(0.5),
+            //       pageBuilder: (context, animation, secondaryAnimation) =>
+            //           AlertDialog(
+            //         backgroundColor: const Color(0xff2d2d2d),
+            //         title: const Text(
+            //           '알림',
+            //           style: TextStyle(color: Colors.white),
+            //         ),
+            //         content: Column(
+            //           mainAxisSize: MainAxisSize.min,
+            //           children:
+            //               NotificationService.getNotifications() // 여기서 직접 가져오기
+            //                   .map((notification) => ListTile(
+            //                         title: Text(
+            //                           notification,
+            //                           style:
+            //                               const TextStyle(color: Colors.white),
+            //                         ),
+            //                       ))
+            //                   .toList(),
+            //         ),
+            //       ),
+            //       transitionBuilder:
+            //           (context, animation, secondaryAnimation, child) {
+            //         var curve = Curves.easeInOut;
+            //         var curvedAnimation = CurvedAnimation(
+            //           parent: animation,
+            //           curve: curve,
+            //         );
+
+            //         return GestureDetector(
+            //           onTap: () => Navigator.of(context).pop(),
+            //           child: BackdropFilter(
+            //             filter: ImageFilter.blur(sigmaX: 5, sigmaY: 5),
+            //             child: GestureDetector(
+            //               onTap: () {},
+            //               child: ScaleTransition(
+            //                 scale: Tween<double>(begin: 0.8, end: 1.0)
+            //                     .animate(curvedAnimation),
+            //                 child: FadeTransition(
+            //                   opacity: Tween<double>(begin: 0.0, end: 1.0)
+            //                       .animate(curvedAnimation),
+            //                   child: const Dialog(
+            //                     backgroundColor: Color(0xff2d2d2d),
+            //                     child: Padding(
+            //                       padding: EdgeInsets.all(16.0),
+            //                       child: Column(
+            //                         mainAxisSize: MainAxisSize.min,
+            //                         children: [
+            //                           Text(
+            //                             '알림',
+            //                             style: TextStyle(
+            //                               color: Colors.white,
+            //                               fontSize: 20,
+            //                               fontWeight: FontWeight.bold,
+            //                             ),
+            //                           ),
+            //                           SizedBox(height: 20),
+            //                         ],
+            //                       ),
+            //                     ),
+            //                   ),
+            //                 ),
+            //               ),
+            //             ),
+            //           ),
+            //         );
+            //       },
+            //       transitionDuration: const Duration(milliseconds: 300),
+            //     );
+            //   },
+            // ),
           ),
         ],
       ),
@@ -469,13 +492,17 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
             ),
             Expanded(
               child: ListView.builder(
-                itemCount: accounts.length, // 실제 계좌 수로 변경
+                itemCount: accounts.length,
                 itemBuilder: (context, index) {
                   final account = accounts[index];
-                  // 만기일 계산
                   final endDate = DateTime.parse(account['endDate']);
                   final remainingDays =
                       max(0, endDate.difference(DateTime.now()).inDays);
+
+                  // 만기된 계좌 숨기기 로직 추가
+                  if (hideExpiredAccounts && remainingDays <= 0) {
+                    return const SizedBox.shrink(); // 만기된 계좌는 숨김
+                  }
 
                   // 월 이자 계산 수정
                   final principal = account['principal'];
