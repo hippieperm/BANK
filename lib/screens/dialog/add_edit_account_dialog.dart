@@ -47,7 +47,8 @@ class _AddEditAccountDialogState extends State<AddEditAccountDialog>
     startDateController.text = widget.startDate; // 시작일 초기화
     endDateController.text = widget.endDate; // 종료일 초기화
     interestRateController.text = widget.interestRate.toString(); // 이자율 초기화
-    principalController.text = formatNumber(widget.principal.toString()); // 원금 초기화
+    principalController.text =
+        formatNumber(widget.principal.toString()); // 원금 초기화
     isTaxExempt = widget.isTaxExempt; // 비과세 여부 초기화
     _controller = AnimationController(
       vsync: this,
@@ -236,7 +237,7 @@ class _AddEditAccountDialogState extends State<AddEditAccountDialog>
                         const Text(
                           '  ~  ',
                           style: TextStyle(
-                            fontSize: 24,
+                            fontSize: 14,
                             fontWeight: FontWeight.bold,
                           ),
                         ),
@@ -286,7 +287,7 @@ class _AddEditAccountDialogState extends State<AddEditAccountDialog>
                     const SizedBox(height: 20),
                     Center(
                       child: SizedBox(
-                        width: 215,
+                        width: double.infinity,
                         child: TextField(
                           controller: principalController,
                           decoration: InputDecoration(
@@ -334,10 +335,10 @@ class _AddEditAccountDialogState extends State<AddEditAccountDialog>
                     ),
                     const SizedBox(height: 16),
                     Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceAround,
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         SizedBox(
-                          width: 100,
+                          width: 115,
                           height: 50, // 높이를 동일하게 설정
                           child: TextField(
                             controller: interestRateController,
@@ -372,7 +373,7 @@ class _AddEditAccountDialogState extends State<AddEditAccountDialog>
                             });
                           },
                           child: Container(
-                            width: 100,
+                            width: 115,
                             height: 50, // 높이를 동일하게 설정
                             decoration: BoxDecoration(
                               borderRadius: BorderRadius.circular(14),
@@ -451,23 +452,22 @@ class _AddEditAccountDialogState extends State<AddEditAccountDialog>
                         btnOkColor: Colors.green,
                       ).show();
                     },
-                    child: Center(
-                      child: Container(
-                        decoration: BoxDecoration(
-                          color: const Color.fromARGB(255, 93, 72, 153),
-                          borderRadius: BorderRadius.circular(8.0),
+                    child: Container(
+                      width: double.infinity,
+                      decoration: BoxDecoration(
+                        color: const Color.fromARGB(255, 93, 72, 153),
+                        borderRadius: BorderRadius.circular(8.0),
+                      ),
+                      child: const Padding(
+                        padding: EdgeInsets.symmetric(
+                          vertical: 15,
+                          horizontal: 90,
                         ),
-                        child: const Padding(
-                          padding: EdgeInsets.symmetric(
-                            vertical: 15,
-                            horizontal: 90,
-                          ),
-                          child: Text(
-                            '저장',
-                            style: TextStyle(
-                              color: Colors.white,
-                              fontWeight: FontWeight.bold,
-                            ),
+                        child: Text(
+                          '저장',
+                          style: TextStyle(
+                            color: Colors.white,
+                            fontWeight: FontWeight.bold,
                           ),
                         ),
                       ),
