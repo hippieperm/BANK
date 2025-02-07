@@ -5,8 +5,6 @@ import 'package:awesome_dialog/awesome_dialog.dart';
 import 'package:bank/screens/dialog/account_detail_dialog.dart';
 import 'package:bank/screens/dialog/add_edit_account_dialog.dart';
 
-import 'package:bank/screens/settings_screen.dart';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:fl_chart/fl_chart.dart';
@@ -75,6 +73,8 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
   void _addAccount(Map<String, dynamic> account) {
     setState(() {
       accounts.add(account);
+      // 정렬 설정에 따라 계좌를 추가 후 정렬
+      AccountService.sortAccounts(accounts, currentSortType, isAscending);
       StorageService.saveAccounts(accounts);
     });
   }
@@ -721,7 +721,7 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
           if (index == 1) {
             showDialog(
               context: context,
-              builder: (context) => AddEditAccountDialog(
+              builder: (context) => const AddEditAccountDialog(
                 bankName: '',
                 startDate: '',
                 endDate: '',
