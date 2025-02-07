@@ -661,7 +661,7 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
                                         'D-Day',
                                         style: TextStyle(
                                           fontWeight: FontWeight.bold,
-                                          fontSize: 10,
+                                          fontSize: 11,
                                           color: remainingDays <= 30
                                               ? Colors.red
                                               : Colors.white,
