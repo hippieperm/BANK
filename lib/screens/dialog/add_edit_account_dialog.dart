@@ -386,6 +386,28 @@ class _AddEditAccountDialogState extends State<AddEditAccountDialog>
                               ),
                             ),
                             keyboardType: TextInputType.number,
+                            onChanged: (value) {
+                              // 쉼표 제거 후 숫자만 추출
+                              String numericOnly = removeCommas(value);
+                              if (numericOnly.isNotEmpty) {
+                                // 천 단위 쉼표 추가
+                                String formatted = formatNumber(numericOnly);
+                                // 커서 위치 저장
+                                int cursorPosition =
+                                    interestRateController.selection.start;
+                                // 이전 쉼표 개수와 새로운 쉼표 개수의 차이
+                                int commasDiff =
+                                    formatted.length - value.length;
+
+                                interestRateController.text = formatted;
+                                // 커서 위치 조정
+                                interestRateController.selection =
+                                    TextSelection.fromPosition(
+                                  TextPosition(
+                                      offset: cursorPosition + commasDiff),
+                                );
+                              }
+                            },
                           ),
                         ),
                         const SizedBox(
