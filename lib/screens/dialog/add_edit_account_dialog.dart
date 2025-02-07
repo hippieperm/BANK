@@ -122,6 +122,19 @@ class _AddEditAccountDialogState extends State<AddEditAccountDialog>
                 content: Column(
                   mainAxisSize: MainAxisSize.min,
                   children: [
+                    Padding(
+                      padding: const EdgeInsets.only(bottom: 18),
+                      child: Center(
+                        child: Container(
+                          width: 190,
+                          height: 2,
+                          decoration: BoxDecoration(
+                            color: Colors.grey,
+                            borderRadius: BorderRadius.circular(2),
+                          ),
+                        ),
+                      ),
+                    ),
                     GestureDetector(
                       onTap: () async {
                         final result = await showDialog(
