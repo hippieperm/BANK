@@ -735,10 +735,10 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
             });
           } else if (index == 2) {
             // 설정 화면으로 이동
-            Navigator.push(
-              context,
-              MaterialPageRoute(builder: (context) => const SettingsScreen()),
-            );
+            // Navigator.push(
+            //   context,
+            //   MaterialPageRoute(builder: (context) => const SettingsScreen()),
+            // );
           }
         },
       ),

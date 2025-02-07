@@ -11,12 +11,12 @@ class AddEditAccountDialog extends StatefulWidget {
   final String bankName;
   final String startDate;
   final String endDate;
-  double? interestRate;
-  double? principal;
+  final double? interestRate;
+  final double? principal;
   final bool isTaxExempt;
   final bool isEditing;
 
-  AddEditAccountDialog({
+  const AddEditAccountDialog({
     super.key,
     required this.bankName,
     required this.startDate,
