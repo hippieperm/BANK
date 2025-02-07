@@ -702,6 +702,7 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
                 interestRate: 0,
                 principal: 0,
                 isTaxExempt: false,
+                selectedBankImage: '',
               ),
             ).then((result) {
               if (result != null) {

@@ -22,7 +22,7 @@ class AddEditAccountDialog extends StatefulWidget {
     required this.endDate,
     required this.interestRate,
     required this.principal,
-    required this.isTaxExempt,
+    required this.isTaxExempt, required selectedBankImage,
   });
 
   @override
