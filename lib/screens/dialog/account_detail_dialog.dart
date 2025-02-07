@@ -54,7 +54,7 @@ class _AccountDetailDialogState extends State<AccountDetailDialog>
         backgroundColor: Colors.transparent,
         insetPadding: EdgeInsets.symmetric(
           horizontal: MediaQuery.of(context).size.width * 0.05, // 화면 너비의 5%로 설정
-          vertical: MediaQuery.of(context).size.height * 0.2, // 화면 높이의 10%로 설정
+          vertical: MediaQuery.of(context).size.height * 0.15, // 화면 높이의 10%로 설정
         ),
         child: Stack(
           children: [

@@ -22,7 +22,8 @@ class AddEditAccountDialog extends StatefulWidget {
     required this.endDate,
     required this.interestRate,
     required this.principal,
-    required this.isTaxExempt, required selectedBankImage,
+    required this.isTaxExempt,
+    required selectedBankImage,
   });
 
   @override
@@ -105,8 +106,12 @@ class _AddEditAccountDialogState extends State<AddEditAccountDialog>
                 ),
               ),
               child: AlertDialog(
-                backgroundColor: Colors.white.withOpacity(0.7),
-                title: const Text('계좌 추가/수정'),
+                backgroundColor:
+                    const Color.fromARGB(255, 56, 55, 55).withOpacity(0.9),
+                title: const Text(
+                  '계좌 추가/수정',
+                  style: TextStyle(color: Colors.white),
+                ),
                 content: Column(
                   mainAxisSize: MainAxisSize.min,
                   children: [
@@ -231,7 +236,7 @@ class _AddEditAccountDialogState extends State<AddEditAccountDialog>
                             startDateController.text.isEmpty
                                 ? '시작일 선택'
                                 : startDateController.text,
-                            style: const TextStyle(color: Colors.black),
+                            style: const TextStyle(color: Colors.white),
                           ),
                         ),
                         const Text(
@@ -279,7 +284,7 @@ class _AddEditAccountDialogState extends State<AddEditAccountDialog>
                             endDateController.text.isEmpty
                                 ? '종료일 선택'
                                 : endDateController.text,
-                            style: const TextStyle(color: Colors.black),
+                            style: const TextStyle(color: Colors.white),
                           ),
                         ),
                       ],
@@ -292,7 +297,9 @@ class _AddEditAccountDialogState extends State<AddEditAccountDialog>
                           controller: principalController,
                           decoration: InputDecoration(
                             labelText: '원금',
+                            labelStyle: const TextStyle(color: Colors.white),
                             suffixText: '원',
+                            suffixStyle: const TextStyle(color: Colors.white),
                             border: OutlineInputBorder(
                               borderRadius: BorderRadius.circular(15.0),
                             ),
@@ -330,6 +337,7 @@ class _AddEditAccountDialogState extends State<AddEditAccountDialog>
                               );
                             }
                           },
+                          style: const TextStyle(color: Colors.white),
                         ),
                       ),
                     ),
@@ -344,7 +352,9 @@ class _AddEditAccountDialogState extends State<AddEditAccountDialog>
                             controller: interestRateController,
                             decoration: InputDecoration(
                               labelText: '이자율(%)',
+                              labelStyle: const TextStyle(color: Colors.white),
                               suffixText: '%',
+                              suffixStyle: const TextStyle(color: Colors.white),
                               border: OutlineInputBorder(
                                 borderRadius: BorderRadius.circular(15.0),
                               ),
@@ -361,6 +371,7 @@ class _AddEditAccountDialogState extends State<AddEditAccountDialog>
                               ),
                             ),
                             keyboardType: TextInputType.number,
+                            style: const TextStyle(color: Colors.white),
                           ),
                         ),
                         const SizedBox(
@@ -395,7 +406,7 @@ class _AddEditAccountDialogState extends State<AddEditAccountDialog>
                               child: Text(
                                 '비과세',
                                 style: TextStyle(
-                                  color: Colors.black,
+                                  color: Colors.white,
                                   fontSize: isTaxExempt
                                       ? 16
                                       : 14, // 비과세 선택 시 폰트 크기 조정
