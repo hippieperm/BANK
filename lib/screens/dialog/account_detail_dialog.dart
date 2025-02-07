@@ -2,6 +2,7 @@ import 'dart:ui';
 
 import 'package:flutter/material.dart';
 import 'package:awesome_dialog/awesome_dialog.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 
 import 'add_edit_account_dialog.dart';
 
@@ -82,12 +83,13 @@ class _AccountDetailDialogState extends State<AccountDetailDialog>
                 ),
                 child: AlertDialog(
                   backgroundColor: Colors.white.withOpacity(0.7),
-                  title: Text(
-                    widget.bankName,
-                    style: const TextStyle(
-                      fontSize: 28,
-                      fontWeight: FontWeight.bold,
-                    ),
+                  title: Row(
+                    children: [
+                      SvgPicture.asset(
+                        widget.bankName,
+                        height: 28,
+                      ),
+                    ],
                   ),
                   content: SizedBox(
                     width: MediaQuery.of(context).size.width * 0.8,

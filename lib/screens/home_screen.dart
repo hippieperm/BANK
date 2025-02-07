@@ -615,8 +615,8 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
                                                 onTap: () {}, // 내부 클릭 시 이벤트 중단
                                                 child: AccountDetailDialog(
                                                     account: account,
-                                                    bankName:
-                                                        account['bankName']),
+                                                    bankName: account[
+                                                        'bankImage']), // 은행명 대신 은행 이미지 사용
                                               ),
                                             ],
                                           ),
