@@ -212,7 +212,18 @@ class _AccountDetailDialogState extends State<AccountDetailDialog>
                                       showDialog(
                                         context: context,
                                         builder: (context) =>
-                                            const AddEditAccountDialog(),
+                                            AddEditAccountDialog(
+                                          bankName: widget.bankName,
+                                          startDate:
+                                              widget.account['startDate'],
+                                          endDate: widget.account['endDate'],
+                                          interestRate:
+                                              widget.account['interestRate'],
+                                          principal:
+                                              widget.account['principal'],
+                                          isTaxExempt:
+                                              widget.account['isTaxExempt'],
+                                        ),
                                       );
                                     },
                                   ).show();

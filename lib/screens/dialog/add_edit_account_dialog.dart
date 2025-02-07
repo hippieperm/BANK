@@ -8,7 +8,22 @@ import 'bank_choice_dialog.dart';
 import 'package:awesome_dialog/awesome_dialog.dart';
 
 class AddEditAccountDialog extends StatefulWidget {
-  const AddEditAccountDialog({super.key});
+  final String bankName;
+  final String startDate;
+  final String endDate;
+  final double interestRate;
+  final double principal;
+  final bool isTaxExempt;
+
+  const AddEditAccountDialog({
+    super.key,
+    required this.bankName,
+    required this.startDate,
+    required this.endDate,
+    required this.interestRate,
+    required this.principal,
+    required this.isTaxExempt,
+  });
 
   @override
   _AddEditAccountDialogState createState() => _AddEditAccountDialogState();
@@ -29,6 +44,11 @@ class _AddEditAccountDialogState extends State<AddEditAccountDialog>
   @override
   void initState() {
     super.initState();
+    startDateController.text = widget.startDate; // 시작일 초기화
+    endDateController.text = widget.endDate; // 종료일 초기화
+    interestRateController.text = widget.interestRate.toString(); // 이자율 초기화
+    principalController.text = formatNumber(widget.principal.toString()); // 원금 초기화
+    isTaxExempt = widget.isTaxExempt; // 비과세 여부 초기화
     _controller = AnimationController(
       vsync: this,
       duration: const Duration(milliseconds: 300),

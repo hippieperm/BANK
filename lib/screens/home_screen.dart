@@ -695,7 +695,14 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
           if (index == 1) {
             showDialog(
               context: context,
-              builder: (context) => const AddEditAccountDialog(),
+              builder: (context) => const AddEditAccountDialog(
+                bankName: '',
+                startDate: '',
+                endDate: '',
+                interestRate: 0,
+                principal: 0,
+                isTaxExempt: false,
+              ),
             ).then((result) {
               if (result != null) {
                 _addAccount(result);
