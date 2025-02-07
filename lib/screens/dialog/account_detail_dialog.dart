@@ -242,7 +242,7 @@ class _AccountDetailDialogState extends State<AccountDetailDialog>
                                   child: const Padding(
                                     padding: EdgeInsets.symmetric(
                                       vertical: 14,
-                                      horizontal: 22,
+                                      horizontal: 30,
                                     ),
                                     child: Center(
                                       child: Text(
@@ -300,7 +300,7 @@ class _AccountDetailDialogState extends State<AccountDetailDialog>
                                     child: const Padding(
                                       padding: EdgeInsets.symmetric(
                                         vertical: 14,
-                                        horizontal: 22,
+                                        horizontal: 30,
                                       ),
                                       child: Text(
                                         '수정하기',
@@ -338,7 +338,7 @@ class _AccountDetailDialogState extends State<AccountDetailDialog>
                                     child: const Padding(
                                       padding: EdgeInsets.symmetric(
                                         vertical: 14,
-                                        horizontal: 22,
+                                        horizontal: 30,
                                       ),
                                       child: Text(
                                         '삭제하기',
