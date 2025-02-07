@@ -173,8 +173,10 @@ class _AccountDetailDialogState extends State<AccountDetailDialog>
                               ),
                               Text(
                                 '비과세 여부: ${widget.account['isTaxExempt'] ? '비과세' : '과세'} 적용',
-                                style: const TextStyle(
-                                  color: Colors.white,
+                                style: TextStyle(
+                                  color: widget.account['isTaxExempt']
+                                      ? Colors.purple[200]
+                                      : Colors.red[200],
                                   fontSize: 14,
                                   fontWeight: FontWeight.bold,
                                 ),
