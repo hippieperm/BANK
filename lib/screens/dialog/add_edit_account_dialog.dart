@@ -52,7 +52,7 @@ class _AddEditAccountDialogState extends State<AddEditAccountDialog>
     interestRateController.text =
         widget.interestRate?.toString() ?? ''; // 이자율 초기화
     principalController.text =
-        formatNumber(widget.principal?.toString() ?? ''); // 원금 초기화
+        formatNumber(widget.principal?.toStringAsFixed(0) ?? ''); // 원금 초기화
     isTaxExempt = widget.isTaxExempt; // 비과세 여부 초기화
     _controller = AnimationController(
       vsync: this,
