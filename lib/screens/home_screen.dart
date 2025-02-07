@@ -120,12 +120,15 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
       appBar: AppBar(
         backgroundColor: const Color(0xff2d2d2d),
         elevation: 0.1,
-        title: Text(
-          '정기예금 관리',
-          style: TextStyle(
-            fontWeight: FontWeight.bold,
-            fontSize: 22,
-            color: Colors.white.withOpacity(0.9),
+        title: Padding(
+          padding: const EdgeInsets.only(left: 16),
+          child: Text(
+            '정기예금 관리',
+            style: TextStyle(
+              fontWeight: FontWeight.bold,
+              fontSize: 22,
+              color: Colors.white.withOpacity(0.9),
+            ),
           ),
         ),
         actions: [
