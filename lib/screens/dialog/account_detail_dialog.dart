@@ -154,7 +154,7 @@ class _AccountDetailDialogState extends State<AccountDetailDialog>
                                 padding: const EdgeInsets.all(10.0),
                                 child: Center(
                                   child: Container(
-                                    width: double.infinity,
+                                    width: 190,
                                     height: 2,
                                     decoration: BoxDecoration(
                                       color: Colors.grey,
@@ -185,7 +185,7 @@ class _AccountDetailDialogState extends State<AccountDetailDialog>
                                 padding: const EdgeInsets.all(10.0),
                                 child: Center(
                                   child: Container(
-                                    width: double.infinity,
+                                    width: 190,
                                     height: 2,
                                     decoration: BoxDecoration(
                                       color: Colors.grey,
@@ -273,6 +273,8 @@ class _AccountDetailDialogState extends State<AccountDetailDialog>
                                               widget.account['principal'],
                                           isTaxExempt:
                                               widget.account['isTaxExempt'],
+                                          selectedBankImage:
+                                              widget.account['bankname'],
                                         ),
                                       );
                                     },
