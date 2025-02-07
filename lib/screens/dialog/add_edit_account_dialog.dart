@@ -363,6 +363,9 @@ class _AddEditAccountDialogState extends State<AddEditAccountDialog>
                             keyboardType: TextInputType.number,
                           ),
                         ),
+                        const SizedBox(
+                          width: 15,
+                        ),
                         GestureDetector(
                           onTap: () {
                             setState(() {
