@@ -11,19 +11,21 @@ class AddEditAccountDialog extends StatefulWidget {
   final String bankName;
   final String startDate;
   final String endDate;
-  final double interestRate;
-  final double principal;
+  double? interestRate;
+  double? principal;
   final bool isTaxExempt;
+  final bool isEditing;
 
-  const AddEditAccountDialog({
+  AddEditAccountDialog({
     super.key,
     required this.bankName,
     required this.startDate,
     required this.endDate,
-    required this.interestRate,
-    required this.principal,
+    this.interestRate,
+    this.principal,
     required this.isTaxExempt,
     required selectedBankImage,
+    this.isEditing = false,
   });
 
   @override
@@ -47,9 +49,10 @@ class _AddEditAccountDialogState extends State<AddEditAccountDialog>
     super.initState();
     startDateController.text = widget.startDate; // 시작일 초기화
     endDateController.text = widget.endDate; // 종료일 초기화
-    interestRateController.text = widget.interestRate.toString(); // 이자율 초기화
+    interestRateController.text =
+        widget.interestRate?.toString() ?? ''; // 이자율 초기화
     principalController.text =
-        formatNumber(widget.principal.toString()); // 원금 초기화
+        formatNumber(widget.principal?.toString() ?? ''); // 원금 초기화
     isTaxExempt = widget.isTaxExempt; // 비과세 여부 초기화
     _controller = AnimationController(
       vsync: this,
@@ -107,7 +110,15 @@ class _AddEditAccountDialogState extends State<AddEditAccountDialog>
               ),
               child: AlertDialog(
                 backgroundColor: Colors.white.withOpacity(0.7),
-                title: const Text('계좌 추가/수정'),
+                title: Center(
+                  child: Text(
+                    widget.isEditing ? '계좌 수정' : '계좌 추가',
+                    style: const TextStyle(
+                      fontSize: 22,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                ),
                 content: Column(
                   mainAxisSize: MainAxisSize.min,
                   children: [

@@ -287,6 +287,7 @@ class _AccountDetailDialogState extends State<AccountDetailDialog>
                                                 widget.account['isTaxExempt'],
                                             selectedBankImage:
                                                 widget.account['bankname'],
+                                            isEditing: true,
                                           ),
                                         );
                                       },
