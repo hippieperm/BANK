@@ -164,6 +164,14 @@ class _AccountDetailDialogState extends State<AccountDetailDialog>
                                 ),
                               ),
                               Text(
+                                '원금: ₩ ${formatNumber(widget.account['principal'])}',
+                                style: const TextStyle(
+                                  color: Colors.white,
+                                  fontSize: 16,
+                                  fontWeight: FontWeight.bold,
+                                ),
+                              ),
+                              Text(
                                 '이자율: ${widget.account['interestRate']}%',
                                 style: const TextStyle(
                                   color: Colors.white,
