@@ -82,7 +82,8 @@ class _AccountDetailDialogState extends State<AccountDetailDialog>
                   ),
                 ),
                 child: AlertDialog(
-                  backgroundColor: Colors.white.withOpacity(0.7),
+                  backgroundColor:
+                      const Color.fromARGB(255, 56, 55, 55).withOpacity(0.6),
                   title: Row(
                     children: [
                       SvgPicture.asset(
@@ -104,6 +105,7 @@ class _AccountDetailDialogState extends State<AccountDetailDialog>
                                     child: Text(
                                       notification,
                                       style: const TextStyle(
+                                        color: Colors.white,
                                         fontSize: 16,
                                         fontWeight: FontWeight.bold,
                                       ),
@@ -114,6 +116,7 @@ class _AccountDetailDialogState extends State<AccountDetailDialog>
                               Text(
                                 '시작일: ${widget.account['startDate']}',
                                 style: const TextStyle(
+                                  color: Colors.white,
                                   fontSize: 18,
                                   fontWeight: FontWeight.bold,
                                 ),
@@ -121,6 +124,7 @@ class _AccountDetailDialogState extends State<AccountDetailDialog>
                               Text(
                                 '종료일: ${widget.account['endDate']}',
                                 style: const TextStyle(
+                                  color: Colors.white,
                                   fontSize: 18,
                                   fontWeight: FontWeight.bold,
                                 ),
@@ -129,6 +133,7 @@ class _AccountDetailDialogState extends State<AccountDetailDialog>
                               Text(
                                 '이자율: ${widget.account['interestRate']}%',
                                 style: const TextStyle(
+                                  color: Colors.white,
                                   fontSize: 14,
                                   fontWeight: FontWeight.bold,
                                 ),
@@ -136,6 +141,7 @@ class _AccountDetailDialogState extends State<AccountDetailDialog>
                               Text(
                                 '비과세 여부: ${widget.account['isTaxExempt'] ? '비과세' : '과세'} 적용',
                                 style: const TextStyle(
+                                  color: Colors.white,
                                   fontSize: 14,
                                   fontWeight: FontWeight.bold,
                                 ),
@@ -144,6 +150,7 @@ class _AccountDetailDialogState extends State<AccountDetailDialog>
                               Text(
                                 '월 수익: ₩ ${formatNumber(widget.account['principal'] * (widget.account['interestRate'] / 100) / 12)}',
                                 style: const TextStyle(
+                                  color: Colors.white,
                                   fontSize: 18,
                                   fontWeight: FontWeight.bold,
                                 ),
@@ -151,6 +158,7 @@ class _AccountDetailDialogState extends State<AccountDetailDialog>
                               Text(
                                 '남은 기간: ${DateTime.parse(widget.account['endDate']).difference(DateTime.now()).inDays}일 남음',
                                 style: const TextStyle(
+                                  color: Colors.white,
                                   fontSize: 18,
                                   fontWeight: FontWeight.bold,
                                 ),
@@ -159,6 +167,7 @@ class _AccountDetailDialogState extends State<AccountDetailDialog>
                               Text(
                                 '총 수입: ₩ ${formatNumber(widget.account['principal'] * (widget.account['interestRate'] / 100) * (DateTime.now().difference(DateTime.parse(widget.account['startDate'])).inDays) / 365)}',
                                 style: const TextStyle(
+                                  color: Colors.white,
                                   fontSize: 18,
                                   fontWeight: FontWeight.bold,
                                 ),
