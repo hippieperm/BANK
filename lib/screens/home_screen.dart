@@ -1,6 +1,7 @@
 import 'dart:ui';
 import 'dart:math';
 
+import 'package:awesome_dialog/awesome_dialog.dart';
 import 'package:bank/screens/dialog/account_detail_dialog.dart';
 import 'package:bank/screens/dialog/add_edit_account_dialog.dart';
 
@@ -621,38 +622,33 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
                                   ),
                                   onPressed: () {
                                     // 상세 보기 기능
-                                    showDialog(
+                                    showGeneralDialog(
                                       context: context,
                                       barrierDismissible: true,
-                                      builder: (context) => GestureDetector(
-                                        onTap: () {
-                                          Navigator.of(context)
-                                              .pop(); // 다이얼로그 닫기
-                                        },
-                                        child: Dialog(
-                                          backgroundColor: Colors.transparent,
-                                          child: Stack(
-                                            children: [
-                                              BackdropFilter(
-                                                filter: ImageFilter.blur(
-                                                    sigmaX: 10.0, sigmaY: 10.0),
-                                                child: Container(
-                                                  color: Colors.black
-                                                      .withOpacity(0),
-                                                ),
-                                              ),
-                                              GestureDetector(
-                                                onTap: () {}, // 내부 클릭 시 이벤트 중단
-                                                child: AccountDetailDialog(
-                                                    account: account,
-                                                    bankName: account[
-                                                        'bankImage']), // 은행명 대신 은행 이미지 사용
-                                              ),
-                                            ],
-                                          ),
-                                        ),
+                                      barrierLabel: '',
+                                      barrierColor:
+                                          Colors.black.withOpacity(0.5),
+                                      pageBuilder: (context, animation,
+                                              secondaryAnimation) =>
+                                          AccountDetailDialog(
+                                        account: account,
+                                        bankName: account['bankImage'],
                                       ),
-                                    );
+                                    ).then((result) {
+                                      if (result == true) {
+                                        setState(() {
+                                          accounts.removeAt(index);
+                                          AwesomeDialog(
+                                            context: context,
+                                            dialogType: DialogType.success,
+                                            animType: AnimType.scale,
+                                            title: '삭제 성공',
+                                            desc: '계좌가 성공적으로 삭제되었습니다.',
+                                            btnOkOnPress: () {},
+                                          ).show();
+                                        });
+                                      }
+                                    });
                                   },
                                   child: Column(
                                     mainAxisAlignment: MainAxisAlignment.center,

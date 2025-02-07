@@ -321,6 +321,8 @@ class _AccountDetailDialogState extends State<AccountDetailDialog>
                                     btnCancelOnPress: () {},
                                     btnOkOnPress: () {
                                       // 삭제 로직 추가
+                                      Navigator.of(context)
+                                          .pop(true); // 삭제 성공 시 true 반환
                                     },
                                   ).show();
                                 },
