@@ -123,8 +123,28 @@ class _AccountDetailDialogState extends State<AccountDetailDialog>
                               ),
                               Text(
                                 '종료일: ${widget.account['endDate']}',
-                                style: const TextStyle(
-                                  color: Colors.white,
+                                style: TextStyle(
+                                  color:
+                                      DateTime.parse(widget.account['endDate'])
+                                                  .difference(DateTime.now())
+                                                  .inDays <=
+                                              30
+                                          ? Colors.red
+                                          : Colors.white,
+                                  fontSize: 18,
+                                  fontWeight: FontWeight.bold,
+                                ),
+                              ),
+                              Text(
+                                '남은 기간: ${DateTime.parse(widget.account['endDate']).difference(DateTime.now()).inDays}일 남음',
+                                style: TextStyle(
+                                  color:
+                                      DateTime.parse(widget.account['endDate'])
+                                                  .difference(DateTime.now())
+                                                  .inDays <=
+                                              30
+                                          ? Colors.red
+                                          : Colors.white,
                                   fontSize: 18,
                                   fontWeight: FontWeight.bold,
                                 ),
@@ -134,7 +154,7 @@ class _AccountDetailDialogState extends State<AccountDetailDialog>
                                 '이자율: ${widget.account['interestRate']}%',
                                 style: const TextStyle(
                                   color: Colors.white,
-                                  fontSize: 14,
+                                  fontSize: 16,
                                   fontWeight: FontWeight.bold,
                                 ),
                               ),
@@ -155,15 +175,7 @@ class _AccountDetailDialogState extends State<AccountDetailDialog>
                                   fontWeight: FontWeight.bold,
                                 ),
                               ),
-                              Text(
-                                '남은 기간: ${DateTime.parse(widget.account['endDate']).difference(DateTime.now()).inDays}일 남음',
-                                style: const TextStyle(
-                                  color: Colors.white,
-                                  fontSize: 18,
-                                  fontWeight: FontWeight.bold,
-                                ),
-                              ),
-                              const SizedBox(height: 4),
+                              // const SizedBox(height: 4),
                               Text(
                                 '총 수입: ₩ ${formatNumber(widget.account['principal'] * (widget.account['interestRate'] / 100) * (DateTime.now().difference(DateTime.parse(widget.account['startDate'])).inDays) / 365)}',
                                 style: const TextStyle(
