@@ -638,17 +638,15 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
                                       ),
                                     ).then((result) {
                                       if (result == true) {
-                                        setState(() {
-                                          accounts.removeAt(index);
-                                          AwesomeDialog(
-                                            context: context,
-                                            dialogType: DialogType.success,
-                                            animType: AnimType.scale,
-                                            title: '삭제 성공',
-                                            desc: '계좌가 성공적으로 삭제되었습니다.',
-                                            btnOkOnPress: () {},
-                                          ).show();
-                                        });
+                                        _deleteAccount(index); // 삭제 메서드 호출
+                                        AwesomeDialog(
+                                          context: context,
+                                          dialogType: DialogType.success,
+                                          animType: AnimType.scale,
+                                          title: '삭제 성공',
+                                          desc: '계좌가 성공적으로 삭제되었습니다.',
+                                          btnOkOnPress: () {},
+                                        ).show();
                                       }
                                     });
                                   },

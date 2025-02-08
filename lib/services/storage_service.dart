@@ -16,17 +16,19 @@ class StorageService {
 
   // 계좌 데이터 저장
   static Future<void> saveAccounts(List<Map<String, dynamic>> accounts) async {
-    final String encodedData = json.encode(accounts);
-    await _prefs!.setString(ACCOUNTS_KEY, encodedData);
+    final prefs = await SharedPreferences.getInstance();
+    prefs.setString('accounts', jsonEncode(accounts));
   }
 
   // 계좌 데이터 불러오기
   static Future<List<Map<String, dynamic>>> loadAccounts() async {
-    final String? encodedData = _prefs!.getString(ACCOUNTS_KEY);
-    if (encodedData == null) return [];
-
-    final List<dynamic> decodedData = json.decode(encodedData);
-    return decodedData.cast<Map<String, dynamic>>();
+    final prefs = await SharedPreferences.getInstance();
+    final String? accountsString = prefs.getString('accounts');
+    if (accountsString != null) {
+      List<dynamic> jsonList = jsonDecode(accountsString);
+      return jsonList.map((json) => json as Map<String, dynamic>).toList();
+    }
+    return [];
   }
 
   // 설정 데이터 저장
