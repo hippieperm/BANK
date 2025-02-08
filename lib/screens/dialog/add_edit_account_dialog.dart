@@ -469,6 +469,7 @@ class _AddEditAccountDialogState extends State<AddEditAccountDialog>
                           interestRateController.text.isEmpty ||
                           principalController.text.isEmpty) {
                         AwesomeDialog(
+                          width: 380,
                           context: context,
                           dialogType: DialogType.warning,
                           animType: AnimType.scale,
@@ -482,6 +483,7 @@ class _AddEditAccountDialogState extends State<AddEditAccountDialog>
 
                       // 계좌 추가 성공 다이얼로그
                       AwesomeDialog(
+                        width: 380,
                         context: context,
                         dialogType: DialogType.success,
                         animType: AnimType.scale,

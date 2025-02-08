@@ -640,6 +640,7 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
                                       if (result == true) {
                                         _deleteAccount(index); // 삭제 메서드 호출
                                         AwesomeDialog(
+                                          width: 380,
                                           context: context,
                                           dialogType: DialogType.success,
                                           animType: AnimType.scale,

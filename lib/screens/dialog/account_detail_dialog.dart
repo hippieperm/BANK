@@ -264,6 +264,7 @@ class _AccountDetailDialogState extends State<AccountDetailDialog>
                                 TextButton(
                                   onPressed: () {
                                     AwesomeDialog(
+                                    width: 380,
                                       context: context,
                                       dialogType: DialogType.warning,
                                       animType: AnimType.scale,
@@ -318,6 +319,7 @@ class _AccountDetailDialogState extends State<AccountDetailDialog>
                                   onPressed: () {
                                     // 삭제 확인 다이얼로그 표시
                                     AwesomeDialog(
+                                    width: 380,
                                       context: context,
                                       dialogType: DialogType.error,
                                       animType: AnimType.scale,
