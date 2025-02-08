@@ -86,8 +86,8 @@ class _BankChoiceDialogState extends State<BankChoiceDialog>
                         onTap: () {
                           try {
                             Navigator.pop(context, {
-                              'name': bank['name'],
-                              'image': bank['image'],
+                              'name': bank['image'],
+                              'image': bank['name'],
                             });
                           } catch (e) {
                             print('은행 선택 오류: $e');

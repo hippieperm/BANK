@@ -48,8 +48,8 @@ class _AddEditAccountDialogState extends State<AddEditAccountDialog>
   @override
   void initState() {
     super.initState();
-    print(widget.bankName);
-    print(widget.bankImage);
+    selectedBankName = widget.bankName;
+    selectedBankImage = widget.bankImage;
     startDateController.text = widget.startDate; // 시작일 초기화
     endDateController.text = widget.endDate; // 종료일 초기화
     interestRateController.text =
@@ -178,21 +178,21 @@ class _AddEditAccountDialogState extends State<AddEditAccountDialog>
                                 horizontal: 30,
                                 vertical: 3,
                               ),
-                              child: widget.bankImage != ''
+                              child: selectedBankImage != ''
                                   ? Row(
                                       mainAxisAlignment:
                                           MainAxisAlignment.center,
                                       children: [
-                                        widget.bankName.endsWith('.svg')
+                                        selectedBankName!.endsWith('.svg')
                                             ? SvgPicture.asset(
-                                                widget.bankName,
+                                                selectedBankName!,
                                                 width: 24,
                                                 height: 24,
                                                 placeholderBuilder: (context) =>
                                                     const Icon(Icons.error),
                                               )
                                             : Image.asset(
-                                                widget.bankName,
+                                                selectedBankName!,
                                                 width: 24,
                                                 height: 24,
                                                 errorBuilder: (context, error,
@@ -489,8 +489,8 @@ class _AddEditAccountDialogState extends State<AddEditAccountDialog>
                         desc: '계좌가 성공적으로 추가되었습니다.',
                         btnOkOnPress: () {
                           Navigator.pop(context, {
-                            'bankName': selectedBankName,
-                            'bankImage': selectedBankImage,
+                            'bankName': selectedBankImage,
+                            'bankImage': selectedBankName,
                             'startDate': startDateController.text,
                             'endDate': endDateController.text,
                             'interestRate':
