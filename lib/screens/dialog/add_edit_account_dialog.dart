@@ -9,6 +9,7 @@ import 'package:awesome_dialog/awesome_dialog.dart';
 
 class AddEditAccountDialog extends StatefulWidget {
   final String bankName;
+  final String bankImage;
   final String startDate;
   final String endDate;
   final double? interestRate;
@@ -19,12 +20,12 @@ class AddEditAccountDialog extends StatefulWidget {
   const AddEditAccountDialog({
     super.key,
     required this.bankName,
+    required this.bankImage,
     required this.startDate,
     required this.endDate,
     this.interestRate,
     this.principal,
     required this.isTaxExempt,
-    required selectedBankImage,
     this.isEditing = false,
   });
 
@@ -47,6 +48,8 @@ class _AddEditAccountDialogState extends State<AddEditAccountDialog>
   @override
   void initState() {
     super.initState();
+    print(widget.bankName);
+    print(widget.bankImage);
     startDateController.text = widget.startDate; // 시작일 초기화
     endDateController.text = widget.endDate; // 종료일 초기화
     interestRateController.text =
@@ -175,22 +178,21 @@ class _AddEditAccountDialogState extends State<AddEditAccountDialog>
                                 horizontal: 30,
                                 vertical: 3,
                               ),
-                              child: selectedBankName != null &&
-                                      selectedBankImage != null
+                              child: widget.bankImage != null
                                   ? Row(
                                       mainAxisAlignment:
                                           MainAxisAlignment.center,
                                       children: [
-                                        selectedBankImage!.endsWith('.svg')
+                                        widget.bankName.endsWith('.svg')
                                             ? SvgPicture.asset(
-                                                selectedBankImage!,
+                                                widget.bankName,
                                                 width: 24,
                                                 height: 24,
                                                 placeholderBuilder: (context) =>
                                                     const Icon(Icons.error),
                                               )
                                             : Image.asset(
-                                                selectedBankImage!,
+                                                widget.bankName,
                                                 width: 24,
                                                 height: 24,
                                                 errorBuilder: (context, error,

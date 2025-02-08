@@ -58,8 +58,13 @@ class AccountService {
           DateTime startDateB = DateTime.parse(b['startDate']);
           comparison = startDateA.compareTo(startDateB);
           break;
+        case '총 수입':
+          double totalIncomeA = a['totalIncome'] ?? 0.0;
+          double totalIncomeB = b['totalIncome'] ?? 0.0;
+          comparison = totalIncomeA.compareTo(totalIncomeB);
+          break;
         default:
-          comparison = 0; // 기본값
+          comparison = 0; // 기본값 총수입추가
       }
 
       return isAscending ? comparison : -comparison; // 오름차순/내림차순 적용

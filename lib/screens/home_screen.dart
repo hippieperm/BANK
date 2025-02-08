@@ -37,7 +37,6 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
   void initState() {
     super.initState();
     _loadData();
-    _loadSortSettings(); // 정렬 설정 불러오기
     _loadHideExpiredAccountsSetting(); // 만기된 계좌 숨기기 설정 불러오기
     notifications.clear();
     notifications.addAll(NotificationService.getNotifications());
@@ -48,6 +47,7 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
     setState(() {
       accounts = loadedAccounts;
     });
+    _loadSortSettings(); // 정렬 설정 불러오기
   }
 
   Future<void> _loadSortSettings() async {
@@ -73,6 +73,8 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
   void _addAccount(Map<String, dynamic> account) {
     setState(() {
       accounts.add(account);
+      // 총수입 필드 추가
+      account['totalIncome'] = calculateTotalIncome(account); // 총수입 계산
       // 정렬 설정에 따라 계좌를 추가 후 정렬
       AccountService.sortAccounts(accounts, currentSortType, isAscending);
       StorageService.saveAccounts(accounts);
@@ -726,7 +728,7 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
                 startDate: '',
                 endDate: '',
                 isTaxExempt: false,
-                selectedBankImage: '',
+                bankImage: '',
               ),
             ).then((result) {
               if (result != null) {
@@ -756,5 +758,14 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
   String formatNumber(double number) {
     return number.toStringAsFixed(0).replaceAllMapped(
         RegExp(r'(\d{1,3})(?=(\d{3})+(?!\d))'), (Match m) => '${m[1]},');
+  }
+
+  // 총수입 계산 함수 추가
+  double calculateTotalIncome(Map<String, dynamic> account) {
+    // 총수입 계산 로직 구현
+    double principal = account['principal'] ?? 0.0;
+    double interestRate = account['interestRate'] ?? 0.0;
+    int durationMonths = account['durationMonths'] ?? 0; // 계좌 기간 (개월)
+    return principal * (interestRate / 100) * durationMonths / 12; // 총수입 계산
   }
 }
