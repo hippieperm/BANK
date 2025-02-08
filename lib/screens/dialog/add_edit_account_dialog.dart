@@ -178,7 +178,7 @@ class _AddEditAccountDialogState extends State<AddEditAccountDialog>
                                 horizontal: 30,
                                 vertical: 3,
                               ),
-                              child: widget.bankImage != null
+                              child: widget.bankImage != ''
                                   ? Row(
                                       mainAxisAlignment:
                                           MainAxisAlignment.center,
