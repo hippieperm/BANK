@@ -487,8 +487,8 @@ class _AddEditAccountDialogState extends State<AddEditAccountDialog>
                         context: context,
                         dialogType: DialogType.success,
                         animType: AnimType.scale,
-                        title: '계좌 추가 성공',
-                        desc: '계좌가 성공적으로 추가되었습니다.',
+                        title: widget.isEditing ? '계좌 수정 성공' : '계좌 추가 성공',
+                        desc: widget.isEditing ? '계좌가 성공적으로 수정되었습니다.': '계좌가 성공적으로 추가되었습니다.',
                         btnOkOnPress: () {
                           Navigator.pop(context, {
                             'bankName': selectedBankImage,
