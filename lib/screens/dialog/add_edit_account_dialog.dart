@@ -54,7 +54,7 @@ class _AddEditAccountDialogState extends State<AddEditAccountDialog>
     selectedBankImage = widget.bankImage;
     startDateController.text = widget.startDate; // 시작일 초기화
     endDateController.text = widget.endDate; // 종료일 초기화
-    principalController.text = widget.principal?.toString() ?? ''; // 원금 초기화
+    principalController.text = formatCurrency(widget.principal ?? 0); // 원금 초기화
     interestRateController.text =
         widget.interestRate?.toString() ?? ''; // 이자율 초기화
     isTaxExempt = widget.isTaxExempt; // 비과세 여부 초기화
@@ -80,6 +80,12 @@ class _AddEditAccountDialogState extends State<AddEditAccountDialog>
   // 쉼표를 제거하는 함수
   String removeCommas(String text) {
     return text.replaceAll(',', '');
+  }
+
+  String formatCurrency(double amount) {
+    // 소수점 이하를 제거하고 천 단위로 쉼표 추가
+    return amount.toStringAsFixed(0).replaceAllMapped(
+        RegExp(r'(\d)(?=(\d{3})+(?!\d))'), (Match m) => '${m[1]},');
   }
 
   @override
@@ -342,19 +348,13 @@ class _AddEditAccountDialogState extends State<AddEditAccountDialog>
                             String numericOnly = removeCommas(value);
                             if (numericOnly.isNotEmpty) {
                               // 천 단위 쉼표 추가
-                              String formatted = formatNumber(numericOnly);
-                              // 커서 위치 저장
-                              int cursorPosition =
-                                  principalController.selection.start;
-                              // 이전 쉼표 개수와 새로운 쉼표 개수의 차이
-                              int commasDiff = formatted.length - value.length;
-
+                              String formatted =
+                                  formatCurrency(double.parse(numericOnly));
                               principalController.text = formatted;
                               // 커서 위치 조정
                               principalController.selection =
                                   TextSelection.fromPosition(
-                                TextPosition(
-                                    offset: cursorPosition + commasDiff),
+                                TextPosition(offset: formatted.length),
                               );
                             }
                           },
