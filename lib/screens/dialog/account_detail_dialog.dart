@@ -12,6 +12,7 @@ class AccountDetailDialog extends StatefulWidget {
   final List<String>? notifications;
   final Function(Map<String, dynamic>)? onEdit;
   final Function()? onDelete;
+  final int? lateDay;
 
   const AccountDetailDialog({
     super.key,
@@ -20,6 +21,7 @@ class AccountDetailDialog extends StatefulWidget {
     this.notifications,
     this.onEdit,
     this.onDelete,
+    this.lateDay,
   });
 
   @override
@@ -148,20 +150,31 @@ class _AccountDetailDialogState extends State<AccountDetailDialog>
                                       fontWeight: FontWeight.bold,
                                     ),
                                   ),
-                                  Text(
-                                    '남은 기간: ${DateTime.parse(widget.account['endDate']).difference(DateTime.now()).inDays}일 남음',
-                                    style: TextStyle(
-                                      color: DateTime.parse(
-                                                      widget.account['endDate'])
-                                                  .difference(DateTime.now())
-                                                  .inDays <=
-                                              30
-                                          ? Colors.red
-                                          : Colors.white,
-                                      fontSize: 18,
-                                      fontWeight: FontWeight.bold,
-                                    ),
-                                  ),
+                                  widget.lateDay! > 0
+                                      ? Text(
+                                          '남은 기간: ${DateTime.parse(widget.account['endDate']).difference(DateTime.now()).inDays}일 남음',
+                                          style: TextStyle(
+                                            color: DateTime.parse(widget
+                                                            .account['endDate'])
+                                                        .difference(
+                                                            DateTime.now())
+                                                        .inDays <=
+                                                    30
+                                                ? Colors.red
+                                                : Colors.white,
+                                            fontSize: 18,
+                                            fontWeight: FontWeight.bold,
+                                          ),
+                                        )
+                                      : Container(),
+                                  // : const Text(
+                                  //     '만기',
+                                  //     style: TextStyle(
+                                  //       color: Colors.red,
+                                  //       fontWeight: FontWeight.bold,
+                                  //       fontSize: 18,
+                                  //     ),
+                                  //   ),
                                   Padding(
                                     padding: const EdgeInsets.all(10.0),
                                     child: Center(

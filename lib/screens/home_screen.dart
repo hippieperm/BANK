@@ -1,13 +1,10 @@
-import 'dart:ui';
 import 'dart:math';
 
-import 'package:awesome_dialog/awesome_dialog.dart';
 import 'package:bank/screens/dialog/account_detail_dialog.dart';
 import 'package:bank/screens/dialog/add_edit_account_dialog.dart';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:fl_chart/fl_chart.dart';
 import 'package:bank/services/account_service.dart';
 
 import 'package:bank/services/storage_service.dart';
@@ -196,119 +193,6 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
                 });
               },
             ),
-            // child: IconButton(
-            //   icon: Stack(
-            //     children: [
-            //       const Icon(
-            //         Icons.notifications,
-            //         color: Colors.white,
-            //         size: 34,
-            //       ),
-            //       Positioned(
-            //         right: 0,
-            //         top: 0,
-            //         child: Container(
-            //           padding: const EdgeInsets.all(1),
-            //           decoration: BoxDecoration(
-            //             color: Colors.red,
-            //             borderRadius: BorderRadius.circular(6),
-            //           ),
-            //           constraints: const BoxConstraints(
-            //             minWidth: 14,
-            //             minHeight: 14,
-            //           ),
-            //           child: const Text(
-            //             // notifications.length.toString(),
-            //             '',
-            //             style: TextStyle(
-            //               color: Colors.white,
-            //               fontSize: 0,
-            //               fontWeight: FontWeight.bold,
-            //             ),
-            //             textAlign: TextAlign.center,
-            //           ),
-            //         ),
-            //       ),
-            //     ],
-            //   ),
-            //   onPressed: () {
-            //     // 알림 설정 기능
-            //     showGeneralDialog(
-            //       context: context,
-            //       barrierDismissible: true,
-            //       barrierLabel: '',
-            //       barrierColor: Colors.black.withOpacity(0.5),
-            //       pageBuilder: (context, animation, secondaryAnimation) =>
-            //           AlertDialog(
-            //         backgroundColor: const Color(0xff2d2d2d),
-            //         title: const Text(
-            //           '알림',
-            //           style: TextStyle(color: Colors.white),
-            //         ),
-            //         content: Column(
-            //           mainAxisSize: MainAxisSize.min,
-            //           children:
-            //               NotificationService.getNotifications() // 여기서 직접 가져오기
-            //                   .map((notification) => ListTile(
-            //                         title: Text(
-            //                           notification,
-            //                           style:
-            //                               const TextStyle(color: Colors.white),
-            //                         ),
-            //                       ))
-            //                   .toList(),
-            //         ),
-            //       ),
-            //       transitionBuilder:
-            //           (context, animation, secondaryAnimation, child) {
-            //         var curve = Curves.easeInOut;
-            //         var curvedAnimation = CurvedAnimation(
-            //           parent: animation,
-            //           curve: curve,
-            //         );
-
-            //         return GestureDetector(
-            //           onTap: () => Navigator.of(context).pop(),
-            //           child: BackdropFilter(
-            //             filter: ImageFilter.blur(sigmaX: 5, sigmaY: 5),
-            //             child: GestureDetector(
-            //               onTap: () {},
-            //               child: ScaleTransition(
-            //                 scale: Tween<double>(begin: 0.8, end: 1.0)
-            //                     .animate(curvedAnimation),
-            //                 child: FadeTransition(
-            //                   opacity: Tween<double>(begin: 0.0, end: 1.0)
-            //                       .animate(curvedAnimation),
-            //                   child: const Dialog(
-            //                     backgroundColor: Color(0xff2d2d2d),
-            //                     child: Padding(
-            //                       padding: EdgeInsets.all(16.0),
-            //                       child: Column(
-            //                         mainAxisSize: MainAxisSize.min,
-            //                         children: [
-            //                           Text(
-            //                             '알림',
-            //                             style: TextStyle(
-            //                               color: Colors.white,
-            //                               fontSize: 20,
-            //                               fontWeight: FontWeight.bold,
-            //                             ),
-            //                           ),
-            //                           SizedBox(height: 20),
-            //                         ],
-            //                       ),
-            //                     ),
-            //                   ),
-            //                 ),
-            //               ),
-            //             ),
-            //           ),
-            //         );
-            //       },
-            //       transitionDuration: const Duration(milliseconds: 300),
-            //     );
-            //   },
-            // ),
           ),
         ],
       ),
@@ -320,125 +204,6 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
               color: Colors.transparent,
               child: InkWell(
                 borderRadius: BorderRadius.circular(24),
-                // onTap: () {
-                //   showGeneralDialog(
-                //     context: context,
-                //     barrierDismissible: true,
-                //     barrierLabel: '',
-                //     barrierColor: Colors.black.withOpacity(0.5),
-                //     pageBuilder: (context, animation, secondaryAnimation) =>
-                //         Container(),
-                //     transitionBuilder:
-                //         (context, animation, secondaryAnimation, child) {
-                //       var curve = Curves.easeInOut;
-                //       var curvedAnimation = CurvedAnimation(
-                //         parent: animation,
-                //         curve: curve,
-                //       );
-
-                //       return GestureDetector(
-                //         onTap: () => Navigator.of(context).pop(),
-                //         child: BackdropFilter(
-                //           filter: ImageFilter.blur(sigmaX: 5, sigmaY: 5),
-                //           child: GestureDetector(
-                //             onTap: () {},
-                //             child: ScaleTransition(
-                //               scale: Tween<double>(begin: 0.8, end: 1.0)
-                //                   .animate(curvedAnimation),
-                //               child: FadeTransition(
-                //                 opacity: Tween<double>(begin: 0.0, end: 1.0)
-                //                     .animate(curvedAnimation),
-                //                 child: const Dialog(
-                //                   backgroundColor: Color(0xff2d2d2d),
-                //                   child: Padding(
-                //                     padding: EdgeInsets.all(16.0),
-                //                     child: Column(
-                //                       mainAxisSize: MainAxisSize.min,
-                //                       children: [
-                //                         Text(
-                //                           '월별 이자 추이',
-                //                           style: TextStyle(
-                //                             color: Colors.white,
-                //                             fontSize: 20,
-                //                             fontWeight: FontWeight.bold,
-                //                           ),
-                //                         ),
-                //                         SizedBox(height: 20),
-                //                         // SizedBox(
-                //                         //   height: 300,
-                //                         //   child: LineChart(
-                //                         //     LineChartData(
-                //                         //       gridData:
-                //                         //           const FlGridData(show: false),
-                //                         //       titlesData: FlTitlesData(
-                //                         //         leftTitles: const AxisTitles(
-                //                         //           sideTitles: SideTitles(
-                //                         //               showTitles: false),
-                //                         //         ),
-                //                         //         rightTitles: const AxisTitles(
-                //                         //           sideTitles: SideTitles(
-                //                         //               showTitles: false),
-                //                         //         ),
-                //                         //         topTitles: const AxisTitles(
-                //                         //           sideTitles: SideTitles(
-                //                         //               showTitles: false),
-                //                         //         ),
-                //                         //         bottomTitles: AxisTitles(
-                //                         //           sideTitles: SideTitles(
-                //                         //             showTitles: true,
-                //                         //             getTitlesWidget:
-                //                         //                 (value, meta) {
-                //                         //               return Text(
-                //                         //                 '${value.toInt()}월',
-                //                         //                 style: const TextStyle(
-                //                         //                   color: Colors.white70,
-                //                         //                   fontSize: 12,
-                //                         //                 ),
-                //                         //               );
-                //                         //             },
-                //                         //           ),
-                //                         //         ),
-                //                         //       ),
-                //                         //       borderData:
-                //                         //           FlBorderData(show: false),
-                //                         //       lineBarsData: [
-                //                         //         LineChartBarData(
-                //                         //           spots:
-                //                         //               List.generate(6, (index) {
-                //                         //             return FlSpot(
-                //                         //                 index.toDouble(),
-                //                         //                 calculateTotalMonthlyInterest() *
-                //                         //                     (1 + index * 0.1));
-                //                         //           }),
-                //                         //           isCurved: true,
-                //                         //           color: Colors.blue,
-                //                         //           barWidth: 3,
-                //                         //           isStrokeCapRound: true,
-                //                         //           dotData: const FlDotData(
-                //                         //               show: false),
-                //                         //           belowBarData: BarAreaData(
-                //                         //             show: true,
-                //                         //             color: Colors.blue
-                //                         //                 .withOpacity(0.2),
-                //                         //           ),
-                //                         //         ),
-                //                         //       ],
-                //                         //     ),
-                //                         //   ),
-                //                         // ),
-                //                       ],
-                //                     ),
-                //                   ),
-                //                 ),
-                //               ),
-                //             ),
-                //           ),
-                //         ),
-                //       );
-                //     },
-                //     transitionDuration: const Duration(milliseconds: 300),
-                //   );
-                // },
                 child: Container(
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(24),
@@ -487,9 +252,9 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
                             ),
                             const SizedBox(height: 8),
                             Text(
-                              '₩ ${formatIncome(calculateTotalReceivedInterest())}',
+                              '₩ ${formatNumber(calculateTotalReceivedInterest())}',
                               style: const TextStyle(
-                                fontSize: 18,
+                                fontSize: 14,
                                 fontWeight: FontWeight.bold,
                                 color: Colors.white,
                               ),
@@ -633,6 +398,7 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
                                     showDialog(
                                       context: context,
                                       builder: (context) => AccountDetailDialog(
+                                        lateDay: remainingDays,
                                         account: account,
                                         bankName: account['bankImage'],
                                         onEdit: (updatedAccount) {
@@ -650,10 +416,6 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
                                   child: Column(
                                     mainAxisAlignment: MainAxisAlignment.center,
                                     children: [
-                                      // const Icon(
-                                      //   Icons.date_range_rounded,
-                                      //   color: Colors.white,
-                                      // ),
                                       Text(
                                         'D-Day',
                                         style: TextStyle(
@@ -754,24 +516,6 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
   String formatNumber(double number) {
     return number.toStringAsFixed(0).replaceAllMapped(
         RegExp(r'(\d{1,3})(?=(\d{3})+(?!\d))'), (Match m) => '${m[1]},');
-  }
-
-  String formatIncome(double income) {
-    if (income >= 1000000000000) {
-      return '${(income / 1000000000000).toStringAsFixed(0)}조';
-    } else if (income >= 100000000) {
-      return '${(income / 100000000).toStringAsFixed(0)}억';
-    } else if (income >= 10000000) {
-      return '${(income / 10000000).toStringAsFixed(0)}천만';
-    } else if (income >= 1000000) {
-      return '${(income / 1000000).toStringAsFixed(0)}백만';
-    } else if (income >= 10000) {
-      return '${(income / 10000).toStringAsFixed(0)}만';
-    } else if (income >= 1000) {
-      return '${(income / 1000).toStringAsFixed(0)}천';
-    } else {
-      return income.toStringAsFixed(0);
-    }
   }
 
   // 총수입 계산 함수 추가
