@@ -92,7 +92,7 @@ class _AddEditAccountDialogState extends State<AddEditAccountDialog>
   Widget build(BuildContext context) {
     return Dialog(
       backgroundColor: Colors.transparent, // 배경을 투명하게 설정
-      insetPadding: const EdgeInsets.symmetric(horizontal: 1, vertical: 100),
+      insetPadding: const EdgeInsets.symmetric(horizontal: 20, vertical: 0),
       child: Stack(
         children: [
           // 배경 블러 처리
@@ -498,12 +498,12 @@ class _AddEditAccountDialogState extends State<AddEditAccountDialog>
                             'bankImage': selectedBankName,
                             'startDate': startDateController.text,
                             'endDate': endDateController.text,
-                            'interestRate':
-                                double.parse(interestRateController.text),
+                            'interestRate': double.parse(removeCommas(
+                                interestRateController.text)), // 쉼표 제거 후 변환
                             'isTaxExempt': isTaxExempt,
                             'taxRate': taxRate,
-                            'principal': double.parse(
-                                removeCommas(principalController.text)),
+                            'principal': double.parse(removeCommas(
+                                principalController.text)), // 쉼표 제거 후 변환
                           });
                         },
                         btnOkColor: Colors.green,
