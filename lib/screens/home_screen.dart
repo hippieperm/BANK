@@ -320,125 +320,125 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
               color: Colors.transparent,
               child: InkWell(
                 borderRadius: BorderRadius.circular(24),
-                onTap: () {
-                  showGeneralDialog(
-                    context: context,
-                    barrierDismissible: true,
-                    barrierLabel: '',
-                    barrierColor: Colors.black.withOpacity(0.5),
-                    pageBuilder: (context, animation, secondaryAnimation) =>
-                        Container(),
-                    transitionBuilder:
-                        (context, animation, secondaryAnimation, child) {
-                      var curve = Curves.easeInOut;
-                      var curvedAnimation = CurvedAnimation(
-                        parent: animation,
-                        curve: curve,
-                      );
+                // onTap: () {
+                //   showGeneralDialog(
+                //     context: context,
+                //     barrierDismissible: true,
+                //     barrierLabel: '',
+                //     barrierColor: Colors.black.withOpacity(0.5),
+                //     pageBuilder: (context, animation, secondaryAnimation) =>
+                //         Container(),
+                //     transitionBuilder:
+                //         (context, animation, secondaryAnimation, child) {
+                //       var curve = Curves.easeInOut;
+                //       var curvedAnimation = CurvedAnimation(
+                //         parent: animation,
+                //         curve: curve,
+                //       );
 
-                      return GestureDetector(
-                        onTap: () => Navigator.of(context).pop(),
-                        child: BackdropFilter(
-                          filter: ImageFilter.blur(sigmaX: 5, sigmaY: 5),
-                          child: GestureDetector(
-                            onTap: () {},
-                            child: ScaleTransition(
-                              scale: Tween<double>(begin: 0.8, end: 1.0)
-                                  .animate(curvedAnimation),
-                              child: FadeTransition(
-                                opacity: Tween<double>(begin: 0.0, end: 1.0)
-                                    .animate(curvedAnimation),
-                                child: Dialog(
-                                  backgroundColor: const Color(0xff2d2d2d),
-                                  child: Padding(
-                                    padding: const EdgeInsets.all(16.0),
-                                    child: Column(
-                                      mainAxisSize: MainAxisSize.min,
-                                      children: [
-                                        const Text(
-                                          '월별 이자 추이',
-                                          style: TextStyle(
-                                            color: Colors.white,
-                                            fontSize: 20,
-                                            fontWeight: FontWeight.bold,
-                                          ),
-                                        ),
-                                        const SizedBox(height: 20),
-                                        SizedBox(
-                                          height: 300,
-                                          child: LineChart(
-                                            LineChartData(
-                                              gridData:
-                                                  const FlGridData(show: false),
-                                              titlesData: FlTitlesData(
-                                                leftTitles: const AxisTitles(
-                                                  sideTitles: SideTitles(
-                                                      showTitles: false),
-                                                ),
-                                                rightTitles: const AxisTitles(
-                                                  sideTitles: SideTitles(
-                                                      showTitles: false),
-                                                ),
-                                                topTitles: const AxisTitles(
-                                                  sideTitles: SideTitles(
-                                                      showTitles: false),
-                                                ),
-                                                bottomTitles: AxisTitles(
-                                                  sideTitles: SideTitles(
-                                                    showTitles: true,
-                                                    getTitlesWidget:
-                                                        (value, meta) {
-                                                      return Text(
-                                                        '${value.toInt()}월',
-                                                        style: const TextStyle(
-                                                          color: Colors.white70,
-                                                          fontSize: 12,
-                                                        ),
-                                                      );
-                                                    },
-                                                  ),
-                                                ),
-                                              ),
-                                              borderData:
-                                                  FlBorderData(show: false),
-                                              lineBarsData: [
-                                                LineChartBarData(
-                                                  spots:
-                                                      List.generate(6, (index) {
-                                                    return FlSpot(
-                                                        index.toDouble(),
-                                                        calculateTotalMonthlyInterest() *
-                                                            (1 + index * 0.1));
-                                                  }),
-                                                  isCurved: true,
-                                                  color: Colors.blue,
-                                                  barWidth: 3,
-                                                  isStrokeCapRound: true,
-                                                  dotData: const FlDotData(
-                                                      show: false),
-                                                  belowBarData: BarAreaData(
-                                                    show: true,
-                                                    color: Colors.blue
-                                                        .withOpacity(0.2),
-                                                  ),
-                                                ),
-                                              ],
-                                            ),
-                                          ),
-                                        ),
-                                      ],
-                                    ),
-                                  ),
-                                ),
-                              ),
-                            ),
-                          ),
-                        ),
-                      );
-                    },
-                    transitionDuration: const Duration(milliseconds: 300),
-                  );
-                },
+                //       return GestureDetector(
+                //         onTap: () => Navigator.of(context).pop(),
+                //         child: BackdropFilter(
+                //           filter: ImageFilter.blur(sigmaX: 5, sigmaY: 5),
+                //           child: GestureDetector(
+                //             onTap: () {},
+                //             child: ScaleTransition(
+                //               scale: Tween<double>(begin: 0.8, end: 1.0)
+                //                   .animate(curvedAnimation),
+                //               child: FadeTransition(
+                //                 opacity: Tween<double>(begin: 0.0, end: 1.0)
+                //                     .animate(curvedAnimation),
+                //                 child: const Dialog(
+                //                   backgroundColor: Color(0xff2d2d2d),
+                //                   child: Padding(
+                //                     padding: EdgeInsets.all(16.0),
+                //                     child: Column(
+                //                       mainAxisSize: MainAxisSize.min,
+                //                       children: [
+                //                         Text(
+                //                           '월별 이자 추이',
+                //                           style: TextStyle(
+                //                             color: Colors.white,
+                //                             fontSize: 20,
+                //                             fontWeight: FontWeight.bold,
+                //                           ),
+                //                         ),
+                //                         SizedBox(height: 20),
+                //                         // SizedBox(
+                //                         //   height: 300,
+                //                         //   child: LineChart(
+                //                         //     LineChartData(
+                //                         //       gridData:
+                //                         //           const FlGridData(show: false),
+                //                         //       titlesData: FlTitlesData(
+                //                         //         leftTitles: const AxisTitles(
+                //                         //           sideTitles: SideTitles(
+                //                         //               showTitles: false),
+                //                         //         ),
+                //                         //         rightTitles: const AxisTitles(
+                //                         //           sideTitles: SideTitles(
+                //                         //               showTitles: false),
+                //                         //         ),
+                //                         //         topTitles: const AxisTitles(
+                //                         //           sideTitles: SideTitles(
+                //                         //               showTitles: false),
+                //                         //         ),
+                //                         //         bottomTitles: AxisTitles(
+                //                         //           sideTitles: SideTitles(
+                //                         //             showTitles: true,
+                //                         //             getTitlesWidget:
+                //                         //                 (value, meta) {
+                //                         //               return Text(
+                //                         //                 '${value.toInt()}월',
+                //                         //                 style: const TextStyle(
+                //                         //                   color: Colors.white70,
+                //                         //                   fontSize: 12,
+                //                         //                 ),
+                //                         //               );
+                //                         //             },
+                //                         //           ),
+                //                         //         ),
+                //                         //       ),
+                //                         //       borderData:
+                //                         //           FlBorderData(show: false),
+                //                         //       lineBarsData: [
+                //                         //         LineChartBarData(
+                //                         //           spots:
+                //                         //               List.generate(6, (index) {
+                //                         //             return FlSpot(
+                //                         //                 index.toDouble(),
+                //                         //                 calculateTotalMonthlyInterest() *
+                //                         //                     (1 + index * 0.1));
+                //                         //           }),
+                //                         //           isCurved: true,
+                //                         //           color: Colors.blue,
+                //                         //           barWidth: 3,
+                //                         //           isStrokeCapRound: true,
+                //                         //           dotData: const FlDotData(
+                //                         //               show: false),
+                //                         //           belowBarData: BarAreaData(
+                //                         //             show: true,
+                //                         //             color: Colors.blue
+                //                         //                 .withOpacity(0.2),
+                //                         //           ),
+                //                         //         ),
+                //                         //       ],
+                //                         //     ),
+                //                         //   ),
+                //                         // ),
+                //                       ],
+                //                     ),
+                //                   ),
+                //                 ),
+                //               ),
+                //             ),
+                //           ),
+                //         ),
+                //       );
+                //     },
+                //     transitionDuration: const Duration(milliseconds: 300),
+                //   );
+                // },
                 child: Container(
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(24),
