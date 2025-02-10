@@ -8,6 +8,7 @@ import 'bank_choice_dialog.dart';
 import 'package:awesome_dialog/awesome_dialog.dart';
 
 class AddEditAccountDialog extends StatefulWidget {
+  final Map<String, dynamic> account;
   final String bankName;
   final String bankImage;
   final String startDate;
@@ -19,6 +20,7 @@ class AddEditAccountDialog extends StatefulWidget {
 
   const AddEditAccountDialog({
     super.key,
+    required this.account,
     required this.bankName,
     required this.bankImage,
     required this.startDate,
@@ -488,7 +490,9 @@ class _AddEditAccountDialogState extends State<AddEditAccountDialog>
                         dialogType: DialogType.success,
                         animType: AnimType.scale,
                         title: widget.isEditing ? '계좌 수정 성공' : '계좌 추가 성공',
-                        desc: widget.isEditing ? '계좌가 성공적으로 수정되었습니다.': '계좌가 성공적으로 추가되었습니다.',
+                        desc: widget.isEditing
+                            ? '계좌가 성공적으로 수정되었습니다.'
+                            : '계좌가 성공적으로 추가되었습니다.',
                         btnOkOnPress: () {
                           Navigator.pop(context, {
                             'bankName': selectedBankImage,

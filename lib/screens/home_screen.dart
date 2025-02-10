@@ -92,8 +92,8 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
   // 계좌 수정 시 저장
   void _updateAccount(int index, Map<String, dynamic> updatedAccount) {
     setState(() {
-      accounts[index] = updatedAccount;
-      StorageService.saveAccounts(accounts);
+      accounts[index] = updatedAccount; // 업데이트된 계좌 정보로 변경
+      StorageService.saveAccounts(accounts); // 변경된 계좌 목록 저장
     });
   }
 
@@ -612,8 +612,8 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
                                 ],
                               ),
                               SizedBox(
-                                width: 80, // 버튼의 너비
-                                height: 80, // 버튼의 높이
+                                width: 80,
+                                height: 80,
                                 child: TextButton(
                                   style: TextButton.styleFrom(
                                     backgroundColor: const Color(0xff3d3d3d),
@@ -624,32 +624,20 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
                                   ),
                                   onPressed: () {
                                     // 상세 보기 기능
-                                    showGeneralDialog(
+                                    showDialog(
                                       context: context,
-                                      barrierDismissible: true,
-                                      barrierLabel: '',
-                                      barrierColor:
-                                          Colors.black.withOpacity(0.5),
-                                      pageBuilder: (context, animation,
-                                              secondaryAnimation) =>
-                                          AccountDetailDialog(
+                                      builder: (context) => AccountDetailDialog(
                                         account: account,
                                         bankName: account['bankImage'],
+                                        onEdit: (updatedAccount) {
+                                          _updateAccount(index,
+                                              updatedAccount); // 수정된 계좌 정보 업데이트
+                                        },
+                                        onDelete: () {
+                                          _deleteAccount(index); // 삭제 메서드 호출
+                                        },
                                       ),
-                                    ).then((result) {
-                                      if (result == true) {
-                                        _deleteAccount(index); // 삭제 메서드 호출
-                                        AwesomeDialog(
-                                          width: 380,
-                                          context: context,
-                                          dialogType: DialogType.success,
-                                          animType: AnimType.scale,
-                                          title: '삭제 성공',
-                                          desc: '계좌가 성공적으로 삭제되었습니다.',
-                                          btnOkOnPress: () {},
-                                        ).show();
-                                      }
-                                    });
+                                    );
                                   },
                                   child: Column(
                                     mainAxisAlignment: MainAxisAlignment.center,
@@ -728,6 +716,7 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
                 endDate: '',
                 isTaxExempt: false,
                 bankImage: '',
+                account: {},
               ),
             ).then((result) {
               if (result != null) {

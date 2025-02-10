@@ -10,12 +10,16 @@ class AccountDetailDialog extends StatefulWidget {
   final Map<String, dynamic> account;
   final String bankName;
   final List<String>? notifications;
+  final Function(Map<String, dynamic>)? onEdit;
+  final Function()? onDelete;
 
   const AccountDetailDialog({
     super.key,
     required this.account,
     required this.bankName,
     this.notifications,
+    this.onEdit,
+    this.onDelete,
   });
 
   @override
@@ -264,7 +268,7 @@ class _AccountDetailDialogState extends State<AccountDetailDialog>
                                 TextButton(
                                   onPressed: () {
                                     AwesomeDialog(
-                                    width: 380,
+                                      width: 380,
                                       context: context,
                                       dialogType: DialogType.warning,
                                       animType: AnimType.scale,
@@ -276,7 +280,10 @@ class _AccountDetailDialogState extends State<AccountDetailDialog>
                                           context: context,
                                           builder: (context) =>
                                               AddEditAccountDialog(
+                                            account: widget.account,
                                             bankName: widget.bankName,
+                                            bankImage:
+                                                widget.account['bankImage'],
                                             startDate:
                                                 widget.account['startDate'],
                                             endDate: widget.account['endDate'],
@@ -286,11 +293,15 @@ class _AccountDetailDialogState extends State<AccountDetailDialog>
                                                 widget.account['principal'],
                                             isTaxExempt:
                                                 widget.account['isTaxExempt'],
-                                            bankImage:
-                                                widget.account['bankName'],
                                             isEditing: true,
                                           ),
-                                        );
+                                        ).then((result) {
+                                          if (result != null &&
+                                              widget.onEdit != null) {
+                                            widget.onEdit!(result);
+                                            Navigator.pop(context);
+                                          }
+                                        });
                                       },
                                     ).show();
                                   },
@@ -319,7 +330,7 @@ class _AccountDetailDialogState extends State<AccountDetailDialog>
                                   onPressed: () {
                                     // 삭제 확인 다이얼로그 표시
                                     AwesomeDialog(
-                                    width: 380,
+                                      width: 380,
                                       context: context,
                                       dialogType: DialogType.error,
                                       animType: AnimType.scale,
