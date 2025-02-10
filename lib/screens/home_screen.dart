@@ -121,148 +121,338 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
 
   @override
   Widget build(BuildContext context) {
-    return GestureDetector(
-      onTap: () {
-        FocusScope.of(context).unfocus();
-      },
-      child: Scaffold(
-        backgroundColor: const Color(0xff1b1b1b),
-        appBar: AppBar(
-          backgroundColor: const Color(0xff2d2d2d),
-          elevation: 0.1,
-          title: Padding(
-            padding: const EdgeInsets.only(left: 16),
-            child: Text(
-              '정기예금 관리',
-              style: TextStyle(
-                fontWeight: FontWeight.bold,
-                fontSize: 22,
-                color: Colors.white.withOpacity(0.9),
-              ),
+    return Scaffold(
+      backgroundColor: const Color(0xff1b1b1b),
+      appBar: AppBar(
+        backgroundColor: const Color(0xff2d2d2d),
+        elevation: 0.1,
+        title: Padding(
+          padding: const EdgeInsets.only(left: 16),
+          child: Text(
+            '정기예금 관리',
+            style: TextStyle(
+              fontWeight: FontWeight.bold,
+              fontSize: 22,
+              color: Colors.white.withOpacity(0.9),
             ),
           ),
-          actions: [
-            PopupMenuButton<String>(
-              icon: const Icon(Icons.sort, color: Colors.white, size: 28),
-              color: const Color(0xff2d2d2d),
-              onSelected: sortAccounts,
-              itemBuilder: (BuildContext context) => [
-                '은행별',
-                '만기일자',
-                '원금',
-                '월이자수입',
-                '금리',
-                '시작일자',
-                '총 수입',
-                //총수입,
-                //만기인지 아닌지 차트,
-                //상세보기에 은행 전화번호,총수입 원금
-              ].map((String choice) {
-                return PopupMenuItem<String>(
-                  value: choice,
-                  child: Row(
-                    children: [
-                      Text(
-                        choice,
-                        style: const TextStyle(
-                          color: Colors.white,
-                          fontWeight: FontWeight.bold,
-                          fontSize: 16,
-                        ),
+        ),
+        actions: [
+          PopupMenuButton<String>(
+            icon: const Icon(Icons.sort, color: Colors.white, size: 28),
+            color: const Color(0xff2d2d2d),
+            onSelected: sortAccounts,
+            itemBuilder: (BuildContext context) => [
+              '은행별',
+              '만기일자',
+              '원금',
+              '월이자수입',
+              '금리',
+              '시작일자',
+              '총 수입',
+              //총수입,
+              //만기인지 아닌지 차트,
+              //상세보기에 은행 전화번호,총수입 원금
+            ].map((String choice) {
+              return PopupMenuItem<String>(
+                value: choice,
+                child: Row(
+                  children: [
+                    Text(
+                      choice,
+                      style: const TextStyle(
+                        color: Colors.white,
+                        fontWeight: FontWeight.bold,
+                        fontSize: 16,
                       ),
-                      if (currentSortType == choice)
-                        Icon(
-                          isAscending
-                              ? Icons.arrow_upward
-                              : Icons.arrow_downward,
-                          color: Colors.white,
-                          size: 18,
-                        ),
-                    ],
-                  ),
-                );
-              }).toList(),
-            ),
-            const SizedBox(width: 16),
-            Padding(
-              padding: const EdgeInsets.only(right: 16.0),
-              child: IconButton(
-                icon: Icon(
-                  hideExpiredAccounts ? Icons.visibility_off : Icons.visibility,
-                  color: Colors.white,
+                    ),
+                    if (currentSortType == choice)
+                      Icon(
+                        isAscending ? Icons.arrow_upward : Icons.arrow_downward,
+                        color: Colors.white,
+                        size: 18,
+                      ),
+                  ],
                 ),
-                onPressed: () {
-                  setState(() {
-                    hideExpiredAccounts = !hideExpiredAccounts; // 상태 전환
-                    StorageService.saveSettings(
-                        {'hideExpiredAccounts': hideExpiredAccounts}); // 설정 저장
-                  });
-                },
+              );
+            }).toList(),
+          ),
+          const SizedBox(width: 16),
+          Padding(
+            padding: const EdgeInsets.only(right: 16.0),
+            child: IconButton(
+              icon: Icon(
+                hideExpiredAccounts ? Icons.visibility_off : Icons.visibility,
+                color: Colors.white,
+              ),
+              onPressed: () {
+                setState(() {
+                  hideExpiredAccounts = !hideExpiredAccounts; // 상태 전환
+                  StorageService.saveSettings(
+                      {'hideExpiredAccounts': hideExpiredAccounts}); // 설정 저장
+                });
+              },
+            ),
+          ),
+        ],
+      ),
+      body: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 18, vertical: 10),
+        child: Column(
+          children: [
+            Material(
+              color: Colors.transparent,
+              child: InkWell(
+                borderRadius: BorderRadius.circular(24),
+                child: Container(
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(24),
+                    color: const Color(0xff3d3d3d),
+                  ),
+                  child: Padding(
+                    padding: const EdgeInsets.symmetric(
+                        horizontal: 20, vertical: 20),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceAround,
+                      children: [
+                        Column(
+                          children: [
+                            const Text(
+                              '이번 달 총 이자',
+                              style: TextStyle(
+                                fontSize: 16,
+                                color: Colors.white70,
+                              ),
+                            ),
+                            const SizedBox(height: 8),
+                            Text(
+                              '₩ ${formatNumber(calculateTotalMonthlyInterest())}',
+                              style: const TextStyle(
+                                fontSize: 24,
+                                fontWeight: FontWeight.bold,
+                                color: Colors.white,
+                              ),
+                            ),
+                          ],
+                        ),
+                        Container(
+                          width: 1,
+                          height: 40,
+                          color: Colors.white24,
+                        ),
+                        Column(
+                          children: [
+                            const Text(
+                              // '누적 수령 이자',
+                              '총 수입',
+                              style: TextStyle(
+                                fontSize: 16,
+                                color: Colors.white70,
+                              ),
+                            ),
+                            const SizedBox(height: 8),
+                            Text(
+                              '₩ ${formatNumber(calculateTotalReceivedInterest())}',
+                              style: const TextStyle(
+                                fontSize: 14,
+                                fontWeight: FontWeight.bold,
+                                color: Colors.white,
+                              ),
+                            ),
+                          ],
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
               ),
             ),
-          ],
-        ),
-        body: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 18, vertical: 10),
-          child: Column(
-            children: [
-              Material(
-                color: Colors.transparent,
-                child: InkWell(
-                  borderRadius: BorderRadius.circular(24),
-                  child: Container(
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(24),
-                      color: const Color(0xff3d3d3d),
-                    ),
+            Expanded(
+              child: ListView.builder(
+                itemCount: accounts.length,
+                itemBuilder: (context, index) {
+                  final account = accounts[index];
+                  final endDate = DateTime.parse(account['endDate']);
+                  final remainingDays =
+                      max(0, endDate.difference(DateTime.now()).inDays);
+
+                  // 만기된 계좌 숨기기 로직 추가
+                  if (hideExpiredAccounts && remainingDays <= 0) {
+                    return const SizedBox.shrink(); // 만기된 계좌는 숨김
+                  }
+
+                  // 월 이자 계산 수정
+                  final principal = account['principal'];
+                  final interestRate = account['interestRate'];
+                  final monthlyInterest = principal * (interestRate / 100) / 12;
+
+                  // 천 단위 구분 쉼표를 위한 포맷 함수
+                  String formatNumber(double number) {
+                    return number.toStringAsFixed(0).replaceAllMapped(
+                        RegExp(r'(\d{1,3})(?=(\d{3})+(?!\d))'),
+                        (Match m) => '${m[1]},');
+                  }
+
+                  return Card(
+                    color: const Color(0xff2d2d2d),
+                    margin: const EdgeInsets.only(top: 10),
                     child: Padding(
                       padding: const EdgeInsets.symmetric(
-                          horizontal: 20, vertical: 20),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceAround,
+                          horizontal: 20, vertical: 10),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          Column(
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
-                              const Text(
-                                '이번 달 총 이자',
-                                style: TextStyle(
-                                  fontSize: 16,
-                                  color: Colors.white70,
-                                ),
+                              Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  SvgPicture.asset(
+                                    account['bankImage']!,
+                                    width: 100,
+                                    height: 24,
+                                    fit: BoxFit.contain,
+                                  ),
+                                  const SizedBox(height: 8),
+                                  Row(
+                                    children: [
+                                      Text(
+                                        '${account['startDate']} ~ ',
+                                        style: const TextStyle(
+                                          fontSize: 14,
+                                          color: Colors.white70,
+                                        ),
+                                      ),
+                                      Text(
+                                        '${account['endDate']}',
+                                        style: TextStyle(
+                                          fontSize: 14,
+                                          color: remainingDays <= 30
+                                              ? Colors.red
+                                              : Colors.white70,
+                                          fontWeight: remainingDays <= 30
+                                              ? FontWeight.bold
+                                              : FontWeight.normal,
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                  const SizedBox(height: 5),
+                                  Row(
+                                    children: [
+                                      const Text(
+                                        '원금: ₩ ',
+                                        style: TextStyle(
+                                          fontSize: 14,
+                                          color: Colors.white,
+                                          fontWeight: FontWeight.w600,
+                                        ),
+                                      ),
+                                      Text(
+                                        formatNumber(principal),
+                                        style: TextStyle(
+                                          fontSize: 16,
+                                          color: Colors.white.withOpacity(0.9),
+                                          fontWeight: FontWeight.bold,
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                  const SizedBox(height: 1),
+                                  Row(
+                                    children: [
+                                      const Text(
+                                        '월 이자 수입: ₩ ',
+                                        style: TextStyle(
+                                          fontSize: 14,
+                                          color: Colors.white,
+                                          fontWeight: FontWeight.w600,
+                                        ),
+                                      ),
+                                      Text(
+                                        formatNumber(monthlyInterest),
+                                        style: const TextStyle(
+                                          fontSize: 18,
+                                          color: Colors.white,
+                                          fontWeight: FontWeight.bold,
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                ],
                               ),
-                              const SizedBox(height: 8),
-                              Text(
-                                '₩ ${formatNumber(calculateTotalMonthlyInterest())}',
-                                style: const TextStyle(
-                                  fontSize: 24,
-                                  fontWeight: FontWeight.bold,
-                                  color: Colors.white,
-                                ),
-                              ),
-                            ],
-                          ),
-                          Container(
-                            width: 1,
-                            height: 40,
-                            color: Colors.white24,
-                          ),
-                          Column(
-                            children: [
-                              const Text(
-                                // '누적 수령 이자',
-                                '총 수입',
-                                style: TextStyle(
-                                  fontSize: 16,
-                                  color: Colors.white70,
-                                ),
-                              ),
-                              const SizedBox(height: 8),
-                              Text(
-                                '₩ ${formatNumber(calculateTotalReceivedInterest())}',
-                                style: const TextStyle(
-                                  fontSize: 14,
-                                  fontWeight: FontWeight.bold,
-                                  color: Colors.white,
+                              SizedBox(
+                                width: 80,
+                                height: 80,
+                                child: TextButton(
+                                  style: TextButton.styleFrom(
+                                    backgroundColor: const Color(0xff3d3d3d),
+                                    shape: RoundedRectangleBorder(
+                                      borderRadius:
+                                          BorderRadius.circular(15), // 라운딩
+                                    ),
+                                  ),
+                                  onPressed: () {
+                                    // 상세 보기 기능
+                                    showDialog(
+                                      context: context,
+                                      builder: (context) => AccountDetailDialog(
+                                        lateDay: remainingDays,
+                                        account: account,
+                                        bankName: account['bankImage'],
+                                        onEdit: (updatedAccount) {
+                                          _updateAccount(index,
+                                              updatedAccount); // 수정된 계좌 정보 업데이트
+                                        },
+                                        onDelete: () {
+                                          _deleteAccount(index); // 삭제 메서드 호출
+                                          Navigator.pop(
+                                              context); // AccountDetailDialog 닫기
+                                        },
+                                      ),
+                                    );
+                                  },
+                                  child: Column(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    children: [
+                                      Text(
+                                        'D-Day',
+                                        style: TextStyle(
+                                          fontWeight: FontWeight.bold,
+                                          fontSize: 11,
+                                          color: remainingDays <= 30
+                                              ? Colors.red
+                                              : Colors.white,
+                                        ),
+                                      ),
+                                      Text(
+                                        '$remainingDays',
+                                        style: TextStyle(
+                                          fontWeight: FontWeight.bold,
+                                          fontSize: remainingDays
+                                                      .toString()
+                                                      .length >=
+                                                  5
+                                              ? 18
+                                              : remainingDays
+                                                          .toString()
+                                                          .length >=
+                                                      4
+                                                  ? 20
+                                                  : remainingDays
+                                                              .toString()
+                                                              .length >=
+                                                          3
+                                                      ? 26
+                                                      : 28, // 글자 수에 따라 폰트 사이즈 조정
+                                          color: remainingDays <= 30
+                                              ? Colors.red
+                                              : Colors.white,
+                                        ),
+                                      ),
+                                    ],
+                                  ),
                                 ),
                               ),
                             ],
@@ -270,248 +460,47 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
                         ],
                       ),
                     ),
-                  ),
-                ),
+                  );
+                },
               ),
-              Expanded(
-                child: ListView.builder(
-                  itemCount: accounts.length,
-                  itemBuilder: (context, index) {
-                    final account = accounts[index];
-                    final endDate = DateTime.parse(account['endDate']);
-                    final remainingDays =
-                        max(0, endDate.difference(DateTime.now()).inDays);
-
-                    // 만기된 계좌 숨기기 로직 추가
-                    if (hideExpiredAccounts && remainingDays <= 0) {
-                      return const SizedBox.shrink(); // 만기된 계좌는 숨김
-                    }
-
-                    // 월 이자 계산 수정
-                    final principal = account['principal'];
-                    final interestRate = account['interestRate'];
-                    final monthlyInterest =
-                        principal * (interestRate / 100) / 12;
-
-                    // 천 단위 구분 쉼표를 위한 포맷 함수
-                    String formatNumber(double number) {
-                      return number.toStringAsFixed(0).replaceAllMapped(
-                          RegExp(r'(\d{1,3})(?=(\d{3})+(?!\d))'),
-                          (Match m) => '${m[1]},');
-                    }
-
-                    return Card(
-                      color: const Color(0xff2d2d2d),
-                      margin: const EdgeInsets.only(top: 10),
-                      child: Padding(
-                        padding: const EdgeInsets.symmetric(
-                            horizontal: 20, vertical: 10),
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
-                                Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    SvgPicture.asset(
-                                      account['bankImage']!,
-                                      width: 100,
-                                      height: 24,
-                                      fit: BoxFit.contain,
-                                    ),
-                                    const SizedBox(height: 8),
-                                    Row(
-                                      children: [
-                                        Text(
-                                          '${account['startDate']} ~ ',
-                                          style: const TextStyle(
-                                            fontSize: 14,
-                                            color: Colors.white70,
-                                          ),
-                                        ),
-                                        Text(
-                                          '${account['endDate']}',
-                                          style: TextStyle(
-                                            fontSize: 14,
-                                            color: remainingDays <= 30
-                                                ? Colors.red
-                                                : Colors.white70,
-                                            fontWeight: remainingDays <= 30
-                                                ? FontWeight.bold
-                                                : FontWeight.normal,
-                                          ),
-                                        ),
-                                      ],
-                                    ),
-                                    const SizedBox(height: 5),
-                                    Row(
-                                      children: [
-                                        const Text(
-                                          '원금: ₩ ',
-                                          style: TextStyle(
-                                            fontSize: 14,
-                                            color: Colors.white,
-                                            fontWeight: FontWeight.w600,
-                                          ),
-                                        ),
-                                        Text(
-                                          formatNumber(principal),
-                                          style: TextStyle(
-                                            fontSize: 16,
-                                            color:
-                                                Colors.white.withOpacity(0.9),
-                                            fontWeight: FontWeight.bold,
-                                          ),
-                                        ),
-                                      ],
-                                    ),
-                                    const SizedBox(height: 1),
-                                    Row(
-                                      children: [
-                                        const Text(
-                                          '월 이자 수입: ₩ ',
-                                          style: TextStyle(
-                                            fontSize: 14,
-                                            color: Colors.white,
-                                            fontWeight: FontWeight.w600,
-                                          ),
-                                        ),
-                                        Text(
-                                          formatNumber(monthlyInterest),
-                                          style: const TextStyle(
-                                            fontSize: 18,
-                                            color: Colors.white,
-                                            fontWeight: FontWeight.bold,
-                                          ),
-                                        ),
-                                      ],
-                                    ),
-                                  ],
-                                ),
-                                SizedBox(
-                                  width: 80,
-                                  height: 80,
-                                  child: TextButton(
-                                    style: TextButton.styleFrom(
-                                      backgroundColor: const Color(0xff3d3d3d),
-                                      shape: RoundedRectangleBorder(
-                                        borderRadius:
-                                            BorderRadius.circular(15), // 라운딩
-                                      ),
-                                    ),
-                                    onPressed: () {
-                                      // 상세 보기 기능
-                                      showDialog(
-                                        context: context,
-                                        builder: (context) =>
-                                            AccountDetailDialog(
-                                          lateDay: remainingDays,
-                                          account: account,
-                                          bankName: account['bankImage'],
-                                          onEdit: (updatedAccount) {
-                                            _updateAccount(index,
-                                                updatedAccount); // 수정된 계좌 정보 업데이트
-                                          },
-                                          onDelete: () {
-                                            _deleteAccount(index); // 삭제 메서드 호출
-                                            Navigator.pop(
-                                                context); // AccountDetailDialog 닫기
-                                          },
-                                        ),
-                                      );
-                                    },
-                                    child: Column(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.center,
-                                      children: [
-                                        Text(
-                                          'D-Day',
-                                          style: TextStyle(
-                                            fontWeight: FontWeight.bold,
-                                            fontSize: 11,
-                                            color: remainingDays <= 30
-                                                ? Colors.red
-                                                : Colors.white,
-                                          ),
-                                        ),
-                                        Text(
-                                          '$remainingDays',
-                                          style: TextStyle(
-                                            fontWeight: FontWeight.bold,
-                                            fontSize: remainingDays
-                                                        .toString()
-                                                        .length >=
-                                                    5
-                                                ? 18
-                                                : remainingDays
-                                                            .toString()
-                                                            .length >=
-                                                        4
-                                                    ? 20
-                                                    : remainingDays
-                                                                .toString()
-                                                                .length >=
-                                                            3
-                                                        ? 26
-                                                        : 28, // 글자 수에 따라 폰트 사이즈 조정
-                                            color: remainingDays <= 30
-                                                ? Colors.red
-                                                : Colors.white,
-                                          ),
-                                        ),
-                                      ],
-                                    ),
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ],
-                        ),
-                      ),
-                    );
-                  },
-                ),
-              ),
-            ],
-          ),
-        ),
-        bottomNavigationBar: BottomNavigationBar(
-          backgroundColor: Colors.transparent,
-          unselectedItemColor: Colors.white,
-          elevation: 1,
-          items: const [
-            BottomNavigationBarItem(icon: Icon(Icons.home), label: '홈'),
-            BottomNavigationBarItem(icon: Icon(Icons.add), label: '계좌 추가'),
-            BottomNavigationBarItem(icon: Icon(Icons.settings), label: '설정'),
+            ),
           ],
-          onTap: (index) {
-            if (index == 1) {
-              showDialog(
-                context: context,
-                builder: (context) => const AddEditAccountDialog(
-                  bankName: '',
-                  startDate: '',
-                  endDate: '',
-                  isTaxExempt: false,
-                  bankImage: '',
-                  account: {},
-                ),
-              ).then((result) {
-                if (result != null) {
-                  _addAccount(result);
-                }
-              });
-            } else if (index == 2) {
-              // 설정 화면으로 이동
-              // Navigator.push(
-              //   context,
-              //   MaterialPageRoute(builder: (context) => const SettingsScreen()),
-              // );
-            }
-          },
         ),
+      ),
+      bottomNavigationBar: BottomNavigationBar(
+        backgroundColor: Colors.transparent,
+        unselectedItemColor: Colors.white,
+        elevation: 1,
+        items: const [
+          BottomNavigationBarItem(icon: Icon(Icons.home), label: '홈'),
+          BottomNavigationBarItem(icon: Icon(Icons.add), label: '계좌 추가'),
+          BottomNavigationBarItem(icon: Icon(Icons.settings), label: '설정'),
+        ],
+        onTap: (index) {
+          if (index == 1) {
+            showDialog(
+              context: context,
+              builder: (context) => const AddEditAccountDialog(
+                bankName: '',
+                startDate: '',
+                endDate: '',
+                isTaxExempt: false,
+                bankImage: '',
+                account: {},
+              ),
+            ).then((result) {
+              if (result != null) {
+                _addAccount(result);
+              }
+            });
+          } else if (index == 2) {
+            // 설정 화면으로 이동
+            // Navigator.push(
+            //   context,
+            //   MaterialPageRoute(builder: (context) => const SettingsScreen()),
+            // );
+          }
+        },
       ),
     );
   }
