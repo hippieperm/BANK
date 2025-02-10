@@ -54,10 +54,9 @@ class _AddEditAccountDialogState extends State<AddEditAccountDialog>
     selectedBankImage = widget.bankImage;
     startDateController.text = widget.startDate; // 시작일 초기화
     endDateController.text = widget.endDate; // 종료일 초기화
+    principalController.text = widget.principal?.toString() ?? ''; // 원금 초기화
     interestRateController.text =
         widget.interestRate?.toString() ?? ''; // 이자율 초기화
-    principalController.text =
-        formatNumber(widget.principal?.toStringAsFixed(0) ?? ''); // 원금 초기화
     isTaxExempt = widget.isTaxExempt; // 비과세 여부 초기화
     _controller = AnimationController(
       vsync: this,
