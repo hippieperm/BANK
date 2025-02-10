@@ -83,10 +83,16 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
 
   // 계좌 삭제 시 저장
   void _deleteAccount(int index) {
-    setState(() {
-      accounts.removeAt(index);
-      StorageService.saveAccounts(accounts);
-    });
+    if (index >= 0 && index < accounts.length) {
+      // 인덱스 유효성 검사
+      setState(() {
+        accounts.removeAt(index);
+        StorageService.saveAccounts(accounts);
+      });
+    } else {
+      // 인덱스가 유효하지 않을 경우 처리
+      print('Invalid index: $index');
+    }
   }
 
   // 계좌 수정 시 저장
@@ -635,6 +641,8 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
                                         },
                                         onDelete: () {
                                           _deleteAccount(index); // 삭제 메서드 호출
+                                          Navigator.pop(
+                                              context); // AccountDetailDialog 닫기
                                         },
                                       ),
                                     );

@@ -338,9 +338,9 @@ class _AccountDetailDialogState extends State<AccountDetailDialog>
                                       desc: '정말로 삭제하시겠습니까?',
                                       btnCancelOnPress: () {},
                                       btnOkOnPress: () {
-                                        // 삭제 로직 추가
-                                        Navigator.of(context)
-                                            .pop(true); // 삭제 성공 시 true 반환
+                                        if (widget.onDelete != null) {
+                                          widget.onDelete!(); // 삭제 콜백 호출
+                                        }
                                       },
                                     ).show();
                                   },
