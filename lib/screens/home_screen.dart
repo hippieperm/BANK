@@ -487,9 +487,9 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
                             ),
                             const SizedBox(height: 8),
                             Text(
-                              '₩ ${formatNumber(calculateTotalReceivedInterest())}',
+                              '₩ ${formatIncome(calculateTotalReceivedInterest())}',
                               style: const TextStyle(
-                                fontSize: 14,
+                                fontSize: 18,
                                 fontWeight: FontWeight.bold,
                                 color: Colors.white,
                               ),
@@ -754,6 +754,24 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
   String formatNumber(double number) {
     return number.toStringAsFixed(0).replaceAllMapped(
         RegExp(r'(\d{1,3})(?=(\d{3})+(?!\d))'), (Match m) => '${m[1]},');
+  }
+
+  String formatIncome(double income) {
+    if (income >= 1000000000000) {
+      return '${(income / 1000000000000).toStringAsFixed(0)}조';
+    } else if (income >= 100000000) {
+      return '${(income / 100000000).toStringAsFixed(0)}억';
+    } else if (income >= 10000000) {
+      return '${(income / 10000000).toStringAsFixed(0)}천만';
+    } else if (income >= 1000000) {
+      return '${(income / 1000000).toStringAsFixed(0)}백만';
+    } else if (income >= 10000) {
+      return '${(income / 10000).toStringAsFixed(0)}만';
+    } else if (income >= 1000) {
+      return '${(income / 1000).toStringAsFixed(0)}천';
+    } else {
+      return income.toStringAsFixed(0);
+    }
   }
 
   // 총수입 계산 함수 추가
