@@ -96,7 +96,7 @@ class _AddEditAccountDialogState extends State<AddEditAccountDialog>
       },
       child: Dialog(
         backgroundColor: Colors.transparent, // 배경을 투명하게 설정
-        insetPadding: const EdgeInsets.symmetric(horizontal: 20, vertical: 0),
+        insetPadding: const EdgeInsets.symmetric(horizontal: 0, vertical: 0),
         child: Stack(
           children: [
             // 배경 블러 처리
