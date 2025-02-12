@@ -1,4 +1,5 @@
 import 'dart:ui';
+import 'dart:io';
 
 import 'package:flutter/material.dart';
 
@@ -194,17 +195,9 @@ class _AddEditAccountDialogState extends State<AddEditAccountDialog>
                                         mainAxisAlignment:
                                             MainAxisAlignment.center,
                                         children: [
-                                          selectedBankName!.endsWith('.svg')
-                                              ? SvgPicture.asset(
-                                                  selectedBankName!,
-                                                  width: 24,
-                                                  height: 24,
-                                                  placeholderBuilder:
-                                                      (context) => const Icon(
-                                                          Icons.error),
-                                                )
-                                              : Image.asset(
-                                                  selectedBankName!,
+                                          selectedBankImage!.startsWith('/')
+                                              ? Image.file(
+                                                  File(selectedBankImage!),
                                                   width: 24,
                                                   height: 24,
                                                   errorBuilder: (context, error,
@@ -212,7 +205,28 @@ class _AddEditAccountDialogState extends State<AddEditAccountDialog>
                                                     return const Icon(
                                                         Icons.error);
                                                   },
-                                                ),
+                                                )
+                                              : selectedBankImage!
+                                                      .endsWith('.svg')
+                                                  ? SvgPicture.asset(
+                                                      selectedBankName!,
+                                                      width: 24,
+                                                      height: 24,
+                                                      placeholderBuilder:
+                                                          (context) =>
+                                                              const Icon(
+                                                                  Icons.error),
+                                                    )
+                                                  : Image.asset(
+                                                      selectedBankName!,
+                                                      width: 24,
+                                                      height: 24,
+                                                      errorBuilder: (context,
+                                                          error, stackTrace) {
+                                                        return const Icon(
+                                                            Icons.error);
+                                                      },
+                                                    ),
                                           const SizedBox(width: 8),
                                         ],
                                       )

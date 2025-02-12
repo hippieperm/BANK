@@ -1,4 +1,5 @@
 import 'dart:math';
+import 'dart:io';
 
 import 'package:bank/screens/dialog/account_detail_dialog.dart';
 import 'package:bank/screens/dialog/add_edit_account_dialog.dart';
@@ -308,12 +309,26 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
                               Column(
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
-                                  SvgPicture.asset(
-                                    account['bankImage']!,
-                                    width: 100,
-                                    height: 24,
-                                    fit: BoxFit.contain,
-                                  ),
+                                  account['bankImage']!.startsWith('/')
+                                      ? Image.file(
+                                          File(account['bankImage']!),
+                                          width: 100,
+                                          height: 24,
+                                          fit: BoxFit.contain,
+                                        )
+                                      : account['bankImage']!.endsWith('.svg')
+                                          ? SvgPicture.asset(
+                                              account['bankImage']!,
+                                              width: 100,
+                                              height: 24,
+                                              fit: BoxFit.contain,
+                                            )
+                                          : Image.asset(
+                                              account['bankImage']!,
+                                              width: 100,
+                                              height: 24,
+                                              fit: BoxFit.contain,
+                                            ),
                                   const SizedBox(height: 8),
                                   Row(
                                     children: [

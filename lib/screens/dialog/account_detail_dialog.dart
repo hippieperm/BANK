@@ -1,4 +1,5 @@
 import 'dart:ui';
+import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:awesome_dialog/awesome_dialog.dart';
@@ -101,10 +102,15 @@ class _AccountDetailDialogState extends State<AccountDetailDialog>
                       title: Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
-                          SvgPicture.asset(
-                            widget.bankName,
-                            height: 28,
-                          ),
+                          widget.bankName.startsWith('/')
+                              ? Image.file(
+                                  File(widget.bankName),
+                                  height: 28,
+                                )
+                              : SvgPicture.asset(
+                                  widget.bankName,
+                                  height: 28,
+                                ),
                         ],
                       ),
                       content: SizedBox(
