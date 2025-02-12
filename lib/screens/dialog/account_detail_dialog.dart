@@ -1,3 +1,4 @@
+import 'dart:typed_data';
 import 'dart:ui';
 import 'dart:io';
 
@@ -107,10 +108,26 @@ class _AccountDetailDialogState extends State<AccountDetailDialog>
                                   File(widget.bankName),
                                   height: 28,
                                 )
-                              : SvgPicture.asset(
-                                  widget.bankName,
-                                  height: 28,
-                                ),
+                              : widget.account['isGallery'] == true
+                                  ? Image.file(
+                                      File(widget.account['bankImage']),
+                                      height: 28,
+                                    )
+                                  : widget.account['isApp'] == true
+                                      ? Image.memory(
+                                          widget.account['bankImage'],
+                                          height: 28,
+                                        )
+                                      : widget.account['bankImage']
+                                              .endsWith('.svg')
+                                          ? SvgPicture.asset(
+                                              widget.account['bankImage'],
+                                              height: 28,
+                                            )
+                                          : Image.asset(
+                                              widget.account['bankImage'],
+                                              height: 28,
+                                            ),
                         ],
                       ),
                       content: SizedBox(

@@ -1,3 +1,4 @@
+import 'dart:typed_data';
 import 'dart:ui';
 import 'dart:io';
 
@@ -39,7 +40,7 @@ class AddEditAccountDialog extends StatefulWidget {
 class _AddEditAccountDialogState extends State<AddEditAccountDialog>
     with SingleTickerProviderStateMixin {
   String? selectedBankName;
-  String? selectedBankImage;
+  dynamic selectedBankImage;
   final TextEditingController startDateController = TextEditingController();
   final TextEditingController endDateController = TextEditingController();
   final TextEditingController interestRateController = TextEditingController();
@@ -47,6 +48,7 @@ class _AddEditAccountDialogState extends State<AddEditAccountDialog>
   bool isTaxExempt = false;
   double taxRate = 0;
   late AnimationController _controller;
+  Map<String, dynamic> result = {};
 
   @override
   void initState() {
@@ -152,17 +154,18 @@ class _AddEditAccountDialogState extends State<AddEditAccountDialog>
                       ),
                       GestureDetector(
                         onTap: () async {
-                          final result = await showDialog(
+                          final dialogResult = await showDialog(
                             context: context,
                             builder: (BuildContext context) {
                               return const BankChoiceDialog();
                             },
                           );
 
-                          if (result != null && mounted) {
+                          if (dialogResult != null && mounted) {
                             setState(() {
-                              selectedBankName = result['name'];
-                              selectedBankImage = result['image'];
+                              result = dialogResult;
+                              selectedBankName = dialogResult['name'];
+                              selectedBankImage = dialogResult['image'];
                             });
                           }
                         },
@@ -195,38 +198,31 @@ class _AddEditAccountDialogState extends State<AddEditAccountDialog>
                                         mainAxisAlignment:
                                             MainAxisAlignment.center,
                                         children: [
-                                          selectedBankImage!.startsWith('/')
+                                          result['isGallery'] == true
                                               ? Image.file(
                                                   File(selectedBankImage!),
                                                   width: 24,
                                                   height: 24,
-                                                  errorBuilder: (context, error,
-                                                      stackTrace) {
-                                                    return const Icon(
-                                                        Icons.error);
-                                                  },
                                                 )
-                                              : selectedBankImage!
-                                                      .endsWith('.svg')
-                                                  ? SvgPicture.asset(
-                                                      selectedBankName!,
+                                              : result['isApp'] == true
+                                                  ? Image.memory(
+                                                      selectedBankImage
+                                                          as Uint8List,
                                                       width: 24,
                                                       height: 24,
-                                                      placeholderBuilder:
-                                                          (context) =>
-                                                              const Icon(
-                                                                  Icons.error),
                                                     )
-                                                  : Image.asset(
-                                                      selectedBankName!,
-                                                      width: 24,
-                                                      height: 24,
-                                                      errorBuilder: (context,
-                                                          error, stackTrace) {
-                                                        return const Icon(
-                                                            Icons.error);
-                                                      },
-                                                    ),
+                                                  : selectedBankImage!
+                                                          .endsWith('.svg')
+                                                      ? SvgPicture.asset(
+                                                          selectedBankImage!,
+                                                          width: 24,
+                                                          height: 24,
+                                                        )
+                                                      : Image.asset(
+                                                          selectedBankImage!,
+                                                          width: 24,
+                                                          height: 24,
+                                                        ),
                                           const SizedBox(width: 8),
                                         ],
                                       )
@@ -513,16 +509,18 @@ class _AddEditAccountDialogState extends State<AddEditAccountDialog>
                               : '계좌가 성공적으로 추가되었습니다.',
                           btnOkOnPress: () {
                             Navigator.pop(context, {
-                              'bankName': selectedBankImage,
-                              'bankImage': selectedBankName,
+                              'bankName': selectedBankName,
+                              'bankImage': selectedBankImage,
                               'startDate': startDateController.text,
                               'endDate': endDateController.text,
-                              'interestRate': double.parse(removeCommas(
-                                  interestRateController.text)), // 쉼표 제거 후 변환
+                              'interestRate': double.parse(
+                                  removeCommas(interestRateController.text)),
                               'isTaxExempt': isTaxExempt,
                               'taxRate': taxRate,
-                              'principal': double.parse(removeCommas(
-                                  principalController.text)), // 쉼표 제거 후 변환
+                              'principal': double.parse(
+                                  removeCommas(principalController.text)),
+                              'isApp': result['isApp'] ?? false,
+                              'isGallery': result['isGallery'] ?? false
                             });
                           },
                           btnOkColor: Colors.green,

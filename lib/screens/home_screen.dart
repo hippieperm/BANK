@@ -1,5 +1,6 @@
 import 'dart:math';
 import 'dart:io';
+import 'dart:typed_data';
 
 import 'package:bank/screens/dialog/account_detail_dialog.dart';
 import 'package:bank/screens/dialog/add_edit_account_dialog.dart';
@@ -309,26 +310,35 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
                               Column(
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
-                                  account['bankImage']!.startsWith('/')
+                                  account['isGallery'] == true
                                       ? Image.file(
-                                          File(account['bankImage']!),
+                                          File(account['bankImage']),
                                           width: 100,
                                           height: 24,
                                           fit: BoxFit.contain,
                                         )
-                                      : account['bankImage']!.endsWith('.svg')
-                                          ? SvgPicture.asset(
-                                              account['bankImage']!,
+                                      : account['isApp'] == true
+                                          ? Image.memory(
+                                              Uint8List.fromList(
+                                                  account['bankImage']),
                                               width: 100,
                                               height: 24,
                                               fit: BoxFit.contain,
                                             )
-                                          : Image.asset(
-                                              account['bankImage']!,
-                                              width: 100,
-                                              height: 24,
-                                              fit: BoxFit.contain,
-                                            ),
+                                          : account['bankImage']
+                                                  .endsWith('.svg')
+                                              ? SvgPicture.asset(
+                                                  account['bankImage'],
+                                                  width: 100,
+                                                  height: 24,
+                                                  fit: BoxFit.contain,
+                                                )
+                                              : Image.asset(
+                                                  account['bankImage'],
+                                                  width: 100,
+                                                  height: 24,
+                                                  fit: BoxFit.contain,
+                                                ),
                                   const SizedBox(height: 8),
                                   Row(
                                     children: [
