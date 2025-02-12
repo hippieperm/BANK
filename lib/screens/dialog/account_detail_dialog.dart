@@ -315,7 +315,6 @@ class _AccountDetailDialogState extends State<AccountDetailDialog>
                                                     widget.account['principal'],
                                                 isTaxExempt: widget
                                                     .account['isTaxExempt'],
-                                                    
                                                 isEditing: true,
                                               ),
                                             ).then((result) {
@@ -421,13 +420,6 @@ class _AccountDetailDialogState extends State<AccountDetailDialog>
         final List<int> intList = imageData.map((e) => e as int).toList();
         return Image.memory(
           Uint8List.fromList(intList),
-          height: 28,
-          errorBuilder: (context, error, stackTrace) =>
-              const Icon(Icons.account_balance, size: 28),
-        );
-      } else if (widget.account['isGallery'] == true) {
-        return Image.file(
-          File(widget.account['bankImage']),
           height: 28,
           errorBuilder: (context, error, stackTrace) =>
               const Icon(Icons.account_balance, size: 28),

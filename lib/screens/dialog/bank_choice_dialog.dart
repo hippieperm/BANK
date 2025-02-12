@@ -140,96 +140,43 @@ class _BankChoiceDialogState extends State<BankChoiceDialog>
                       }),
                       GestureDetector(
                         onTap: () async {
-                          final ImagePicker picker = ImagePicker();
+                          // 앱 아이콘 선택 다이얼로그
+                          final apps =
+                              await InstalledApps.getInstalledApps(true, true);
+                          if (!context.mounted) return;
 
-                          // 이미지 소스 선택 다이얼로그
                           showDialog(
                             context: context,
                             builder: (BuildContext context) {
                               return AlertDialog(
                                 backgroundColor: const Color(0xff2d2d2d),
-                                title: const Text('이미지 선택',
+                                title: const Text('앱 선택',
                                     style: TextStyle(color: Colors.white)),
-                                content: Column(
-                                  mainAxisSize: MainAxisSize.min,
-                                  children: [
-                                    ListTile(
-                                      leading: const Icon(Icons.photo_library,
-                                          color: Colors.white),
-                                      title: const Text('갤러리에서 선택',
-                                          style:
-                                              TextStyle(color: Colors.white)),
-                                      onTap: () async {
-                                        Navigator.pop(context);
-                                        final XFile? image =
-                                            await picker.pickImage(
-                                                source: ImageSource.gallery);
-                                        if (image != null && context.mounted) {
+                                content: SizedBox(
+                                  width: double.maxFinite,
+                                  height: MediaQuery.of(context).size.height *
+                                      0.45, // 화면 높이의 60%로 설정
+                                  child: ListView.builder(
+                                    itemCount: apps.length,
+                                    itemBuilder: (context, index) {
+                                      final app = apps[index];
+                                      return ListTile(
+                                        leading: Image.memory(app.icon!),
+                                        title: Text(app.name,
+                                            style: const TextStyle(
+                                                color: Colors.white)),
+                                        onTap: () {
+                                          Navigator.pop(context);
                                           Navigator.pop(context, {
-                                            'name': '직접추가',
-                                            'image': image.path,
-                                            'isGallery': true
+                                            'name': app.name,
+                                            'image':
+                                                Uint8List.fromList(app.icon!),
+                                            'isApp': true
                                           });
-                                        }
-                                      },
-                                    ),
-                                    ListTile(
-                                      leading: const Icon(Icons.apps,
-                                          color: Colors.white),
-                                      title: const Text('앱 아이콘에서 선택',
-                                          style:
-                                              TextStyle(color: Colors.white)),
-                                      onTap: () async {
-                                        Navigator.pop(context);
-                                        final apps = await InstalledApps
-                                            .getInstalledApps(true, true);
-                                        if (!context.mounted) return;
-
-                                        showDialog(
-                                          context: context,
-                                          builder: (BuildContext context) {
-                                            return AlertDialog(
-                                              backgroundColor:
-                                                  const Color(0xff2d2d2d),
-                                              title: const Text('앱 선택',
-                                                  style: TextStyle(
-                                                      color: Colors.white)),
-                                              content: SizedBox(
-                                                width: double.maxFinite,
-                                                height: 300,
-                                                child: ListView.builder(
-                                                  itemCount: apps.length,
-                                                  itemBuilder:
-                                                      (context, index) {
-                                                    final app = apps[index];
-                                                    return ListTile(
-                                                      leading: Image.memory(
-                                                          app.icon!),
-                                                      title: Text(app.name,
-                                                          style:
-                                                              const TextStyle(
-                                                                  color: Colors
-                                                                      .white)),
-                                                      onTap: () {
-                                                        Navigator.pop(context);
-                                                        Navigator.pop(context, {
-                                                          'name': app.name,
-                                                          'image': Uint8List
-                                                              .fromList(
-                                                                  app.icon!),
-                                                          'isApp': true
-                                                        });
-                                                      },
-                                                    );
-                                                  },
-                                                ),
-                                              ),
-                                            );
-                                          },
-                                        );
-                                      },
-                                    ),
-                                  ],
+                                        },
+                                      );
+                                    },
+                                  ),
                                 ),
                               );
                             },
@@ -240,11 +187,10 @@ class _BankChoiceDialogState extends State<BankChoiceDialog>
                           child: Column(
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
-                              Icon(Icons.add_photo_alternate,
-                                  size: 40, color: Colors.white),
+                              Icon(Icons.apps, size: 40, color: Colors.white),
                               SizedBox(height: 10),
                               Text(
-                                '직접추가',
+                                '앱 아이콘',
                                 style: TextStyle(
                                   color: Colors.white,
                                   fontWeight: FontWeight.bold,

@@ -310,35 +310,27 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
                               Column(
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
-                                  account['isGallery'] == true
-                                      ? Image.file(
-                                          File(account['bankImage']),
-                                          width: 100,
+                                  account['isApp'] == true
+                                      ? Image.memory(
+                                          Uint8List.fromList(List<int>.from(
+                                              account['bankImage'])),
+                                          width: 24,
                                           height: 24,
                                           fit: BoxFit.contain,
                                         )
-                                      : account['isApp'] == true
-                                          ? Image.memory(
-                                              Uint8List.fromList(List<int>.from(
-                                                  account['bankImage'])),
-                                              width: 100,
+                                      : account['bankImage'].endsWith('.svg')
+                                          ? SvgPicture.asset(
+                                              account['bankImage'],
+                                              width: 24,
                                               height: 24,
                                               fit: BoxFit.contain,
                                             )
-                                          : account['bankImage']
-                                                  .endsWith('.svg')
-                                              ? SvgPicture.asset(
-                                                  account['bankImage'],
-                                                  width: 100,
-                                                  height: 24,
-                                                  fit: BoxFit.contain,
-                                                )
-                                              : Image.asset(
-                                                  account['bankImage'],
-                                                  width: 100,
-                                                  height: 24,
-                                                  fit: BoxFit.contain,
-                                                ),
+                                          : Image.asset(
+                                              account['bankImage'],
+                                              width: 24,
+                                              height: 24,
+                                              fit: BoxFit.contain,
+                                            ),
                                   const SizedBox(height: 8),
                                   Row(
                                     children: [

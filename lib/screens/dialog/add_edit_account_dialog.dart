@@ -59,9 +59,6 @@ class _AddEditAccountDialogState extends State<AddEditAccountDialog>
     if (widget.account['isApp'] == true) {
       selectedBankImage = widget.bankImage;
       result['isApp'] = true;
-    } else if (widget.account['isGallery'] == true) {
-      selectedBankImage = widget.bankImage;
-      result['isGallery'] = true;
     } else {
       selectedBankImage = widget.bankImage;
     }
@@ -220,65 +217,39 @@ class _AddEditAccountDialogState extends State<AddEditAccountDialog>
                                         mainAxisAlignment:
                                             MainAxisAlignment.center,
                                         children: [
-                                          if (result['isGallery'] == true)
-                                            Image.file(
-                                              File(selectedBankImage),
+                                          if (result['isApp'] == true)
+                                            Image.memory(
+                                              Uint8List.fromList(List<int>.from(
+                                                  selectedBankImage)),
                                               width: 24,
                                               height: 24,
                                               errorBuilder: (context, error,
                                                       stackTrace) =>
                                                   Container(),
                                             )
-                                          else if (result['isApp'] == true)
-                                            Builder(
-                                              builder: (context) {
-                                                if (selectedBankImage
-                                                    is List<dynamic>) {
-                                                  final List<int> intList =
-                                                      selectedBankImage
-                                                          .cast<int>();
-                                                  return Image.memory(
-                                                    Uint8List.fromList(intList),
+                                          else
+                                            selectedBankImage
+                                                    .toString()
+                                                    .endsWith('.svg')
+                                                ? SvgPicture.asset(
+                                                    selectedBankImage
+                                                        .toString(),
+                                                    width: 24,
+                                                    height: 24,
+                                                    placeholderBuilder:
+                                                        (context) =>
+                                                            Container(),
+                                                  )
+                                                : Image.asset(
+                                                    selectedBankImage
+                                                        .toString(),
                                                     width: 24,
                                                     height: 24,
                                                     errorBuilder: (context,
                                                             error,
                                                             stackTrace) =>
                                                         Container(),
-                                                  );
-                                                } else if (selectedBankImage
-                                                    is Uint8List) {
-                                                  return Image.memory(
-                                                    selectedBankImage,
-                                                    width: 24,
-                                                    height: 24,
-                                                    errorBuilder: (context,
-                                                            error,
-                                                            stackTrace) =>
-                                                        Container(),
-                                                  );
-                                                }
-                                                return Container();
-                                              },
-                                            ),
-                                          selectedBankImage
-                                                  .toString()
-                                                  .endsWith('.svg')
-                                              ? SvgPicture.asset(
-                                                  selectedBankImage.toString(),
-                                                  width: 24,
-                                                  height: 24,
-                                                  placeholderBuilder:
-                                                      (context) => Container(),
-                                                )
-                                              : Image.asset(
-                                                  selectedBankImage.toString(),
-                                                  width: 24,
-                                                  height: 24,
-                                                  errorBuilder: (context, error,
-                                                          stackTrace) =>
-                                                      Container(),
-                                                ),
+                                                  ),
                                           const SizedBox(width: 8),
                                         ],
                                       )
@@ -579,7 +550,6 @@ class _AddEditAccountDialogState extends State<AddEditAccountDialog>
                               'principal': double.parse(
                                   removeCommas(principalController.text)),
                               'isApp': result['isApp'] ?? false,
-                              'isGallery': result['isGallery'] ?? false
                             });
                           },
                           btnOkColor: Colors.green,
