@@ -172,38 +172,42 @@ class _AddEditAccountDialogState extends State<AddEditAccountDialog>
                         ),
                       ),
                       GestureDetector(
-                        onTap: () async {
-                          final dialogResult = await showDialog(
-                            context: context,
-                            builder: (BuildContext context) {
-                              return const BankChoiceDialog();
-                            },
-                          );
+                        onTap: widget.isEditing
+                            ? null // 수정 모드일 때는 터치 비활성화
+                            : () async {
+                                final dialogResult = await showDialog(
+                                  context: context,
+                                  builder: (BuildContext context) {
+                                    return const BankChoiceDialog();
+                                  },
+                                );
 
-                          if (dialogResult != null && mounted) {
-                            setState(() {
-                              result = dialogResult;
-                              selectedBankName = dialogResult['name'];
-                              selectedBankImage = dialogResult['image'];
-                            });
-                          }
-                        },
+                                if (dialogResult != null && mounted) {
+                                  setState(() {
+                                    result = dialogResult;
+                                    selectedBankName = dialogResult['name'];
+                                    selectedBankImage = dialogResult['image'];
+                                  });
+                                }
+                              },
                         child: Material(
-                          // InkWell을 사용하기 위해 Material 위젯 추가
-                          color: Colors.transparent, // 배경색 투명 설정
+                          color: Colors.transparent,
                           child: InkWell(
-                            // 터치 효과를 위해 InkWell 추가
-                            borderRadius: BorderRadius.circular(10), // 모서리 둥글게
-                            splashColor:
-                                Colors.white.withOpacity(0.3), // 터치 효과 색상
-                            highlightColor:
-                                Colors.white.withOpacity(0.1), // 눌렀을 때 효과 색상
+                            borderRadius: BorderRadius.circular(10),
+                            splashColor: widget.isEditing
+                                ? Colors.transparent // 수정 모드일 때는 터치 효과 제거
+                                : Colors.white.withOpacity(0.3),
+                            highlightColor: widget.isEditing
+                                ? Colors.transparent // 수정 모드일 때는 터치 효과 제거
+                                : Colors.white.withOpacity(0.1),
                             child: Container(
-                              padding: const EdgeInsets.symmetric(
-                                vertical: 10.0,
-                              ),
+                              padding:
+                                  const EdgeInsets.symmetric(vertical: 10.0),
                               decoration: BoxDecoration(
-                                color: Colors.purple.withOpacity(0.7),
+                                color: widget.isEditing
+                                    ? Colors.grey
+                                        .withOpacity(0.3) // 수정 모드일 때는 회색으로 변경
+                                    : Colors.purple.withOpacity(0.7),
                                 border: Border.all(color: Colors.grey),
                                 borderRadius: BorderRadius.circular(10),
                               ),
