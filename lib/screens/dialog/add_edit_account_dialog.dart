@@ -227,9 +227,7 @@ class _AddEditAccountDialogState extends State<AddEditAccountDialog>
                                               height: 24,
                                               errorBuilder: (context, error,
                                                       stackTrace) =>
-                                                  const Icon(
-                                                      Icons.account_balance,
-                                                      size: 24),
+                                                  Container(),
                                             )
                                           else if (result['isApp'] == true)
                                             Builder(
@@ -246,10 +244,7 @@ class _AddEditAccountDialogState extends State<AddEditAccountDialog>
                                                     errorBuilder: (context,
                                                             error,
                                                             stackTrace) =>
-                                                        const Icon(
-                                                            Icons
-                                                                .account_balance,
-                                                            size: 24),
+                                                        Container(),
                                                   );
                                                 } else if (selectedBankImage
                                                     is Uint8List) {
@@ -260,15 +255,10 @@ class _AddEditAccountDialogState extends State<AddEditAccountDialog>
                                                     errorBuilder: (context,
                                                             error,
                                                             stackTrace) =>
-                                                        const Icon(
-                                                            Icons
-                                                                .account_balance,
-                                                            size: 24),
+                                                        Container(),
                                                   );
                                                 }
-                                                return const Icon(
-                                                    Icons.account_balance,
-                                                    size: 24);
+                                                return Container();
                                               },
                                             ),
                                           selectedBankImage
@@ -279,9 +269,7 @@ class _AddEditAccountDialogState extends State<AddEditAccountDialog>
                                                   width: 24,
                                                   height: 24,
                                                   placeholderBuilder:
-                                                      (context) => const Icon(
-                                                          Icons.account_balance,
-                                                          size: 24),
+                                                      (context) => Container(),
                                                 )
                                               : Image.asset(
                                                   selectedBankImage.toString(),
@@ -289,9 +277,7 @@ class _AddEditAccountDialogState extends State<AddEditAccountDialog>
                                                   height: 24,
                                                   errorBuilder: (context, error,
                                                           stackTrace) =>
-                                                      const Icon(
-                                                          Icons.account_balance,
-                                                          size: 24),
+                                                      Container(),
                                                 ),
                                           const SizedBox(width: 8),
                                         ],
