@@ -301,8 +301,18 @@ class _AccountDetailDialogState extends State<AccountDetailDialog>
                                               context: context,
                                               builder: (context) =>
                                                   AddEditAccountDialog(
-                                                account: widget.account,
-                                                bankName: widget.bankName,
+                                                account: {
+                                                  ...widget.account,
+                                                  'isApp':
+                                                      widget.account['isApp'],
+                                                  'appName':
+                                                      widget.account['appName'],
+                                                },
+                                                bankName: widget
+                                                            .account['isApp'] ==
+                                                        true
+                                                    ? widget.account['appName']
+                                                    : widget.bankName,
                                                 bankImage:
                                                     widget.account['bankImage'],
                                                 startDate:
@@ -320,6 +330,12 @@ class _AccountDetailDialogState extends State<AccountDetailDialog>
                                             ).then((result) {
                                               if (result != null &&
                                                   widget.onEdit != null) {
+                                                if (widget.account['isApp'] ==
+                                                    true) {
+                                                  result['isApp'] = true;
+                                                  result['appName'] =
+                                                      widget.account['appName'];
+                                                }
                                                 widget.onEdit!(result);
                                                 Navigator.pop(context);
                                               }
@@ -418,27 +434,46 @@ class _AccountDetailDialogState extends State<AccountDetailDialog>
       if (widget.account['isApp'] == true) {
         final List<dynamic> imageData = widget.account['bankImage'];
         final List<int> intList = imageData.map((e) => e as int).toList();
-        return Image.memory(
-          Uint8List.fromList(intList),
-          height: 28,
-          errorBuilder: (context, error, stackTrace) =>
-              const Icon(Icons.account_balance, size: 28),
+        return Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Image.memory(
+              Uint8List.fromList(intList),
+              height: 28,
+              errorBuilder: (context, error, stackTrace) =>
+                  const Icon(Icons.account_balance, size: 28),
+            ),
+            const SizedBox(width: 8),
+            Text(
+              widget.account['appName'] ?? '',
+              style: const TextStyle(
+                color: Colors.white,
+                fontSize: 16,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+          ],
         );
       } else {
         final String imagePath = widget.account['bankImage'];
-        return imagePath.endsWith('.svg')
-            ? SvgPicture.asset(
-                imagePath,
-                height: 28,
-                placeholderBuilder: (context) =>
-                    const Icon(Icons.account_balance, size: 28),
-              )
-            : Image.asset(
-                imagePath,
-                height: 28,
-                errorBuilder: (context, error, stackTrace) =>
-                    const Icon(Icons.account_balance, size: 28),
-              );
+        return Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            imagePath.endsWith('.svg')
+                ? SvgPicture.asset(
+                    imagePath,
+                    height: 28,
+                    placeholderBuilder: (context) =>
+                        const Icon(Icons.account_balance, size: 28),
+                  )
+                : Image.asset(
+                    imagePath,
+                    height: 28,
+                    errorBuilder: (context, error, stackTrace) =>
+                        const Icon(Icons.account_balance, size: 28),
+                  ),
+          ],
+        );
       }
     } catch (e) {
       print('Error loading bank image: $e');

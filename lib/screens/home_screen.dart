@@ -310,27 +310,47 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
                               Column(
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
-                                  account['isApp'] == true
-                                      ? Image.memory(
+                                  Row(
+                                    children: [
+                                      if (account['isApp'] == true) ...[
+                                        Image.memory(
                                           Uint8List.fromList(List<int>.from(
                                               account['bankImage'])),
                                           width: 24,
                                           height: 24,
-                                          fit: BoxFit.contain,
-                                        )
-                                      : account['bankImage'].endsWith('.svg')
-                                          ? SvgPicture.asset(
-                                              account['bankImage'],
-                                              width: 24,
-                                              height: 24,
-                                              fit: BoxFit.contain,
-                                            )
-                                          : Image.asset(
-                                              account['bankImage'],
-                                              width: 24,
-                                              height: 24,
-                                              fit: BoxFit.contain,
-                                            ),
+                                          errorBuilder: (context, error,
+                                                  stackTrace) =>
+                                              const Icon(Icons.account_balance,
+                                                  size: 24),
+                                        ),
+                                        const SizedBox(width: 8),
+                                        Text(
+                                          account['appName'] ?? '',
+                                          style: const TextStyle(
+                                            color: Colors.white,
+                                            fontSize: 14,
+                                            fontWeight: FontWeight.bold,
+                                          ),
+                                        ),
+                                      ] else ...[
+                                        account['bankImage']
+                                                .toString()
+                                                .endsWith('.svg')
+                                            ? SvgPicture.asset(
+                                                account['bankImage'],
+                                                width: 24,
+                                                height: 24,
+                                                fit: BoxFit.contain,
+                                              )
+                                            : Image.asset(
+                                                account['bankImage'],
+                                                width: 24,
+                                                height: 24,
+                                                fit: BoxFit.contain,
+                                              ),
+                                      ],
+                                    ],
+                                  ),
                                   const SizedBox(height: 8),
                                   Row(
                                     children: [

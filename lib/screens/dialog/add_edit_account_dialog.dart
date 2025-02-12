@@ -217,7 +217,9 @@ class _AddEditAccountDialogState extends State<AddEditAccountDialog>
                                         mainAxisAlignment:
                                             MainAxisAlignment.center,
                                         children: [
-                                          if (result['isApp'] == true)
+                                          if (result['isApp'] == true ||
+                                              widget.account['isApp'] ==
+                                                  true) ...[
                                             Image.memory(
                                               Uint8List.fromList(List<int>.from(
                                                   selectedBankImage)),
@@ -226,8 +228,18 @@ class _AddEditAccountDialogState extends State<AddEditAccountDialog>
                                               errorBuilder: (context, error,
                                                       stackTrace) =>
                                                   Container(),
-                                            )
-                                          else
+                                            ),
+                                            const SizedBox(width: 8),
+                                            Text(
+                                              result['appName'] ??
+                                                  widget.account['appName'] ??
+                                                  '',
+                                              style: const TextStyle(
+                                                color: Colors.white,
+                                                fontWeight: FontWeight.bold,
+                                              ),
+                                            ),
+                                          ] else ...[
                                             selectedBankImage
                                                     .toString()
                                                     .endsWith('.svg')
@@ -250,7 +262,7 @@ class _AddEditAccountDialogState extends State<AddEditAccountDialog>
                                                             stackTrace) =>
                                                         Container(),
                                                   ),
-                                          const SizedBox(width: 8),
+                                          ],
                                         ],
                                       )
                                     : const Text(
@@ -539,7 +551,9 @@ class _AddEditAccountDialogState extends State<AddEditAccountDialog>
                               : '계좌가 성공적으로 추가되었습니다.',
                           btnOkOnPress: () {
                             Navigator.pop(context, {
-                              'bankName': selectedBankName,
+                              'bankName': result['isApp'] == true
+                                  ? result['appName']
+                                  : selectedBankName,
                               'bankImage': selectedBankImage,
                               'startDate': startDateController.text,
                               'endDate': endDateController.text,
@@ -550,6 +564,7 @@ class _AddEditAccountDialogState extends State<AddEditAccountDialog>
                               'principal': double.parse(
                                   removeCommas(principalController.text)),
                               'isApp': result['isApp'] ?? false,
+                              'appName': result['appName'],
                             });
                           },
                           btnOkColor: Colors.green,

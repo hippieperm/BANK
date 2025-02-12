@@ -171,7 +171,8 @@ class _BankChoiceDialogState extends State<BankChoiceDialog>
                                             'name': app.name,
                                             'image':
                                                 Uint8List.fromList(app.icon!),
-                                            'isApp': true
+                                            'isApp': true,
+                                            'appName': app.name
                                           });
                                         },
                                       );
