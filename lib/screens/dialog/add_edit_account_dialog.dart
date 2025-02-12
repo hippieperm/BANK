@@ -221,9 +221,20 @@ class _AddEditAccountDialogState extends State<AddEditAccountDialog>
                                         mainAxisAlignment:
                                             MainAxisAlignment.center,
                                         children: [
-                                          if (result['isApp'] == true ||
-                                              widget.account['isApp'] ==
-                                                  true) ...[
+                                          if (result['isCustomName'] ==
+                                              true) ...[
+                                            const Icon(Icons.account_balance,
+                                                size: 24, color: Colors.white),
+                                            const SizedBox(width: 8),
+                                            Text(
+                                              selectedBankName ?? '',
+                                              style: const TextStyle(
+                                                color: Colors.white,
+                                                fontWeight: FontWeight.bold,
+                                              ),
+                                            ),
+                                          ] else if (result['isApp'] ==
+                                              true) ...[
                                             Image.memory(
                                               Uint8List.fromList(List<int>.from(
                                                   selectedBankImage)),
@@ -555,10 +566,12 @@ class _AddEditAccountDialogState extends State<AddEditAccountDialog>
                               : '계좌가 성공적으로 추가되었습니다.',
                           btnOkOnPress: () {
                             Navigator.pop(context, {
-                              'bankName': result['isApp'] == true
-                                  ? result['appName']
-                                  : selectedBankName,
-                              'bankImage': selectedBankImage,
+                              'bankName': result['isCustomName'] == true
+                                  ? result['bankName']
+                                  : result['isApp'] == true
+                                      ? result['appName']
+                                      : selectedBankName,
+                              'bankImage': selectedBankImage ?? '',
                               'startDate': startDateController.text,
                               'endDate': endDateController.text,
                               'interestRate': double.parse(
@@ -568,6 +581,7 @@ class _AddEditAccountDialogState extends State<AddEditAccountDialog>
                               'principal': double.parse(
                                   removeCommas(principalController.text)),
                               'isApp': result['isApp'] ?? false,
+                              'isCustomName': result['isCustomName'] ?? false,
                               'appName': result['appName'],
                             });
                           },

@@ -312,7 +312,19 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
                                 children: [
                                   Row(
                                     children: [
-                                      if (account['isApp'] == true) ...[
+                                      if (account['isCustomName'] == true) ...[
+                                        const Icon(Icons.account_balance,
+                                            size: 24, color: Colors.white),
+                                        const SizedBox(width: 8),
+                                        Text(
+                                          account['bankName'] ?? '',
+                                          style: const TextStyle(
+                                            color: Colors.white,
+                                            fontSize: 20,
+                                            fontWeight: FontWeight.bold,
+                                          ),
+                                        ),
+                                      ] else if (account['isApp'] == true) ...[
                                         Image.memory(
                                           Uint8List.fromList(List<int>.from(
                                               account['bankImage'])),
@@ -328,7 +340,7 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
                                           account['appName'] ?? '',
                                           style: const TextStyle(
                                             color: Colors.white,
-                                            fontSize: 14,
+                                            fontSize: 20,
                                             fontWeight: FontWeight.bold,
                                           ),
                                         ),

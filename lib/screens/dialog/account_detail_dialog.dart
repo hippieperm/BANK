@@ -431,7 +431,23 @@ class _AccountDetailDialogState extends State<AccountDetailDialog>
 
   Widget buildBankImage() {
     try {
-      if (widget.account['isApp'] == true) {
+      if (widget.account['isCustomName'] == true) {
+        return Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            const Icon(Icons.account_balance, size: 28, color: Colors.white),
+            const SizedBox(width: 8),
+            Text(
+              widget.account['bankName'] ?? '',
+              style: const TextStyle(
+                color: Colors.white,
+                fontSize: 24,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+          ],
+        );
+      } else if (widget.account['isApp'] == true) {
         final List<dynamic> imageData = widget.account['bankImage'];
         final List<int> intList = imageData.map((e) => e as int).toList();
         return Row(
@@ -448,7 +464,7 @@ class _AccountDetailDialogState extends State<AccountDetailDialog>
               widget.account['appName'] ?? '',
               style: const TextStyle(
                 color: Colors.white,
-                fontSize: 16,
+                fontSize: 24,
                 fontWeight: FontWeight.bold,
               ),
             ),

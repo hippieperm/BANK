@@ -201,6 +201,70 @@ class _BankChoiceDialogState extends State<BankChoiceDialog>
                           ),
                         ),
                       ),
+                      GestureDetector(
+                        onTap: () {
+                          TextEditingController bankNameController =
+                              TextEditingController();
+                          showDialog(
+                            context: context,
+                            builder: (context) => AlertDialog(
+                              backgroundColor: const Color(0xff2d2d2d),
+                              title: const Text('은행명 입력',
+                                  style: TextStyle(color: Colors.white)),
+                              content: TextField(
+                                controller: bankNameController,
+                                style: const TextStyle(color: Colors.white),
+                                decoration: const InputDecoration(
+                                  hintText: '은행명을 입력하세요',
+                                  hintStyle: TextStyle(color: Colors.grey),
+                                  enabledBorder: UnderlineInputBorder(
+                                    borderSide: BorderSide(color: Colors.grey),
+                                  ),
+                                  focusedBorder: UnderlineInputBorder(
+                                    borderSide:
+                                        BorderSide(color: Colors.purple),
+                                  ),
+                                ),
+                              ),
+                              actions: [
+                                TextButton(
+                                  onPressed: () {
+                                    if (bankNameController.text.isNotEmpty) {
+                                      Navigator.pop(context);
+                                      Navigator.pop(context, {
+                                        'name': bankNameController.text,
+                                        'image': '', // 빈 문자열로 설정
+                                        'isCustomName': true,
+                                        'bankName':
+                                            bankNameController.text, // 은행명 추가
+                                      });
+                                    }
+                                  },
+                                  child: const Text('확인',
+                                      style: TextStyle(color: Colors.purple)),
+                                ),
+                              ],
+                            ),
+                          );
+                        },
+                        child: const Card(
+                          color: Color(0xff3d3d3d),
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Icon(Icons.edit, size: 40, color: Colors.white),
+                              SizedBox(height: 10),
+                              Text(
+                                '은행명 입력',
+                                style: TextStyle(
+                                  color: Colors.white,
+                                  fontWeight: FontWeight.bold,
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                      ),
                     ],
                   ),
                 ),
