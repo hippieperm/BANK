@@ -425,15 +425,17 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
                                       builder: (context) => AccountDetailDialog(
                                         lateDay: remainingDays,
                                         account: account,
-                                        bankName: account['bankImage'],
+                                        bankName: account['isApp'] == true ||
+                                                account['isGallery'] == true
+                                            ? '커스텀 이미지' // 앱이나 갤러리에서 가져온 이미지인 경우
+                                            : account[
+                                                'bankImage'], // 기본 은행 이미지인 경우
                                         onEdit: (updatedAccount) {
-                                          _updateAccount(index,
-                                              updatedAccount); // 수정된 계좌 정보 업데이트
+                                          _updateAccount(index, updatedAccount);
                                         },
                                         onDelete: () {
-                                          _deleteAccount(index); // 삭제 메서드 호출
-                                          Navigator.pop(
-                                              context); // AccountDetailDialog 닫기
+                                          _deleteAccount(index);
+                                          Navigator.pop(context);
                                         },
                                       ),
                                     );

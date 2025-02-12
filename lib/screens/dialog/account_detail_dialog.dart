@@ -115,7 +115,9 @@ class _AccountDetailDialogState extends State<AccountDetailDialog>
                                     )
                                   : widget.account['isApp'] == true
                                       ? Image.memory(
-                                          widget.account['bankImage'],
+                                          Uint8List.fromList(widget
+                                              .account['bankImage']
+                                              .cast<int>()),
                                           height: 28,
                                         )
                                       : widget.account['bankImage']
