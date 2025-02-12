@@ -103,33 +103,7 @@ class _AccountDetailDialogState extends State<AccountDetailDialog>
                       title: Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
-                          widget.bankName.startsWith('/')
-                              ? Image.file(
-                                  File(widget.bankName),
-                                  height: 28,
-                                )
-                              : widget.account['isGallery'] == true
-                                  ? Image.file(
-                                      File(widget.account['bankImage']),
-                                      height: 28,
-                                    )
-                                  : widget.account['isApp'] == true
-                                      ? Image.memory(
-                                          Uint8List.fromList(widget
-                                              .account['bankImage']
-                                              .cast<int>()),
-                                          height: 28,
-                                        )
-                                      : widget.account['bankImage']
-                                              .endsWith('.svg')
-                                          ? SvgPicture.asset(
-                                              widget.account['bankImage'],
-                                              height: 28,
-                                            )
-                                          : Image.asset(
-                                              widget.account['bankImage'],
-                                              height: 28,
-                                            ),
+                          buildBankImage(),
                         ],
                       ),
                       content: SizedBox(
@@ -341,6 +315,7 @@ class _AccountDetailDialogState extends State<AccountDetailDialog>
                                                     widget.account['principal'],
                                                 isTaxExempt: widget
                                                     .account['isTaxExempt'],
+                                                    
                                                 isEditing: true,
                                               ),
                                             ).then((result) {
@@ -437,5 +412,45 @@ class _AccountDetailDialogState extends State<AccountDetailDialog>
         ),
       ),
     );
+  }
+
+  Widget buildBankImage() {
+    try {
+      if (widget.account['isApp'] == true) {
+        final List<dynamic> imageData = widget.account['bankImage'];
+        final List<int> intList = imageData.map((e) => e as int).toList();
+        return Image.memory(
+          Uint8List.fromList(intList),
+          height: 28,
+          errorBuilder: (context, error, stackTrace) =>
+              const Icon(Icons.account_balance, size: 28),
+        );
+      } else if (widget.account['isGallery'] == true) {
+        return Image.file(
+          File(widget.account['bankImage']),
+          height: 28,
+          errorBuilder: (context, error, stackTrace) =>
+              const Icon(Icons.account_balance, size: 28),
+        );
+      } else {
+        final String imagePath = widget.account['bankImage'];
+        return imagePath.endsWith('.svg')
+            ? SvgPicture.asset(
+                imagePath,
+                height: 28,
+                placeholderBuilder: (context) =>
+                    const Icon(Icons.account_balance, size: 28),
+              )
+            : Image.asset(
+                imagePath,
+                height: 28,
+                errorBuilder: (context, error, stackTrace) =>
+                    const Icon(Icons.account_balance, size: 28),
+              );
+      }
+    } catch (e) {
+      print('Error loading bank image: $e');
+      return const Icon(Icons.account_balance, size: 28);
+    }
   }
 }

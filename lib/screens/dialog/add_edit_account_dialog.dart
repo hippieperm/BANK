@@ -12,7 +12,7 @@ import 'package:awesome_dialog/awesome_dialog.dart';
 class AddEditAccountDialog extends StatefulWidget {
   final Map<String, dynamic> account;
   final String bankName;
-  final String bankImage;
+  final dynamic bankImage;
   final String startDate;
   final String endDate;
   final double? interestRate;
@@ -54,7 +54,18 @@ class _AddEditAccountDialogState extends State<AddEditAccountDialog>
   void initState() {
     super.initState();
     selectedBankName = widget.bankName;
-    selectedBankImage = widget.bankImage;
+
+    // bankImage 초기화 시 타입 체크 및 변환
+    if (widget.account['isApp'] == true) {
+      selectedBankImage = widget.bankImage;
+      result['isApp'] = true;
+    } else if (widget.account['isGallery'] == true) {
+      selectedBankImage = widget.bankImage;
+      result['isGallery'] = true;
+    } else {
+      selectedBankImage = widget.bankImage;
+    }
+
     startDateController.text = widget.startDate; // 시작일 초기화
     endDateController.text = widget.endDate; // 종료일 초기화
     principalController.text = formatCurrency(widget.principal ?? 0); // 원금 초기화
@@ -209,31 +220,79 @@ class _AddEditAccountDialogState extends State<AddEditAccountDialog>
                                         mainAxisAlignment:
                                             MainAxisAlignment.center,
                                         children: [
-                                          result['isGallery'] == true
-                                              ? Image.file(
-                                                  File(selectedBankImage!),
+                                          if (result['isGallery'] == true)
+                                            Image.file(
+                                              File(selectedBankImage),
+                                              width: 24,
+                                              height: 24,
+                                              errorBuilder: (context, error,
+                                                      stackTrace) =>
+                                                  const Icon(
+                                                      Icons.account_balance,
+                                                      size: 24),
+                                            )
+                                          else if (result['isApp'] == true)
+                                            Builder(
+                                              builder: (context) {
+                                                if (selectedBankImage
+                                                    is List<dynamic>) {
+                                                  final List<int> intList =
+                                                      selectedBankImage
+                                                          .cast<int>();
+                                                  return Image.memory(
+                                                    Uint8List.fromList(intList),
+                                                    width: 24,
+                                                    height: 24,
+                                                    errorBuilder: (context,
+                                                            error,
+                                                            stackTrace) =>
+                                                        const Icon(
+                                                            Icons
+                                                                .account_balance,
+                                                            size: 24),
+                                                  );
+                                                } else if (selectedBankImage
+                                                    is Uint8List) {
+                                                  return Image.memory(
+                                                    selectedBankImage,
+                                                    width: 24,
+                                                    height: 24,
+                                                    errorBuilder: (context,
+                                                            error,
+                                                            stackTrace) =>
+                                                        const Icon(
+                                                            Icons
+                                                                .account_balance,
+                                                            size: 24),
+                                                  );
+                                                }
+                                                return const Icon(
+                                                    Icons.account_balance,
+                                                    size: 24);
+                                              },
+                                            ),
+                                          selectedBankImage
+                                                  .toString()
+                                                  .endsWith('.svg')
+                                              ? SvgPicture.asset(
+                                                  selectedBankImage.toString(),
                                                   width: 24,
                                                   height: 24,
+                                                  placeholderBuilder:
+                                                      (context) => const Icon(
+                                                          Icons.account_balance,
+                                                          size: 24),
                                                 )
-                                              : result['isApp'] == true
-                                                  ? Image.memory(
-                                                      selectedBankImage
-                                                          as Uint8List,
-                                                      width: 24,
-                                                      height: 24,
-                                                    )
-                                                  : selectedBankImage!
-                                                          .endsWith('.svg')
-                                                      ? SvgPicture.asset(
-                                                          selectedBankImage!,
-                                                          width: 24,
-                                                          height: 24,
-                                                        )
-                                                      : Image.asset(
-                                                          selectedBankImage!,
-                                                          width: 24,
-                                                          height: 24,
-                                                        ),
+                                              : Image.asset(
+                                                  selectedBankImage.toString(),
+                                                  width: 24,
+                                                  height: 24,
+                                                  errorBuilder: (context, error,
+                                                          stackTrace) =>
+                                                      const Icon(
+                                                          Icons.account_balance,
+                                                          size: 24),
+                                                ),
                                           const SizedBox(width: 8),
                                         ],
                                       )
