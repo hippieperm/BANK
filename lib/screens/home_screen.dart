@@ -319,8 +319,8 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
                                         )
                                       : account['isApp'] == true
                                           ? Image.memory(
-                                              Uint8List.fromList(
-                                                  account['bankImage']),
+                                              Uint8List.fromList(List<int>.from(
+                                                  account['bankImage'])),
                                               width: 100,
                                               height: 24,
                                               fit: BoxFit.contain,

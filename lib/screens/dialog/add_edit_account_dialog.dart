@@ -91,6 +91,17 @@ class _AddEditAccountDialogState extends State<AddEditAccountDialog>
         RegExp(r'(\d)(?=(\d{3})+(?!\d))'), (Match m) => '${m[1]},');
   }
 
+  // 숫자 문자열을 double로 안전하게 변환하는 함수 추가
+  double? parseDouble(String text) {
+    if (text.isEmpty) return null;
+    final cleanText = text.replaceAll(',', '').trim();
+    try {
+      return double.parse(cleanText);
+    } catch (e) {
+      return null;
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
@@ -362,15 +373,18 @@ class _AddEditAccountDialogState extends State<AddEditAccountDialog>
                               // 쉼표 제거 후 숫자만 추출
                               String numericOnly = removeCommas(value);
                               if (numericOnly.isNotEmpty) {
-                                // 천 단위 쉼표 추가
-                                String formatted =
-                                    formatCurrency(double.parse(numericOnly));
-                                principalController.text = formatted;
-                                // 커서 위치 조정
-                                principalController.selection =
-                                    TextSelection.fromPosition(
-                                  TextPosition(offset: formatted.length),
-                                );
+                                // 안전하게 double로 변환
+                                double? number = parseDouble(numericOnly);
+                                if (number != null) {
+                                  // 천 단위 쉼표 추가
+                                  String formatted = formatCurrency(number);
+                                  principalController.text = formatted;
+                                  // 커서 위치 조정
+                                  principalController.selection =
+                                      TextSelection.fromPosition(
+                                    TextPosition(offset: formatted.length),
+                                  );
+                                }
                               }
                             },
                           ),
