@@ -227,12 +227,18 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
                               ),
                             ),
                             const SizedBox(height: 8),
-                            Text(
-                              '₩ ${formatNumber(calculateTotalMonthlyInterest())}',
-                              style: const TextStyle(
-                                fontSize: 24,
-                                fontWeight: FontWeight.bold,
-                                color: Colors.white,
+                            SizedBox(
+                              width: 150, // 원하는 최대 너비 설정
+                              child: FittedBox(
+                                fit: BoxFit.scaleDown, // 텍스트가 너무 클 경우에만 축소
+                                child: Text(
+                                  '₩ ${formatNumber(calculateTotalMonthlyInterest())}',
+                                  style: const TextStyle(
+                                    fontSize: 24, // 기본 폰트 크기
+                                    fontWeight: FontWeight.bold,
+                                    color: Colors.white,
+                                  ),
+                                ),
                               ),
                             ),
                           ],
@@ -253,12 +259,18 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
                               ),
                             ),
                             const SizedBox(height: 8),
-                            Text(
-                              '₩ ${formatNumber(calculateTotalReceivedInterest())}',
-                              style: const TextStyle(
-                                fontSize: 14,
-                                fontWeight: FontWeight.bold,
-                                color: Colors.white,
+                            SizedBox(
+                              width: 150, // 원하는 최대 너비 설정
+                              child: FittedBox(
+                                fit: BoxFit.scaleDown, // 텍스트가 너무 클 경우에만 축소
+                                child: Text(
+                                  '₩ ${formatNumber(calculateTotalReceivedInterest())}',
+                                  style: const TextStyle(
+                                    fontSize: 24, // 기본 폰트 크기 설정
+                                    fontWeight: FontWeight.bold,
+                                    color: Colors.white,
+                                  ),
+                                ),
                               ),
                             ),
                           ],
