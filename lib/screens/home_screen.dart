@@ -379,16 +379,16 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
                                   Row(
                                     children: [
                                       Text(
-                                        '${account['startDate']} ~ ',
+                                        '${account['startDate']}  ~  ',
                                         style: const TextStyle(
-                                          fontSize: 14,
+                                          fontSize: 16,
                                           color: Colors.white70,
                                         ),
                                       ),
                                       Text(
                                         '${account['endDate']}',
                                         style: TextStyle(
-                                          fontSize: 14,
+                                          fontSize: 16,
                                           color: remainingDays <= 30
                                               ? Colors.red
                                               : Colors.white70,
