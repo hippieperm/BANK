@@ -206,7 +206,7 @@ class _AddEditAccountDialogState extends State<AddEditAccountDialog>
                               decoration: BoxDecoration(
                                 color: widget.isEditing
                                     ? Colors.grey
-                                        .withOpacity(0.3) // 수정 모드일 때는 회색으로 변경
+                                        .withOpacity(0.9) // 수정 모드일 때는 회색으로 변경
                                     : Colors.purple.withOpacity(0.7),
                                 border: Border.all(color: Colors.grey),
                                 borderRadius: BorderRadius.circular(10),
@@ -229,8 +229,9 @@ class _AddEditAccountDialogState extends State<AddEditAccountDialog>
                                             Text(
                                               selectedBankName ?? '',
                                               style: const TextStyle(
-                                                color: Colors.white,
+                                                color: Colors.black,
                                                 fontWeight: FontWeight.bold,
+                                                fontSize: 20,
                                               ),
                                             ),
                                           ] else if (result['isApp'] ==
@@ -250,8 +251,9 @@ class _AddEditAccountDialogState extends State<AddEditAccountDialog>
                                                   widget.account['appName'] ??
                                                   '',
                                               style: const TextStyle(
-                                                color: Colors.white,
+                                                color: Colors.black,
                                                 fontWeight: FontWeight.bold,
+                                                fontSize: 20,
                                               ),
                                             ),
                                           ] else ...[
