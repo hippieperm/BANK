@@ -55,6 +55,14 @@ class _AddEditAccountDialogState extends State<AddEditAccountDialog>
     super.initState();
     selectedBankName = widget.bankName;
 
+    // result 초기화 추가
+    if (widget.account['isCustomName'] == true) {
+      result = {
+        'isCustomName': true,
+        'bankName': widget.bankName,
+      };
+    }
+
     // bankImage 초기화 시 타입 체크 및 변환
     if (widget.account['isApp'] == true) {
       selectedBankImage = widget.bankImage;
@@ -216,79 +224,85 @@ class _AddEditAccountDialogState extends State<AddEditAccountDialog>
                                   horizontal: 30,
                                   vertical: 3,
                                 ),
-                                child: selectedBankImage != ''
-                                    ? Row(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.center,
-                                        children: [
-                                          if (result['isCustomName'] ==
-                                              true) ...[
-                                            const Icon(Icons.account_balance,
-                                                size: 24, color: Colors.white),
-                                            const SizedBox(width: 8),
-                                            Text(
-                                              selectedBankName ?? '',
-                                              style: const TextStyle(
-                                                color: Colors.black,
-                                                fontWeight: FontWeight.bold,
-                                                fontSize: 20,
-                                              ),
-                                            ),
-                                          ] else if (result['isApp'] ==
-                                              true) ...[
-                                            Image.memory(
-                                              Uint8List.fromList(List<int>.from(
-                                                  selectedBankImage)),
+                                child: Row(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [
+                                    if (widget.account['isCustomName'] ==
+                                            true ||
+                                        result['isCustomName'] == true) ...[
+                                      const Icon(Icons.account_balance,
+                                          size: 24, color: Colors.white),
+                                      const SizedBox(width: 8),
+                                      Text(
+                                        widget.account['bankName'] ??
+                                            selectedBankName ??
+                                            '',
+                                        // ... existing code ...
+                                        style: TextStyle(
+                                          color: widget.isEditing
+                                              ? Colors.black
+                                              : Colors.white,
+                                          fontWeight: FontWeight.bold,
+                                          fontSize: 20,
+                                        ),
+// ... existing code ...
+                                      ),
+                                    ] else if (result['isApp'] == true) ...[
+                                      Image.memory(
+                                        Uint8List.fromList(
+                                            List<int>.from(selectedBankImage)),
+                                        width: 24,
+                                        height: 24,
+                                        errorBuilder:
+                                            (context, error, stackTrace) =>
+                                                Container(),
+                                      ),
+                                      const SizedBox(width: 8),
+                                      Text(
+                                        result['appName'] ??
+                                            widget.account['appName'] ??
+                                            '',
+                                        // ... existing code ...
+                                        style: TextStyle(
+                                          color: widget.isEditing
+                                              ? Colors.black
+                                              : Colors.white,
+                                          fontWeight: FontWeight.bold,
+                                          fontSize: 20,
+                                        ),
+// ... existing code ...
+                                      ),
+                                    ] else if (selectedBankImage != null &&
+                                        selectedBankImage != '') ...[
+                                      selectedBankImage
+                                              .toString()
+                                              .endsWith('.svg')
+                                          ? SvgPicture.asset(
+                                              selectedBankImage.toString(),
+                                              width: 24,
+                                              height: 24,
+                                              placeholderBuilder: (context) =>
+                                                  Container(),
+                                            )
+                                          : Image.asset(
+                                              selectedBankImage.toString(),
                                               width: 24,
                                               height: 24,
                                               errorBuilder: (context, error,
                                                       stackTrace) =>
                                                   Container(),
                                             ),
-                                            const SizedBox(width: 8),
-                                            Text(
-                                              result['appName'] ??
-                                                  widget.account['appName'] ??
-                                                  '',
-                                              style: const TextStyle(
-                                                color: Colors.black,
-                                                fontWeight: FontWeight.bold,
-                                                fontSize: 20,
-                                              ),
-                                            ),
-                                          ] else ...[
-                                            selectedBankImage
-                                                    .toString()
-                                                    .endsWith('.svg')
-                                                ? SvgPicture.asset(
-                                                    selectedBankImage
-                                                        .toString(),
-                                                    width: 24,
-                                                    height: 24,
-                                                    placeholderBuilder:
-                                                        (context) =>
-                                                            Container(),
-                                                  )
-                                                : Image.asset(
-                                                    selectedBankImage
-                                                        .toString(),
-                                                    width: 24,
-                                                    height: 24,
-                                                    errorBuilder: (context,
-                                                            error,
-                                                            stackTrace) =>
-                                                        Container(),
-                                                  ),
-                                          ],
-                                        ],
-                                      )
-                                    : const Text(
+                                    ] else ...[
+                                      const Text(
                                         '은행선택',
                                         style: TextStyle(
                                           color: Colors.white,
                                           fontWeight: FontWeight.bold,
                                         ),
                                       ),
+                                    ],
+                                  ],
+                                ),
                               ),
                             ),
                           ),
