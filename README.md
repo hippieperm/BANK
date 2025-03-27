@@ -50,13 +50,14 @@
 - Calendar Timeline
 
 ## 📷 스크린샷
-![Simulator Screenshot - iPhone 16 Pro Max - 2025-03-27 at 11 43 44](https://github.com/user-attachments/assets/ffd27e29-1194-437e-8479-725660989cc2)
-![Simulator Screenshot - iPhone 16 Pro Max - 2025-03-27 at 11 46 55](https://github.com/user-attachments/assets/e07afb7b-efad-4cfc-88bb-34b18833274a)
-![Simulator Screenshot - iPhone 16 Pro Max - 2025-03-27 at 11 43 50](https://github.com/user-attachments/assets/b0f44830-7397-408b-8f54-8b9bf60347cf)
-![Simulator Screenshot - iPhone 16 Pro Max - 2025-03-27 at 11 45 47](https://github.com/user-attachments/assets/e15b2e99-9655-4b43-b80d-7107b71e40f1)
-![Simulator Screenshot - iPhone 16 Pro Max - 2025-03-27 at 11 45 00](https://github.com/user-attachments/assets/74aaa91d-729b-45e7-9d86-18604d031c6f)
 
-
+<p align="center">
+  <img src="https://github.com/user-attachments/assets/ffd27e29-1194-437e-8479-725660989cc2" width="19%" alt="스크린샷 1" />
+  <img src="https://github.com/user-attachments/assets/e07afb7b-efad-4cfc-88bb-34b18833274a" width="19%" alt="스크린샷 2" />
+  <img src="https://github.com/user-attachments/assets/b0f44830-7397-408b-8f54-8b9bf60347cf" width="19%" alt="스크린샷 3" />
+  <img src="https://github.com/user-attachments/assets/e15b2e99-9655-4b43-b80d-7107b71e40f1" width="19%" alt="스크린샷 4" />
+  <img src="https://github.com/user-attachments/assets/74aaa91d-729b-45e7-9d86-18604d031c6f" width="19%" alt="스크린샷 5" />
+</p>
 
 ## 🤝 기여하기
 
