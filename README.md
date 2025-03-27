@@ -1,16 +1,70 @@
-# bank
+# 정기예금 관리 앱
 
-A new Flutter project.
+<p align="center">
+  <img src="https://img.shields.io/badge/Flutter-02569B?style=for-the-badge&logo=flutter&logoColor=white" alt="Flutter"/>
+  <img src="https://img.shields.io/badge/Dart-0175C2?style=for-the-badge&logo=dart&logoColor=white" alt="Dart"/>
+  <img src="https://img.shields.io/badge/Version-1.0.0-blue?style=for-the-badge" alt="Version"/>
+  <img src="https://img.shields.io/badge/License-MIT-green?style=for-the-badge" alt="License"/>
+</p>
 
-## Getting Started
+## 📝 프로젝트 소개
 
-This project is a starting point for a Flutter application.
+정기예금 관리 앱은 여러 은행의 정기예금 상품을 한 곳에서 관리하고 모니터링할 수 있는 Flutter 기반 애플리케이션입니다. 사용자는 다양한 은행의 정기예금 상품을 등록하고, 만기일, 이자율, 예치금을 추적할 수 있습니다.
 
-A few resources to get you started if this is your first Flutter project:
+## ✨ 주요 기능
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
+- 📊 다양한 은행의 정기예금 상품 관리
+- 📅 만기일 알림 및 캘린더 보기
+- 📈 이자 계산 및 수익률 분석
+- 🔐 안전한 데이터 저장
+- 🌓 라이트/다크 테마 지원
 
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+## 🚀 설치 방법
+
+1. Flutter 개발 환경을 설정합니다
+
+   ```bash
+   flutter pub get
+   ```
+
+2. 앱을 실행합니다
+   ```bash
+   flutter run
+   ```
+
+## 📱 지원 플랫폼
+
+- Android
+- iOS
+- Web
+- macOS
+- Windows
+- Linux
+
+## 🛠️ 기술 스택
+
+- Flutter
+- Dart
+- Shared Preferences (로컬 데이터 저장)
+- FL Chart (그래프 시각화)
+- Calendar Timeline
+
+## 📷 스크린샷
+
+(앱 스크린샷 추가 예정)
+
+## 🤝 기여하기
+
+1. 이 저장소를 포크합니다
+2. 새로운 브랜치를 만듭니다 (`git checkout -b feature/amazing-feature`)
+3. 변경사항을 커밋합니다 (`git commit -m 'Add some amazing feature'`)
+4. 브랜치에 푸시합니다 (`git push origin feature/amazing-feature`)
+5. Pull Request를 생성합니다
+
+## 📄 라이선스
+
+MIT 라이선스 하에 배포됩니다. 자세한 내용은 `LICENSE` 파일을 확인하세요.
+
+## 📞 문의하기
+
+프로젝트에 대한 질문이나 제안이 있으시면 이슈를 등록해주세요.
